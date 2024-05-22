@@ -1,5 +1,5 @@
-import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
-import type { LinkProps } from '@chakra-ui/react';
+import { ChevronDownIcon, CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import type { LinkProps } from "@chakra-ui/react";
 import {
   Box,
   Collapse,
@@ -13,10 +13,10 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
-} from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
-import UserInfo from './UserInfo';
+import UserInfo from "./UserInfo";
 
 interface NavItem {
   label: string;
@@ -25,27 +25,23 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Array<NavItem> = [
-  { label: 'Listings', href: '/jobs' },
-  { label: '', href: '' },
+  { label: "Listings", href: "/jobs" },
+  { label: "", href: "" },
   {
-    label: 'Browse Categories',
+    label: "Browse Categories",
     children: [
       {
-        label: 'Content',
-        href: '/all/Content/',
+        label: "Content",
+        href: "/all/Content/",
       },
       {
-        label: 'Design',
-        href: '/all/Design/',
+        label: "Design",
+        href: "/all/Design/",
       },
       {
-        label: 'Development',
-        href: '/all/Development/',
+        label: "Development",
+        href: "/all/Development/",
       },
-      // {
-      //   label: 'HYPERDRIVE',
-      //   href: '/all/Hyperdrive/',
-      // },
     ],
   },
 ];
@@ -56,34 +52,34 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     <Stack onClick={children && onToggle} spacing={4}>
       <Flex
         as={Link}
-        align={'center'}
-        justify={'space-between'}
+        align={"center"}
+        justify={"space-between"}
         pt={4}
         _hover={{
-          textDecoration: 'none',
+          textDecoration: "none",
         }}
-        href={href ?? '#'}
+        href={href ?? "#"}
       >
-        <Text color={'brand.slate.500'} fontSize="md" fontWeight={400}>
+        <Text color={"brand.slate.500"} fontSize="md" fontWeight={400}>
           {label}
         </Text>
         {children && (
           <ChevronDownIcon
             w={6}
             h={6}
-            color={'brand.slate.500'}
-            transform={isOpen ? 'rotate(180deg)' : ''}
-            transition={'all .25s ease-in-out'}
+            color={"brand.slate.500"}
+            transform={isOpen ? "rotate(180deg)" : ""}
+            transition={"all .25s ease-in-out"}
           />
         )}
       </Flex>
 
-      <Collapse animateOpacity in={isOpen} style={{ marginTop: '0!important' }}>
+      <Collapse animateOpacity in={isOpen} style={{ marginTop: "0!important" }}>
         <Stack
-          align={'start'}
+          align={"start"}
           pl={4}
-          borderStyle={'solid'}
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          borderStyle={"solid"}
+          borderColor={useColorModeValue("gray.200", "gray.700")}
           borderLeft={1}
         >
           {children &&
@@ -92,7 +88,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
                 key={child.label}
                 mt={0}
                 pb={2}
-                color={'gray.500'}
+                color={"gray.500"}
                 fontSize="md"
                 href={child.href}
               >
@@ -107,19 +103,17 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
 
 const MobileNav = () => (
   <Stack
-    display={{ lg: 'none' }}
+    display={{ lg: "none" }}
     p={4}
-    bg={'white'}
-    borderBottom={'1px solid'}
-    borderBottomColor={'blackAlpha.200'}
+    bg={"white"}
+    borderBottom={"1px solid"}
+    borderBottomColor={"blackAlpha.200"}
   >
     {NAV_ITEMS.map((navItem) => (
       <MobileNavItem key={navItem.label} {...navItem} />
     ))}
   </Stack>
 );
-
-
 
 interface NavLinkProps extends LinkProps {
   href: string;
@@ -136,25 +130,25 @@ const NavLink = ({
   ...props
 }: NavLinkProps) => {
   const styles = {
-    color: isActive ? 'brand.slate.600' : 'brand.slate.500',
+    color: isActive ? "brand.slate.600" : "brand.slate.500",
     fontWeight: isCategory ? 400 : 500,
-    borderBottomColor: isActive ? 'brand.purple' : 'transparent',
-    alignItems: 'center',
-    display: 'flex',
-    h: 'full',
+    borderBottomColor: isActive ? "brand.purple" : "transparent",
+    alignItems: "center",
+    display: "flex",
+    h: "full",
     py: 2,
-    fontSize: 'sm',
-    borderBottom: isActive ? '1px solid' : 'none',
+    fontSize: "sm",
+    borderBottom: isActive ? "1px solid" : "none",
     _hover: {
-      textDecoration: 'none',
-      color: 'brand.slate.600',
+      textDecoration: "none",
+      color: "brand.slate.600",
     },
     ...props,
   };
 
   return (
     <Link href={href} {...styles}>
-      {typeof label === 'string' ? <Text fontSize="sm">{label}</Text> : label}
+      {typeof label === "string" ? <Text fontSize="sm">{label}</Text> : label}
     </Link>
   );
 };
@@ -163,15 +157,15 @@ const DesktopNav = () => {
   const router = useRouter();
 
   return (
-    <Stack direction={'row'} h="full" spacing={7}>
+    <Stack direction={"row"} h="full" spacing={7}>
       {NAV_ITEMS[2]?.children?.map((navItem) => {
         const isCurrent = `${navItem.href}` === router.asPath;
         return (
           <Box key={navItem.label}>
-            <Popover placement={'bottom-start'} trigger={'hover'}>
+            <Popover placement={"bottom-start"} trigger={"hover"}>
               <PopoverTrigger>
                 <NavLink
-                  href={navItem.href ?? '#'}
+                  href={navItem.href ?? "#"}
                   label={navItem.label}
                   isActive={isCurrent}
                   isCategory={true}
@@ -200,14 +194,14 @@ export default function WithSubnavigation() {
         borderBottom="1px solid"
         borderBottomColor="blackAlpha.200"
       >
-        <Flex justify={'space-between'} w="100%" maxW="7xl" mx="auto">
+        <Flex justify={"space-between"} w="100%" maxW="7xl" mx="auto">
           <Flex
-            flex={{ base: 1, lg: 'auto' }}
-            display={{ base: 'flex', lg: 'none' }}
+            flex={{ base: 1, lg: "auto" }}
+            display={{ base: "flex", lg: "none" }}
             ml={{ base: -2 }}
           >
             <IconButton
-              aria-label={'Toggle Navigation'}
+              aria-label={"Toggle Navigation"}
               icon={
                 isOpen ? (
                   <CloseIcon w={3} h={3} />
@@ -216,44 +210,31 @@ export default function WithSubnavigation() {
                 )
               }
               onClick={onToggle}
-              variant={'ghost'}
+              variant={"ghost"}
             />
           </Flex>
           <Flex
             align="center"
-            justify={{ base: 'center', lg: 'start' }}
+            justify={{ base: "center", lg: "start" }}
             gap={6}
           >
             <Image
               h={5}
               mr={5}
               cursor="pointer"
-              objectFit={'contain'}
-              alt={'FreLan'}
+              objectFit={"contain"}
+              alt={"FreLan"}
               onClick={() => {
-                router.push('/');
+                router.push("/");
               }}
-              src={'/images/logo/logo.png'}
+              src={"/images/logo/logo.png"}
             />
-            {/* <NavLink
-              display={{ base: 'none', lg: 'flex' }}
-              href="/all/jobs"
-              label="List Jobs"
-              isActive={router.asPath === '/all/jobs/'}
-            /> */}
-
-            {/* <NavLink
-              display={{ base: 'none', lg: 'flex' }}
-              href="/projects"
-              label="Projects"
-              isActive={router.asPath === '/projects/'}
-            /> */}
           </Flex>
           <Flex
             align="center"
-            justify={'center'}
+            justify={"center"}
             flexGrow={1}
-            display={{ base: 'none', lg: 'flex' }}
+            display={{ base: "none", lg: "flex" }}
             h="full"
             ml={10}
           >
@@ -262,8 +243,8 @@ export default function WithSubnavigation() {
 
           <Stack
             align="center"
-            justify={'flex-end'}
-            direction={'row'}
+            justify={"flex-end"}
+            direction={"row"}
             flex={{ base: 1, lg: 1 }}
             py={{ base: 0, lg: 2 }}
             spacing={4}
@@ -274,7 +255,7 @@ export default function WithSubnavigation() {
       </Flex>
       <Box bg="white">
         <Collapse animateOpacity in={isOpen}>
-          <Flex direction="column" w="96%" mt={5} mx={'auto'}>
+          <Flex direction="column" w="96%" mt={5} mx={"auto"}>
             <UserInfo isMobile={true} />
           </Flex>
           <MobileNav />

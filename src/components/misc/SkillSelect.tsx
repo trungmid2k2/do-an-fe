@@ -1,11 +1,11 @@
-import { Flex, FormControl, FormLabel, Image, Tooltip } from '@chakra-ui/react';
-import type { Dispatch, SetStateAction } from 'react';
-import React, { useState } from 'react';
-import ReactSelect from 'react-select';
-import makeAnimated from 'react-select/animated';
+import { Flex, FormControl, FormLabel, Image, Tooltip } from "@chakra-ui/react";
+import type { Dispatch, SetStateAction } from "react";
+import React, { useState } from "react";
+import ReactSelect from "react-select";
+import makeAnimated from "react-select/animated";
 
-import type { MultiSelectOptions } from '../../constants';
-import { MainSkills, skillSubSkillMap } from '../../constants';
+import type { MultiSelectOptions } from "../../constants";
+import { MainSkills, skillSubSkillMap } from "../../constants";
 
 interface Props {
   skills: MultiSelectOptions[];
@@ -24,8 +24,8 @@ export const SkillSelect = ({
   errorSubSkill,
   setSkills,
   setSubSkills,
-  skillLabel = 'Skills Needed',
-  subSkillLabel = 'Sub Skills Needed',
+  skillLabel = "Kĩ năng cần",
+  subSkillLabel = "Kĩ năng phụ",
 }: Props) => {
   const animatedComponents = makeAnimated();
   const tempSubSkills: MultiSelectOptions[] = [];
@@ -50,11 +50,11 @@ export const SkillSelect = ({
   return (
     <>
       <FormControl mb={5} isRequired>
-        <Flex align={'center'} justify={'start'}>
+        <Flex align={"center"} justify={"start"}>
           <FormLabel
-            color={'brand.slate.500'}
+            color={"brand.slate.500"}
             fontWeight={500}
-            htmlFor={'skills'}
+            htmlFor={"skills"}
           >
             {skillLabel}
           </FormLabel>
@@ -67,13 +67,13 @@ export const SkillSelect = ({
             bg="brand.purple"
             borderRadius="0.5rem"
             hasArrow
-            label={`Select all that apply`}
+            label={`Chọn tất cả những gì áp dụng`}
             placement="right-end"
           >
             <Image
               mt={-2}
-              alt={'Info Icon'}
-              src={'/assets/icons/info-icon.svg'}
+              alt={"Info Icon"}
+              src={"/assets/icons/info-icon.svg"}
             />
           </Tooltip>
         </Flex>
@@ -81,9 +81,9 @@ export const SkillSelect = ({
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
-              border: errorSkill ? '2px solid red' : baseStyles.border,
-              backgroundColor: 'brand.slate.500',
-              borderColor: state.isFocused ? 'brand.purple' : 'brand.slate.300',
+              border: errorSkill ? "2px solid red" : baseStyles.border,
+              backgroundColor: "brand.slate.500",
+              borderColor: state.isFocused ? "brand.purple" : "brand.slate.300",
             }),
           }}
           closeMenuOnSelect={false}
@@ -99,11 +99,11 @@ export const SkillSelect = ({
         />
       </FormControl>
       <FormControl mb={5}>
-        <Flex align={'center'} justify={'start'}>
+        <Flex align={"center"} justify={"start"}>
           <FormLabel
-            color={'brand.slate.500'}
+            color={"brand.slate.500"}
             fontWeight={500}
-            htmlFor={'skills'}
+            htmlFor={"skills"}
           >
             {subSkillLabel}
           </FormLabel>
@@ -116,13 +116,13 @@ export const SkillSelect = ({
             bg="brand.purple"
             borderRadius="0.5rem"
             hasArrow
-            label={`Select all that apply`}
+            label={`Chọn tất cả những gì áp dụng`}
             placement="right-end"
           >
             <Image
               mt={-2}
-              alt={'Info Icon'}
-              src={'/assets/icons/info-icon.svg'}
+              alt={"Info Icon"}
+              src={"/assets/icons/info-icon.svg"}
             />
           </Tooltip>
         </Flex>
@@ -130,9 +130,9 @@ export const SkillSelect = ({
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
-              border: errorSubSkill ? '2px solid red' : baseStyles.border,
-              backgroundColor: 'brand.slate.500',
-              borderColor: state.isFocused ? 'brand.purple' : 'brand.slate.300',
+              border: errorSubSkill ? "2px solid red" : baseStyles.border,
+              backgroundColor: "brand.slate.500",
+              borderColor: state.isFocused ? "brand.purple" : "brand.slate.300",
             }),
           }}
           closeMenuOnSelect={false}

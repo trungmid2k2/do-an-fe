@@ -1,23 +1,23 @@
-import { SearchIcon } from '@chakra-ui/icons';
+import { SearchIcon } from "@chakra-ui/icons";
 import {
   HStack,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
-} from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 function Search() {
   const router = useRouter();
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   const searchQuery = () => {
     let path = `${router.asPath}?search=${search}`;
-    if (router.asPath.includes('?')) {
+    if (router.asPath.includes("?")) {
       if (router.query.search) {
-        path = `${router.asPath.split('?')[0]}?search=${search}`;
+        path = `${router.asPath.split("?")[0]}?search=${search}`;
       } else {
         path = `${router.asPath}&search=${search}`;
       }
@@ -26,7 +26,7 @@ function Search() {
   };
 
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       searchQuery();
     }
@@ -34,11 +34,11 @@ function Search() {
 
   useEffect(() => {
     if (!search) return;
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     // eslint-disable-next-line consistent-return
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [search]);
 
@@ -53,13 +53,13 @@ function Search() {
           fontSize="sm"
           borderRadius={4}
           _hover={{
-            borderColor: 'brand.purple',
+            borderColor: "brand.purple",
           }}
           focusBorderColor="brand.purple"
           onChange={(e) => {
             setSearch(e.target.value);
           }}
-          placeholder="Search..."
+          placeholder="Tìm kiếm"
         />
         <InputRightElement
           cursor="pointer"

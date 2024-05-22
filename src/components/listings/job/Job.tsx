@@ -100,7 +100,7 @@ function CreateListing({ job, isEditMode = false, type }: Props) {
     rewards: isEditMode ? job?.rewards || undefined : undefined,
   });
   // -- Grants
-  const [grantBasic, setgrantsBasic] = useState<GrantsBasicType | undefined>();
+  // const [grantBasic, setgrantsBasic] = useState<GrantsBasicType | undefined>();
 
   const [isListingPublishing, setIsListingPublishing] =
     useState<boolean>(false);
@@ -224,67 +224,64 @@ function CreateListing({ job, isEditMode = false, type }: Props) {
             listingType !== "JOB"
               ? [
                   {
-                    label: "Template",
+                    label: "Bản mẫu",
                     number: 1,
-                    mainHead: "List your Opportunity",
+                    mainHead: "Danh sách cơ hội",
                     description:
-                      'To save time, check out our ready made templates below. If you already have a listing elsewhere, use "Start from Scratch" and copy/paste your text.',
+                      'Để tiết kiệm thời gian, hãy xem các mẫu làm sẵn của chúng tôi dưới đây. Nếu bạn đã có danh sách ở nơi khác, hãy sử dụng "Bắt đầu từ đầu" và sao chép/dán văn bản của bạn.',
                   },
                   {
-                    label: "Basics",
+                    label: "Cơ bản",
                     number: 2,
-                    mainHead: "Create a Listing",
-                    description: `Now let's learn a bit more about the work you need completed`,
+                    mainHead: "Tạo danh sách",
+                    description: `Bây giờ hãy tìm hiểu thêm một chút về công việc bạn cần hoàn thành`,
                   },
                   {
-                    label: "Description",
+                    label: "Mô tả",
                     number: 3,
-                    mainHead: "Tell us some more",
+                    mainHead: "Hãy cho chúng tôi biết thêm",
                     description:
-                      "Add more details about the opportunity, submission requirements, reward(s) details, and resources",
+                      "Thêm thông tin chi tiết về cơ hội, yêu cầu gửi, chi tiết (các) phần thưởng và tài nguyên",
                   },
                   {
-                    label: "Reward",
+                    label: "Phần thưởng",
                     number: 4,
-                    mainHead: "Add the reward amount",
-                    description:
-                      "Decide the compensation amount for your listing",
+                    mainHead: "Thêm khoảng tiền thưởng",
+                    description: "Quyết định số tiền bồi thường cho danh sách",
                   },
                 ]
               : [
                   {
-                    label: "Template",
+                    label: "Bản mẫu",
                     number: 1,
-                    mainHead: "List your Opportunity",
+                    mainHead: "Danh sách cơ hội",
                     description:
-                      'To save time, check out our ready made templates below. If you already have a listing elsewhere, use "Start from Scratch" and copy/paste your text.',
+                      'Để tiết kiệm thời gian, hãy xem các mẫu làm sẵn của chúng tôi dưới đây. Nếu bạn đã có danh sách ở nơi khác, hãy sử dụng "Bắt đầu từ đầu" và sao chép/dán văn bản của bạn.',
                   },
                   {
-                    label: "Basics",
+                    label: "Cơ bản",
                     number: 2,
-                    mainHead: "Create a Listing",
-                    description: `Now let's learn a bit more about the work you need completed`,
+                    mainHead: "Tạo danh sách",
+                    description: `Bây giờ hãy tìm hiểu thêm một chút về công việc bạn cần hoàn thành`,
                   },
                   {
-                    label: "Description",
+                    label: "Mô tả",
                     number: 3,
-                    mainHead: "Tell us some more",
+                    mainHead: "Hãy cho chúng tôi biết thêm",
                     description:
-                      "Add more details about the opportunity, submission requirements, reward(s) details, and resources",
+                      "Thêm thông tin chi tiết về cơ hội, yêu cầu gửi, chi tiết (các) phần thưởng và tài nguyên",
                   },
                   {
-                    label: "Questions",
+                    label: "Câu hỏi",
                     number: 4,
-                    mainHead: "Enter your questions",
-                    description:
-                      "What would you like to know about your applicants?",
+                    mainHead: "Nhập câu hỏi",
+                    description: "Bạn muốn biết gì về ứng viên của mình?",
                   },
                   {
-                    label: "Reward",
+                    label: "Tiền lương",
                     number: 5,
-                    mainHead: "Add the reward amount",
-                    description:
-                      "Decide the compensation amount for your listing",
+                    mainHead: "Thêm tiền lương",
+                    description: "Quyết định số tiền bồi thường cho danh sách",
                   },
                 ]
           }
@@ -335,23 +332,7 @@ function CreateListing({ job, isEditMode = false, type }: Props) {
               isNewOrDraft={isNewOrDraft}
             />
           )}
-          {/* {steps > 1 && listingType === "GRANT" && (
-            <CreateGrants
-              createDraft={createDraft}
-              onOpen={onOpen}
-              setSlug={setSlug}
-              grantBasic={grantBasic}
-              setGrantBasic={setgrantsBasic}
-              setSubSkills={setSubSkill}
-              subSkills={subSkill}
-              setMainSkills={setMainSkills}
-              mainSkills={mainSkills}
-              editorData={editorData}
-              setEditorData={setEditorData}
-              setSteps={setSteps}
-              steps={steps}
-            />
-          )} */}
+
           <Toaster />
         </FormLayout>
       )}

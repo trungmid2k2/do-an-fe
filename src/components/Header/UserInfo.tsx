@@ -35,167 +35,163 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
     ? { base: "block", md: "none" }
     : { base: "none", md: "block" };
 
-    return (
-      <>
-        {userInfo ? (
-          <>
-            {userInfo &&
-              !userInfo?.isTalentFilled &&
-              userInfo?.isVerified  && (
-                <Button
-                  display={displayValue}
-                  fontSize="xs"
-                  onClick={() => {
-                    router.push("/new");
-                  }}
-                  size="sm"
-                  variant={{ base: "solid", md: "ghost" }}
-                >
-                  Complete your Profile
-                </Button>
-              )}
-            <Menu>
-              <MenuButton
-                display={isMobile ? "none" : "flex"}
-                minW={0}
-                cursor={"pointer"}
-                rounded={"full"}
-              >
-                <Flex align="center">
-                  {userInfo?.photo ? (
-                    <Image
-                      boxSize="32px"
-                      borderRadius="full"
-                      alt={`${userInfo?.lastname} ${userInfo?.lastname}`}
-                      src={userInfo?.photo}
-                    />
+  return (
+    <>
+      {userInfo ? (
+        <>
+          {userInfo && !userInfo?.isTalentFilled && userInfo?.isVerified && (
+            <Button
+              display={displayValue}
+              fontSize="xs"
+              onClick={() => {
+                router.push("/new");
+              }}
+              size="sm"
+              variant={{ base: "solid", md: "ghost" }}
+            >
+              Hoàn thành hồ sơ
+            </Button>
+          )}
+          <Menu>
+            <MenuButton
+              display={isMobile ? "none" : "flex"}
+              minW={0}
+              cursor={"pointer"}
+              rounded={"full"}
+            >
+              <Flex align="center">
+                {userInfo?.photo ? (
+                  <Image
+                    boxSize="32px"
+                    borderRadius="full"
+                    alt={`${userInfo?.lastname} ${userInfo?.lastname}`}
+                    src={userInfo?.photo}
+                  />
+                ) : (
+                  <Avatar
+                    name={`${userInfo?.lastname} ${userInfo?.lastname}`}
+                    colors={["#92A1C6", "#F0AB3D", "#C271B4"]}
+                    size={32}
+                    variant="marble"
+                  />
+                )}
+                <Box display={displayValue} ml={2}>
+                  {!userInfo?.lastname ? (
+                    <Text color="brand.slate.800" fontSize="sm">
+                      Người dùng mới
+                    </Text>
                   ) : (
-                    <Avatar
-                      name={`${userInfo?.lastname} ${userInfo?.lastname}`}
-                      colors={["#92A1C6", "#F0AB3D", "#C271B4"]}
-                      size={32}
-                      variant="marble"
-                    />
+                    <Text color="brand.slate.800" fontSize="sm">
+                      {userInfo?.lastname}
+                    </Text>
                   )}
-                  <Box display={displayValue} ml={2}>
-                    {!userInfo?.lastname ? (
-                      <Text color="brand.slate.800" fontSize="sm">
-                        New User
-                      </Text>
-                    ) : (
-                      <Text color="brand.slate.800" fontSize="sm">
-                        {userInfo?.lastname}
-                      </Text>
-                    )}
-                   
-                  </Box>
-                </Flex>
-              </MenuButton>
-              <MenuList>
-                <MenuItem
-                  color="brand.slate.500"
-                  fontSize="sm"
-                  fontWeight={600}
-                  onClick={() => {
-                    router.push(`/t/${userInfo.username}`);
-                  }}
-                >
-                  Profile
-                </MenuItem>
-  
-                <MenuItem
-                  color="brand.slate.500"
-                  fontSize="sm"
-                  fontWeight={600}
-                  onClick={() => {
-                    router.push(`/t/${userInfo.username}/edit`);
-                  }}
-                >
-                  Edit Profile
-                </MenuItem>
-                {userInfo?.currentCompany && (
-                  <>
+                </Box>
+              </Flex>
+            </MenuButton>
+            <MenuList>
+              <MenuItem
+                color="brand.slate.500"
+                fontSize="sm"
+                fontWeight={600}
+                onClick={() => {
+                  router.push(`/t/${userInfo.username}`);
+                }}
+              >
+                Hồ sơ
+              </MenuItem>
+
+              <MenuItem
+                color="brand.slate.500"
+                fontSize="sm"
+                fontWeight={600}
+                onClick={() => {
+                  router.push(`/t/${userInfo.username}/edit`);
+                }}
+              >
+                Chỉnh sửa hồ sơ
+              </MenuItem>
+              {userInfo?.currentCompany && (
+                <>
+                  <MenuItem
+                    color="brand.slate.500"
+                    fontSize="sm"
+                    fontWeight={600}
+                    onClick={() => {
+                      router.push("/dashboard/jobs");
+                    }}
+                  >
+                    Dashboard công ty
+                  </MenuItem>
+                </>
+              )}
+
+              {userInfo?.role === "GOD" && (
+                <>
+                  <MenuDivider />
+                  <MenuGroup
+                    ml={3}
+                    color="brand.slate.700"
+                    fontSize="xs"
+                    fontWeight={700}
+                    title="God Mode"
+                  >
                     <MenuItem
-                  color="brand.slate.500"
-                  fontSize="sm"
-                  fontWeight={600}
-                  onClick={() => {
-                    router.push("/dashboard/jobs");
-                  }}
-                >
-                  Company Dashboard
-                </MenuItem>
-                  </>
-                )}
-                
-  
-                {userInfo?.role === "GOD" && (
-                  <>
-                    <MenuDivider />
-                    <MenuGroup
-                      ml={3}
-                      color="brand.slate.700"
-                      fontSize="xs"
-                      fontWeight={700}
-                      title="God Mode"
+                      color="brand.slate.500"
+                      fontSize="sm"
+                      fontWeight={600}
+                      onClick={() => {
+                        router.push("/new/company");
+                      }}
                     >
-                      <MenuItem
-                        color="brand.slate.500"
-                        fontSize="sm"
-                        fontWeight={600}
-                        onClick={() => {
-                          router.push("/new/company");
-                        }}
-                      >
-                        Create New Company
-                      </MenuItem>
-                    </MenuGroup>
-                  </>
-                )}
-  
-                <MenuDivider />
-                <MenuItem
-                  color="red.500"
-                  fontSize="sm"
-                  fontWeight={600}
-                  onClick={() => signOut()}
-                >
-                  Logout
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </>
-        ) : (
-          <>
-            <HStack flexDir={{ base: "column", md: "row" }} gap={2}>
-              <HStack gap={0} w={{ base: "100%", md: "auto" }}>
-                <Button
-                  display={displayValue}
-                  w={{ base: "100%", md: "auto" }}
-                  fontSize="xs"
-                  onClick={onOpen}
-                  size="sm"
-                  variant={{ base: "solid", md: "ghost" }}
-                >
-                  Login
-                </Button>
-                <LoginModal isOpen={isOpen} onClose={onClose} />
-              </HStack>
-  
+                      Tạo mới công ty
+                    </MenuItem>
+                  </MenuGroup>
+                </>
+              )}
+
+              <MenuDivider />
+              <MenuItem
+                color="red.500"
+                fontSize="sm"
+                fontWeight={600}
+                onClick={() => signOut()}
+              >
+                Đăng xuất
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </>
+      ) : (
+        <>
+          <HStack flexDir={{ base: "column", md: "row" }} gap={2}>
+            <HStack gap={0} w={{ base: "100%", md: "auto" }}>
               <Button
                 display={displayValue}
-                w={{ base: "100%" }}
-                px={4}
+                w={{ base: "100%", md: "auto" }}
                 fontSize="xs"
-                onClick={() => router.push("/auth/SignUp")}
+                onClick={onOpen}
                 size="sm"
-                variant="solid"
+                variant={{ base: "solid", md: "ghost" }}
               >
-                Sign Up
+                Đăng nhập
               </Button>
+              <LoginModal isOpen={isOpen} onClose={onClose} />
             </HStack>
-          </>
-        )}
-      </>
-    );
+
+            <Button
+              display={displayValue}
+              w={{ base: "100%" }}
+              px={4}
+              fontSize="xs"
+              onClick={() => router.push("/auth/SignUp")}
+              size="sm"
+              variant="solid"
+            >
+              Đăng ký
+            </Button>
+          </HStack>
+        </>
+      )}
+    </>
+  );
 }

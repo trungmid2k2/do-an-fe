@@ -1,11 +1,11 @@
-import { Box, Button, Flex, HStack, Text, VStack } from '@chakra-ui/react';
-import type { HTMLReactParserOptions } from 'html-react-parser';
-import parse from 'html-react-parser';
-import React, { useState } from 'react';
-import { BiDownArrowAlt, BiUpArrowAlt } from 'react-icons/bi';
+import { Box, Button, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import type { HTMLReactParserOptions } from "html-react-parser";
+import parse from "html-react-parser";
+import React, { useState } from "react";
+import { BiDownArrowAlt, BiUpArrowAlt } from "react-icons/bi";
 
-import type { MainSkills } from '@/interface/skills';
-import { skillMap } from '@/utils/constants';
+import type { MainSkills } from "@/interface/skills";
+import { skillMap } from "@/utils/constants";
 
 interface Props {
   skills?: MainSkills[];
@@ -17,7 +17,7 @@ function DetailDescription({ skills, description }: Props) {
 
   const options: HTMLReactParserOptions = {
     replace: ({ name, children, attribs }: any) => {
-      if (name === 'p' && (!children || children.length === 0)) {
+      if (name === "p" && (!children || children.length === 0)) {
         return <br />;
       }
       return { name, children, attribs };
@@ -25,30 +25,30 @@ function DetailDescription({ skills, description }: Props) {
   };
 
   return (
-    <VStack w={'full'} p={5} bg={'white'} rounded={'xl'}>
+    <VStack w={"full"} p={5} bg={"white"} rounded={"xl"}>
       <Flex
-        justify={['center', 'center', 'space-between', 'space-between']}
-        direction={['column', 'column', 'row', 'row']}
+        justify={["center", "center", "space-between", "space-between"]}
+        direction={["column", "column", "row", "row"]}
         gap={3}
-        w={'full'}
+        w={"full"}
         px={5}
       >
-        <Text color={'brand.slate.400'} fontWeight={500}>
-          Skills Needed
+        <Text color={"brand.slate.400"} fontWeight={500}>
+          Kĩ năng cần
         </Text>
-        <HStack flexWrap={'wrap'} gap={3}>
+        <HStack flexWrap={"wrap"} gap={3}>
           {skills?.map((skill) => (
             <Box
               key={skill}
-              m={'0px !important'}
+              m={"0px !important"}
               px={4}
               py={1}
               bg={`${skillMap.find((e) => e.mainskill === skill)?.color}1A`}
-              rounded={'md'}
+              rounded={"md"}
             >
               <Text
                 color={skillMap.find((e) => e.mainskill === skill)?.color}
-                fontSize={'sm'}
+                fontSize={"sm"}
               >
                 {skill}
               </Text>
@@ -56,18 +56,18 @@ function DetailDescription({ skills, description }: Props) {
           ))}
         </HStack>
       </Flex>
-      <Flex pos={'relative'} direction={'column'} w={'full'}>
+      <Flex pos={"relative"} direction={"column"} w={"full"}>
         <Flex
-          direction={'column'}
-          overflow={'hidden'}
-          w={'full'}
+          direction={"column"}
+          overflow={"hidden"}
+          w={"full"}
           h={
             // eslint-disable-next-line no-nested-ternary
             show
-              ? 'full'
+              ? "full"
               : description && description?.length > 100
-              ? '21.5rem'
-              : 'max'
+              ? "21.5rem"
+              : "max"
           }
           pb={8}
           px={5}
@@ -75,50 +75,50 @@ function DetailDescription({ skills, description }: Props) {
         >
           {parse(
             description?.startsWith('"')
-              ? JSON.parse(description || '')
-              : description ?? '',
+              ? JSON.parse(description || "")
+              : description ?? "",
             options
           )}
         </Flex>
         {description && description?.length > 100 && (
           <Box
-            pos={'absolute'}
+            pos={"absolute"}
             bottom={0}
-            alignItems={'start'}
-            justifyContent={'center'}
-            display={'flex'}
-            w={'full'}
-            h={show ? '0' : '50%'}
-            mx={'auto'}
+            alignItems={"start"}
+            justifyContent={"center"}
+            display={"flex"}
+            w={"full"}
+            h={show ? "0" : "50%"}
+            mx={"auto"}
             bg={
               show
-                ? 'transparent'
-                : 'linear-gradient(180deg, white 0%, rgba(255, 255, 255, 0.57) 100%)'
+                ? "transparent"
+                : "linear-gradient(180deg, white 0%, rgba(255, 255, 255, 0.57) 100%)"
             }
-            transform={'matrix(1, 0, 0, -1, 0, 0);'}
+            transform={"matrix(1, 0, 0, -1, 0, 0);"}
           >
             <Button
-              w={'12rem'}
+              w={"12rem"}
               mt={-3}
-              color={'brand.slate.400'}
-              fontSize={'md'}
-              bg={'white'}
-              shadow={'0px 4px 4px rgba(0, 0, 0, 0.06)'}
-              transform={'matrix(1, 0, 0, -1, 0, 0);'}
+              color={"brand.slate.400"}
+              fontSize={"md"}
+              bg={"white"}
+              shadow={"0px 4px 4px rgba(0, 0, 0, 0.06)"}
+              transform={"matrix(1, 0, 0, -1, 0, 0);"}
               onClick={() => {
                 setShow(!show);
               }}
-              rounded={'2xl'}
+              rounded={"2xl"}
             >
               {show ? (
                 <>
-                  <BiUpArrowAlt fontSize={'md'} />
-                  <Text mx={3}>Read Less</Text>
+                  <BiUpArrowAlt fontSize={"md"} />
+                  <Text mx={3}>Ít lại</Text>
                 </>
               ) : (
                 <>
-                  <BiDownArrowAlt fontSize={'md'} />
-                  <Text mx={3}>Read More</Text>
+                  <BiDownArrowAlt fontSize={"md"} />
+                  <Text mx={3}>Thêm nữa</Text>
                 </>
               )}
             </Button>

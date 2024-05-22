@@ -6,22 +6,22 @@ import {
   HStack,
   Image,
   Text,
-} from '@chakra-ui/react';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import type { ReactNode } from 'react';
-import React, { useEffect, useState } from 'react';
-import { Toaster } from 'react-hot-toast';
+} from "@chakra-ui/react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import type { ReactNode } from "react";
+import React, { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 
-import HomeBanner from '@/components/home/Banner';
-import SideBar from '@/components/home/SideBar';
-import { CategoryBanner } from '@/components/misc/listingsCard';
-import { Superteams } from '@/constants/Superteam';
-import type { User } from '@/interface/user';
-import { Default } from '@/layouts/Default';
-import { Meta } from '@/layouts/Meta';
-import { userStore } from '@/store/user';
-import { earners } from '@/lib/earner';
+import HomeBanner from "@/components/home/Banner";
+import SideBar from "@/components/home/SideBar";
+import { CategoryBanner } from "@/components/misc/listingsCard";
+import { Superteams } from "@/constants/Superteam";
+import type { User } from "@/interface/user";
+import { Default } from "@/layouts/Default";
+import { Meta } from "@/layouts/Meta";
+import { userStore } from "@/store/user";
+import { earners } from "@/lib/earner";
 
 interface TotalType {
   total?: number;
@@ -30,7 +30,7 @@ interface TotalType {
 }
 interface HomeProps {
   children: ReactNode;
-  type: 'home' | 'category' | 'region';
+  type: "home" | "category" | "region";
 }
 
 interface SidebarType {
@@ -61,7 +61,7 @@ function Home({ children, type }: HomeProps) {
     getTotalInfo();
   }, []);
 
-  const Skills = ['Development', 'Design', 'Content', 'Hyperdrive'];
+  const Skills = ["Development", "Design", "Content", "Hyperdrive"];
 
   const matchedTeam = Superteams.find(
     (e) => e.region.toLowerCase() === String(router.query.slug).toLowerCase()
@@ -71,27 +71,22 @@ function Home({ children, type }: HomeProps) {
     <Default
       className="bg-white"
       meta={
-        <Meta
-          title="Frelan"
-          description="Every Solana opportunity in one place!"
-          canonical="/assets/logo/og.svg"
-        />
+        <Meta title="Frelan" description="Hó" canonical="/assets/logo/og.svg" />
       }
     >
-      <Container maxW={'7xl'} mx="auto">
+      <Container maxW={"7xl"} mx="auto">
         <HStack align="start" justify="space-between" my={{ base: 4, md: 8 }}>
           <Flex
             w="full"
             pr={{ base: 0, lg: 6 }}
-            borderRight={{ base: 'none', lg: '1px solid' }}
-            borderRightColor={{ base: 'none', lg: 'blackAlpha.200' }}
+            borderRight={{ base: "none", lg: "1px solid" }}
+            borderRightColor={{ base: "none", lg: "blackAlpha.200" }}
           >
-            
             <Box w="full">
               {!userInfo?.id && (
                 <HomeBanner setTriggerLogin={setTriggerLogin} />
               )}
-              {type === 'category' && (
+              {type === "category" && (
                 <CategoryBanner
                   type={
                     Skills.find(
@@ -102,17 +97,17 @@ function Home({ children, type }: HomeProps) {
                   }
                 />
               )}
-              {type === 'region' && matchedTeam && (
+              {type === "region" && matchedTeam && (
                 <>
                   <Flex
-                    direction={{ md: 'row', base: 'column' }}
-                    w={{ md: 'brand.120', base: '100%' }}
-                    h={{ md: '7.375rem', base: 'fit-content' }}
+                    direction={{ md: "row", base: "column" }}
+                    w={{ md: "brand.120", base: "100%" }}
+                    h={{ md: "7.375rem", base: "fit-content" }}
                     mb={8}
-                    mx={'auto'}
+                    mx={"auto"}
                     p={6}
                     bg={`url(${matchedTeam.bg})`}
-                    bgSize={'cover'}
+                    bgSize={"cover"}
                     rounded={10}
                   >
                     <Center
@@ -120,27 +115,28 @@ function Home({ children, type }: HomeProps) {
                       h={14}
                       mr={3}
                       bg={matchedTeam.color}
-                      rounded={'md'}
+                      rounded={"md"}
                     >
                       <Image
-                        borderRadius={'5px'}
+                        borderRadius={"5px"}
                         alt="Category icon"
                         src={matchedTeam.icons}
                       />
                     </Center>
-                    <Box w={{ md: '80%', base: '100%' }}>
+                    <Box w={{ md: "80%", base: "100%" }}>
                       <Text
-                        mt={{ base: 4, md: '0' }}
-                        fontFamily={'Domine'}
-                        fontWeight={'700'}
+                        mt={{ base: 4, md: "0" }}
+                        fontFamily={"Domine"}
+                        fontWeight={"700"}
                       >
                         {matchedTeam.name}
                       </Text>
-                      <Text color={'brand.slate.500'} fontSize={'small'}>
-                        Welcome to Superteam {matchedTeam.region} earnings page
-                        — use these opportunities to earn in global standards
-                        and gain membership in the most exclusive Solana
-                        community of {matchedTeam.region}!
+                      <Text color={"brand.slate.500"} fontSize={"small"}>
+                        Chào mừng bạn đến với trang thu nhập của Superteam{" "}
+                        {matchedTeam.region}— sử dụng những cơ hội này để kiếm
+                        tiền theo tiêu chuẩn toàn cầu và trở thành thành viên
+                        của Solana độc quyền nhất cộng đồng {matchedTeam.region}
+                        !
                       </Text>
                     </Box>
 
@@ -153,10 +149,10 @@ function Home({ children, type }: HomeProps) {
           </Flex>
           <Flex
             display={{
-              base: 'none',
-              lg: 'flex',
+              base: "none",
+              lg: "flex",
             }}
-            marginInlineStart={'0 !important'}
+            marginInlineStart={"0 !important"}
           >
             <SideBar
               total={sidebarInfo?.totals?.totalInUSD ?? 0}

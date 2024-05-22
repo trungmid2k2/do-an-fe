@@ -7,13 +7,13 @@ import {
   ModalOverlay,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import type { UseMutationResult } from '@tanstack/react-query';
-import React from 'react';
-import { useForm } from 'react-hook-form';
+} from "@chakra-ui/react";
+import type { UseMutationResult } from "@tanstack/react-query";
+import React from "react";
+import { useForm } from "react-hook-form";
 
-import type { Ques } from '../listings/job/questions/builder';
-import { QuestionHandler } from '../listings/job/questions/questionHandler';
+import type { Ques } from "../listings/job/questions/builder";
+import { QuestionHandler } from "../listings/job/questions/questionHandler";
 
 interface Props {
   isOpen: boolean;
@@ -41,28 +41,27 @@ export const SubscribeModal = ({
   const questionsArr = JSON.parse(questions) as Ques[];
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size={'xl'}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
         <ModalOverlay></ModalOverlay>
         <ModalContent>
           <ModalHeader>
-            {eligibility !== 'permission-less'
-              ? 'Submit Your Application'
-              : 'Job Subscribe'}
+            {eligibility !== "permission-less"
+              ? "Nộp đơn ứng tuyển"
+              : "Đăng kí công việc"}
           </ModalHeader>
-          <VStack align={'start'} gap={3} p={5}>
-            <Text color={'gray.500'} fontSize={'1rem'} fontWeight={500}>
-              {eligibility !== 'permission-less'
-                ? `Don't start working just yet! Apply first, and then begin working only once you've been hired for the project by the company.`
-                : `We can't wait to see what you've created! Winners will receive
-              prizes as well as instant admission to our DAO.`}
+          <VStack align={"start"} gap={3} p={5}>
+            <Text color={"gray.500"} fontSize={"1rem"} fontWeight={500}>
+              {eligibility !== "permission-less"
+                ? `Nộp đơn để được ứng tuyển`
+                : `Chúng ta không thể chờ đợi để xem bạn đã tạo ra cái gì! Người chiến thắng sẽ nhận được giải thưởng cũng như được chấp nhận ngay lập tức vào DAO của chúng tôi.`}
             </Text>
-            <Text color={'gray.500'} fontSize={'1rem'} fontWeight={500}>
-              {eligibility !== 'permission-less'
-                ? 'Please note that the company might contact you to assess fit before picking the winner.'
-                : 'Please note that jobs typically take ~5 days after the end date to be evaluated.'}
+            <Text color={"gray.500"} fontSize={"1rem"} fontWeight={500}>
+              {eligibility !== "permission-less"
+                ? "Hãy chú ý công ty này có thẻ liên hệ với bạn để đánh giá sự phù hợp trước khi chọn người chiến thắng."
+                : "Xin lưu ý rằng công việc thường mất ~5 ngày sau ngày kết thúc để được đánh giá"}
             </Text>
             <form
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
               onSubmit={handleSubmit((e) => {
                 SubmssionMutation.mutate({
                   link: e.link,
@@ -70,7 +69,7 @@ export const SubscribeModal = ({
                 });
               })}
             >
-              <VStack gap={4} overflow={'scroll'} h={'20rem'} my={5}>
+              <VStack gap={4} overflow={"scroll"} h={"20rem"} my={5}>
                 {questionsArr.map((e) => {
                   return (
                     <FormControl key={e.order} isRequired>
@@ -88,13 +87,13 @@ export const SubscribeModal = ({
               </VStack>
 
               <Button
-                w={'full'}
-                color={'white'}
-                bg={'#6562FF'}
+                w={"full"}
+                color={"white"}
+                bg={"#6562FF"}
                 isLoading={SubmssionMutation.isLoading}
                 type="submit"
               >
-                {eligibility === 'permission-less' ? 'Submit' : 'Apply'}
+                {eligibility === "permission-less" ? "Nộp" : "Áp dụng"}
               </Button>
             </form>
           </VStack>

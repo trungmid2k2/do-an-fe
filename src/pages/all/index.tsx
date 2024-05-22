@@ -1,12 +1,12 @@
-import { Box, Flex } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, Flex } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
-import { JobsCard, ListingSection } from '@/components/misc/listingsCard';
-import EmptySection from '@/components/shared/EmptySection';
-import Loading from '@/components/shared/Loading';
-import type { Job } from '@/interface/job';
-import Home from '@/layouts/Home';
-import axios from '@/lib/axios';
+import { JobsCard, ListingSection } from "@/components/misc/listingsCard";
+import EmptySection from "@/components/shared/EmptySection";
+import Loading from "@/components/shared/Loading";
+import type { Job } from "@/interface/job";
+import Home from "@/layouts/Home";
+import axios from "@/lib/axios";
 
 interface Listings {
   jobs?: Job[];
@@ -21,9 +21,9 @@ function AllListingsPage() {
   const getListings = async () => {
     setIsListingsLoading(true);
     try {
-      const listingsData = await axios.get('/api/listings', {
+      const listingsData = await axios.get("/api/listings", {
         params: {
-          category: 'jobs',
+          category: "jobs",
           take: 100,
         },
       });
@@ -41,7 +41,7 @@ function AllListingsPage() {
 
   return (
     <Home type="home">
-      <Box w={'100%'}>
+      <Box w={"100%"}>
         <ListingSection
           type="jobs"
           title="Freelance Gigs"
@@ -57,8 +57,8 @@ function AllListingsPage() {
           {!isListingsLoading && !listings?.jobs?.length && (
             <Flex align="center" justify="center" mt={8}>
               <EmptySection
-                title="No jobs available!"
-                message="Subscribe to notifications to get notified about new jobs."
+                title="Không có bài đăng khả dụng!"
+                message="Hãy thử lại sau."
               />
             </Flex>
           )}

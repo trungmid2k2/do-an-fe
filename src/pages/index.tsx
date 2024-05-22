@@ -53,7 +53,7 @@ const HomePage: NextPage = () => {
   };
 
   useEffect(() => {
-    console.log('ok')
+    console.log("ok");
     // if (!isListingsLoading) return;
     getListings(searchText);
   }, [searchText]);
@@ -61,7 +61,7 @@ const HomePage: NextPage = () => {
   const tabs = JobTabs({ isListingsLoading, jobs });
 
   const [activeTab, setActiveTab] = useState<string>(tabs[0]!.id);
-console.log(jobs)
+  console.log(jobs);
   return (
     <Home type="home">
       <FormControl>
@@ -159,7 +159,7 @@ console.log(jobs)
                   size={{ base: "x-small", md: "sm" }}
                   variant={"ghost"}
                 >
-                  View All
+                  Xem tất cả
                 </Button>
               </Link>
             </Flex>
@@ -177,7 +177,7 @@ console.log(jobs)
               size="sm"
               variant="outline"
             >
-              View All
+              Xem tất cả
             </Button>
           </Link>
         </Box>

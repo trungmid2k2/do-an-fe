@@ -10,32 +10,32 @@ import {
   Tooltip,
   useDisclosure,
   VStack,
-} from '@chakra-ui/react';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
-import { TbBell, TbBellRinging } from 'react-icons/tb';
+} from "@chakra-ui/react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
+import { TbBell, TbBellRinging } from "react-icons/tb";
 
-import { EarningModal } from '@/components/modals/earningModal';
-import type { References } from '@/interface/job';
-import type { CompanyType } from '@/interface/company';
-import type { User } from '@/interface/user';
-import { userStore } from '@/store/user';
-import { dayjs } from '@/utils/dayjs';
+import { EarningModal } from "@/components/modals/earningModal";
+import type { References } from "@/interface/job";
+import type { CompanyType } from "@/interface/company";
+import type { User } from "@/interface/user";
+import { userStore } from "@/store/user";
+import { dayjs } from "@/utils/dayjs";
 
 interface Job {
   id: string | undefined;
   title: string;
   deadline?: string;
-  status?: 'OPEN' | 'REVIEW' | 'CLOSED';
+  status?: "OPEN" | "REVIEW" | "CLOSED";
   isActive?: boolean;
   isPublished?: string;
   isFeatured?: string;
   company?: CompanyType | undefined;
   poc?: User;
   slug?: string;
-  type?:  string;
+  type?: string;
   isWinnersAnnounced?: boolean;
   hackathonPrize?: boolean;
   isTemplate?: boolean;
@@ -62,7 +62,7 @@ function ListingHeader({
   const { userInfo } = userStore();
   const hasDeadlineEnded = dayjs().isAfter(deadline);
   const [update, setUpdate] = useState<boolean>(false);
-  const [sub, setSub] = useState<any>([])
+  const [sub, setSub] = useState<any>([]);
   const handleSubscribes = async () => {
     if (!userInfo?.isTalentFilled) {
       onOpen();
@@ -76,10 +76,10 @@ function ListingHeader({
       // });
       // console.log(res);
       setUpdate((prev) => !prev);
-      toast.success('Subscribesd to job');
+      toast.success("Subscribesd to job");
     } catch (error) {
       console.log(error);
-      toast.error('Error');
+      toast.error("Error");
     }
   };
   const handleUnSubscribes = async (idSub: string) => {
@@ -94,10 +94,10 @@ function ListingHeader({
       // });
       // console.log(res);
       setUpdate((prev) => !prev);
-      toast.success('Unsubscribe to job');
+      toast.success("Unsubscribe to job");
     } catch (error) {
       console.log(error);
-      toast.error('Error');
+      toast.error("Error");
     }
   };
 
@@ -112,115 +112,115 @@ function ListingHeader({
   }, [update]);
 
   return (
-    <VStack px={{ base: '2', md: '6' }} bg={'white'}>
+    <VStack px={{ base: "2", md: "6" }} bg={"white"}>
       {isOpen && <EarningModal isOpen={isOpen} onClose={onClose} />}
       <VStack
         align="start"
-        justify={['start', 'start', 'space-between', 'space-between']}
-        flexDir={['column', 'column', 'row', 'row']}
+        justify={["start", "start", "space-between", "space-between"]}
+        flexDir={["column", "column", "row", "row"]}
         gap={5}
-        w={'full'}
-        maxW={'7xl'}
-        mx={'auto'}
+        w={"full"}
+        maxW={"7xl"}
+        mx={"auto"}
         py={10}
       >
         <HStack align="center" px={[3, 3, 0, 0]}>
           <Image
-            w={'4rem'}
-            h={'4rem'}
-            objectFit={'cover'}
-            alt={'phantom'}
-            rounded={'md'}
+            w={"4rem"}
+            h={"4rem"}
+            objectFit={"cover"}
+            alt={"phantom"}
+            rounded={"md"}
             src={
               company?.logo ||
               `${router.basePath}/assets/images/company-logo.png`
             }
           />
-          <VStack align={'start'}>
+          <VStack align={"start"}>
             <HStack>
               <Heading
-                color={'brand.charcoal.700'}
-                fontFamily={'Inter'}
-                fontSize={{ base: 'lg', md: 'xl' }}
+                color={"brand.charcoal.700"}
+                fontFamily={"Inter"}
+                fontSize={{ base: "lg", md: "xl" }}
                 fontWeight={{ base: 600, md: 700 }}
               >
                 {title}
               </Heading>
               <Flex
-                display={{ base: 'none', md: 'flex' }}
-                fontSize={'xs'}
+                display={{ base: "none", md: "flex" }}
+                fontSize={"xs"}
                 fontWeight={500}
-                bg={'green.100'}
-                borderRadius={'full'}
-                whiteSpace={'nowrap'}
+                bg={"green.100"}
+                borderRadius={"full"}
+                whiteSpace={"nowrap"}
               >
-                {(status === 'CLOSED' ||
-                  (status === 'OPEN' && isWinnersAnnounced)) && (
+                {(status === "CLOSED" ||
+                  (status === "OPEN" && isWinnersAnnounced)) && (
                   <Text
                     px={3}
                     py={1}
-                    color={'orange.600'}
-                    bg={'orange.100'}
-                    rounded={'full'}
+                    color={"orange.600"}
+                    bg={"orange.100"}
+                    rounded={"full"}
                   >
-                    Subscribes Closed
+                    Đã đóng đăng kí
                   </Text>
                 )}
                 {!isWinnersAnnounced &&
                   hasDeadlineEnded &&
-                  status === 'OPEN' && (
+                  status === "OPEN" && (
                     <Text
                       px={3}
                       py={1}
-                      color={'orange.600'}
-                      bg={'orange.100'}
-                      rounded={'full'}
+                      color={"orange.600"}
+                      bg={"orange.100"}
+                      rounded={"full"}
                     >
-                      Subscribes In Review
+                      Đăng kí đang xem xét
                     </Text>
                   )}
-                {!hasDeadlineEnded && status === 'OPEN' && (
+                {!hasDeadlineEnded && status === "OPEN" && (
                   <Text
                     px={3}
                     py={1}
-                    color={'green.600'}
-                    bg={'green.100'}
-                    rounded={'full'}
+                    color={"green.600"}
+                    bg={"green.100"}
+                    rounded={"full"}
                   >
-                    Subscribes Open
+                    Mở đăng kí
                   </Text>
                 )}
               </Flex>
             </HStack>
             {!isTemplate && (
               <HStack>
-                <Text color={'#94A3B8'} fontWeight={500}>
+                <Text color={"#94A3B8"} fontWeight={500}>
                   by {company?.name}
                 </Text>
-                <Text color={'#E2E8EF'} fontWeight={500}>
+                <Text color={"#E2E8EF"} fontWeight={500}>
                   |
                 </Text>
                 <Flex
-                  align={'center'}
+                  align={"center"}
                   gap={1}
-                  display={{ base: 'none', md: 'flex' }}
+                  display={{ base: "none", md: "flex" }}
                 >
-                  <Text color={'gray.400'} fontWeight={500}>
+                  <Text color={"gray.400"} fontWeight={500}>
                     {hackathonPrize ? (
-                      'Hackathon Prize'
+                      "Hackathon Prize"
                     ) : (
                       <Tooltip
                         px={4}
                         py={2}
                         color="brand.slate.500"
-                        fontFamily={'Inter'}
+                        fontFamily={"Inter"}
                         fontSize="sm"
                         bg="white"
-                        borderRadius={'lg'}
+                        borderRadius={"lg"}
                         label={
-                          type === 'permissioned'
-                            ? 'A Project is a short-term gig where companies solicit applications from multiple people, and select the best one to work on the Project.'
-                            : 'Jobs are open for anyone to participate in and submit their work (as long as they meet the eligibility requirements mentioned below). The best submissions win!'
+                          type === "permissioned"
+                            ? "Chịu trách nhiệm thực hiện công việc được mô tả trong danh sách này khi được chọn là người chiến thắng."
+                            : "Công việc này là công việc mở! Bất kỳ ai cũng có thể bắt đầu làm việc và nộp trước hạn chót!"
                         }
                       >
                         <Flex>
@@ -230,12 +230,12 @@ function ListingHeader({
                             mr={1}
                             alt={type}
                             src={
-                              type === 'permissioned'
-                                ? '/assets/icons/briefcase.svg'
-                                : '/assets/icons/bolt.svg'
+                              type === "permissioned"
+                                ? "/assets/icons/briefcase.svg"
+                                : "/assets/icons/bolt.svg"
                             }
                           />
-                          {type === 'permissioned' ? 'Project' : 'Job'}
+                          {type === "permissioned" ? "Project" : "Job"}
                         </Flex>
                       </Tooltip>
                     )}
@@ -244,11 +244,11 @@ function ListingHeader({
                 <Text
                   px={2}
                   py={1}
-                  color={'#0800A5'}
-                  fontSize={'xs'}
+                  color={"#0800A5"}
+                  fontSize={"xs"}
                   fontWeight={500}
                   bg="#EBEAFF"
-                  rounded={'full'}
+                  rounded={"full"}
                 >
                   {region}
                 </Text>
@@ -258,61 +258,61 @@ function ListingHeader({
         </HStack>
         <Flex gap={3}>
           <Flex
-            display={{ base: 'flex', md: 'none' }}
+            display={{ base: "flex", md: "none" }}
             ml={3}
-            fontSize={'xs'}
+            fontSize={"xs"}
             fontWeight={500}
-            bg={'green.100'}
-            rounded={'full'}
+            bg={"green.100"}
+            rounded={"full"}
           >
-            {(status === 'CLOSED' ||
-              (status === 'OPEN' && isWinnersAnnounced)) && (
+            {(status === "CLOSED" ||
+              (status === "OPEN" && isWinnersAnnounced)) && (
               <Text
                 px={3}
                 py={1}
-                color={'orange.600'}
-                bg={'orange.100'}
-                rounded={'full'}
+                color={"orange.600"}
+                bg={"orange.100"}
+                rounded={"full"}
               >
-                Subscribes Closed
+                Đóng đăng kí
               </Text>
             )}
-            {!isWinnersAnnounced && hasDeadlineEnded && status === 'OPEN' && (
+            {!isWinnersAnnounced && hasDeadlineEnded && status === "OPEN" && (
               <Text
                 px={3}
                 py={1}
-                color={'orange.600'}
-                bg={'orange.100'}
-                rounded={'full'}
+                color={"orange.600"}
+                bg={"orange.100"}
+                rounded={"full"}
               >
-                In Review
+                Đang xem xét
               </Text>
             )}
-            {!hasDeadlineEnded && status === 'OPEN' && (
+            {!hasDeadlineEnded && status === "OPEN" && (
               <Text
                 px={3}
                 py={1}
-                color={'green.600'}
-                bg={'green.100'}
-                rounded={'full'}
+                color={"green.600"}
+                bg={"green.100"}
+                rounded={"full"}
               >
-                Subscribes Open
+                Đăng kí mở
               </Text>
             )}
           </Flex>
-          <Flex align={'center'} gap={1} display={{ base: 'flex', md: 'none' }}>
+          <Flex align={"center"} gap={1} display={{ base: "flex", md: "none" }}>
             <Tooltip
               px={4}
               py={2}
-              color={'#94A3B8'}
-              fontFamily={'Inter'}
+              color={"#94A3B8"}
+              fontFamily={"Inter"}
               fontSize="sm"
               bg="white"
-              borderRadius={'lg'}
+              borderRadius={"lg"}
               label={
-                type === 'permissioned'
-                  ? 'Projects are like short-term freelance gigs that you can apply for. If and when selected as the winner, you can begin executing the scope of work mentioned in this listing.'
-                  : 'This is an open competition job! Anyone can start working and submit their work before the deadline!'
+                type === "permissioned"
+                  ? "Dự án này yêu cầu bạn thực hiện công việc được mô tả trong danh sách này khi được chọn là người chiến thắng."
+                  : "Đây là công việc mở! Bất kỳ ai cũng có thể bắt đầu làm việc và nộp trước hạn chót!"
               }
             >
               <Flex>
@@ -322,34 +322,35 @@ function ListingHeader({
                   mr={1}
                   alt={type}
                   src={
-                    type === 'permissioned'
-                      ? '/assets/icons/briefcase.svg'
-                      : '/assets/icons/bolt.svg'
+                    type === "permissioned"
+                      ? "/assets/icons/briefcase.svg"
+                      : "/assets/icons/bolt.svg"
                   }
                 />
                 <Text color="gray.400" fontWeight={500}>
-                  {type === 'permissioned' ? 'Project' : 'Job'}
+                  {type === "permissioned" ? "Project" : "Job"}
                 </Text>
               </Flex>
             </Tooltip>
           </Flex>
         </Flex>
-        {router.asPath.includes('jobs') && !isTemplate && (
+        {router.asPath.includes("jobs") && !isTemplate && (
           <HStack>
             <HStack align="start" px={[3, 3, 0, 0]}>
               <IconButton
                 aria-label="Notify"
                 icon={
-                  sub.find((e:any) => e.userId === userInfo?.id) ? (
+                  sub.find((e: any) => e.userId === userInfo?.id) ? (
                     <TbBellRinging />
                   ) : (
                     <TbBell />
                   )
                 }
                 onClick={() => {
-                  if (sub.find((e:any) => e.userId === userInfo?.id)) {
+                  if (sub.find((e: any) => e.userId === userInfo?.id)) {
                     handleUnSubscribes(
-                      sub.find((e:any) => e.userId === userInfo?.id)?.id as string
+                      sub.find((e: any) => e.userId === userInfo?.id)
+                        ?.id as string
                     );
 
                     return;
@@ -359,21 +360,19 @@ function ListingHeader({
                 variant="solid"
               />
             </HStack>
-            <HStack whiteSpace={'nowrap'}>
-              <VStack align={'start'} gap={0}>
-                <Text color={'#000000'} fontSize={'md'} fontWeight={500}>
+            <HStack whiteSpace={"nowrap"}>
+              <VStack align={"start"} gap={0}>
+                <Text color={"#000000"} fontSize={"md"} fontWeight={500}>
                   {sub?.length ? sub.length + 1 : 1}
                 </Text>
                 <Text
-                  mt={'0px !important'}
-                  color={'gray.500'}
-                  fontSize={'md'}
+                  mt={"0px !important"}
+                  color={"gray.500"}
+                  fontSize={"md"}
                   fontWeight={500}
                 >
-                  {(sub?.length ? sub.length + 1 : 1) === 1
-                    ? 'Person'
-                    : 'People'}{' '}
-                  Interested
+                  {(sub?.length ? sub.length + 1 : 1) === 1 ? "Người" : "Người"}{" "}
+                  Thấy hứng thú
                 </Text>
               </VStack>
             </HStack>
@@ -381,97 +380,73 @@ function ListingHeader({
         )}
       </VStack>
       <Toaster />
-      {router.asPath.includes('jobs') && !isTemplate && (
+      {router.asPath.includes("jobs") && !isTemplate && (
         <Flex
-          align={'center'}
-          w={'full'}
+          align={"center"}
+          w={"full"}
           h={10}
-          borderTop={'1px solid'}
-          borderTopColor={'gray.100'}
+          borderTop={"1px solid"}
+          borderTopColor={"gray.100"}
         >
           <HStack
             align="center"
             justifyContent="start"
             gap={10}
-            w={'full'}
-            maxW={'7xl'}
-            h={'full'}
-            mx={'auto'}
-            my={'auto'}
+            w={"full"}
+            maxW={"7xl"}
+            h={"full"}
+            mx={"auto"}
+            my={"auto"}
             px={3}
           >
             <Link
               alignItems="center"
               justifyContent="center"
               display="flex"
-              h={'full'}
+              h={"full"}
               color="gray.800"
               fontWeight={500}
               textDecoration="none"
               borderBottom="2px solid"
               borderBottomColor={
-                !router.asPath.includes('submission') &&
-                !router.asPath.includes('references')
-                  ? 'brand.purple'
-                  : 'transparent'
+                !router.asPath.includes("submission") &&
+                !router.asPath.includes("references")
+                  ? "brand.purple"
+                  : "transparent"
               }
               _hover={{
-                textDecoration: 'none',
-                borderBottom: '2px solid',
-                borderBottomColor: 'brand.purple',
+                textDecoration: "none",
+                borderBottom: "2px solid",
+                borderBottomColor: "brand.purple",
               }}
               href={`/listings/jobs/${slug}`}
             >
-              Details
+              Chi tiết
             </Link>
-            {/* {type !== 'permissioned' && (
+
+            {type === "permissioned" && references && (
               <Link
                 alignItems="center"
                 justifyContent="center"
                 display="flex"
-                h={'full'}
+                h={"full"}
                 color="gray.800"
                 fontWeight={500}
                 textDecoration="none"
                 borderBottom="2px solid"
                 borderBottomColor={
-                  router.asPath.includes('submission')
-                    ? 'brand.purple'
-                    : 'transparent'
+                  router.asPath.includes("references")
+                    ? "brand.purple"
+                    : "transparent"
                 }
                 _hover={{
-                  textDecoration: 'none',
-                  borderBottom: '2px solid',
-                  borderBottomColor: 'brand.purple',
-                }}
-                href={`/listings/jobs/${slug}/submission`}
-              >
-                Subscribes
-              </Link>
-            )} */}
-            {type === 'permissioned' && references && (
-              <Link
-                alignItems="center"
-                justifyContent="center"
-                display="flex"
-                h={'full'}
-                color="gray.800"
-                fontWeight={500}
-                textDecoration="none"
-                borderBottom="2px solid"
-                borderBottomColor={
-                  router.asPath.includes('references')
-                    ? 'brand.purple'
-                    : 'transparent'
-                }
-                _hover={{
-                  textDecoration: 'none',
-                  borderBottom: '2px solid',
-                  borderBottomColor: 'brand.purple',
+                  textDecoration: "none",
+                  borderBottom: "2px solid",
+                  borderBottomColor: "brand.purple",
                 }}
                 href={`/listings/jobs/${slug}/references`}
               >
-                References
+                Phần liên quan
               </Link>
             )}
           </HStack>

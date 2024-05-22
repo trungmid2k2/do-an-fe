@@ -1,4 +1,4 @@
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -12,9 +12,9 @@ import {
   Menu,
   MenuButton,
   Text,
-} from '@chakra-ui/react';
-import React from 'react';
-import { useForm } from 'react-hook-form';
+} from "@chakra-ui/react";
+import React from "react";
+import { useForm } from "react-hook-form";
 
 export const CreateCompanies = () => {
   const {
@@ -35,14 +35,14 @@ export const CreateCompanies = () => {
                 fontWeight={600}
                 textAlign="start"
               >
-                Company name
+                Tên công ty
               </Text>
               <Input
                 h="4.3rem"
                 fontSize="1.5rem"
                 fontWeight={500}
                 focusBorderColor="#CFD2D7"
-                placeholder="Company name"
+                placeholder="Tên công ty"
               />
               {/* {errors.name && (
                 <FormErrorMessage fontSize="1.1rem">
@@ -60,7 +60,7 @@ export const CreateCompanies = () => {
                 fontWeight={600}
                 textAlign="start"
               >
-                Company URL
+                URL công ty
               </Text>
               <Input
                 h="4.3rem"
@@ -68,7 +68,7 @@ export const CreateCompanies = () => {
                 fontSize="1.5rem"
                 fontWeight={500}
                 focusBorderColor="#CFD2D7"
-                placeholder="Enter your website"
+                placeholder="Nhập website công ty"
               />
               {/* {errors.website && (
                 <FormErrorMessage fontSize="1.1rem">
@@ -87,7 +87,7 @@ export const CreateCompanies = () => {
             fontWeight={600}
             textAlign="start"
           >
-            Add your logo
+            Thêm logo công ty
           </Text>
           <Flex align="center" justify="center" gap="2rem" w="30%">
             <Flex
@@ -107,49 +107,27 @@ export const CreateCompanies = () => {
               borderRadius="50%"
               style={{
                 // backgroundImage: imageBlob && `url(${imageBlob})`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
               }}
             >
               <label
                 htmlFor="icon-button-logo"
                 style={{
-                  cursor: 'pointer',
-                  height: '100%',
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  cursor: "pointer",
+                  height: "100%",
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <input
-                  // onChange={(e: any) => {
-                  //   if (e.target.files) {
-                  //     if (e.target.files[0].size > 250000) {
-                  //       toast.error('File size must be less than 250KB');
-                  //       return;
-                  //     }
-                  //     setImageBlob(URL.createObjectURL(e.target.files[0]));
-                  //     setUploading(true);
-                  //     const promise = uploadFile(e.target.files[0], 0);
-                  //     toast
-                  //       .promise(promise, {
-                  //         loading: 'Uploading logo',
-                  //         success: 'Successfully uploaded logo',
-                  //         error: 'Error upload logo',
-                  //       })
-                  //       .then((logo) => {
-                  //         console.log('Uploaded Logo: ', logo);
-                  //         setCompanyDetails({ ...companyDetails, logo: logo });
-                  //         setUploading(false);
-                  //       });
-                  //   }
-                  // }}
                   id="icon-button-logo"
                   type="file"
                   accept="image/*"
                   multiple={false}
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                 />
                 {/* {!companyDetails.logo && (
                   <Image src={UploadIcon} alt="Upload Icon" />
@@ -163,16 +141,13 @@ export const CreateCompanies = () => {
               fontSize="1.3rem"
               fontWeight={500}
               onClick={() => {
-                const inputElem = document.getElementById('icon-button-logo');
+                const inputElem = document.getElementById("icon-button-logo");
                 inputElem?.click();
               }}
             >
-              UPLOAD
+              TẢI LÊN
             </Button>
           </Flex>
-          {/* {errors.logo && (
-            <FormErrorMessage fontSize="1.1rem">{errors.logo}</FormErrorMessage>
-          )} */}
         </FormControl>
 
         <Box w="100%">
@@ -191,7 +166,7 @@ export const CreateCompanies = () => {
               fontSize="1.5rem"
               fontWeight={500}
               focusBorderColor="#CFD2D7"
-              placeholder="Work email"
+              placeholder="Email làm việc"
               type="email"
             />
             {/* {companyDetails.email && (
@@ -222,37 +197,12 @@ export const CreateCompanies = () => {
                 fontWeight={500}
                 bg="transparent"
                 border={
-                  errors.industry ? '2px solid #FF8585' : '2px solid #e2e8f0'
+                  errors.industry ? "2px solid #FF8585" : "2px solid #e2e8f0"
                 }
                 // color={companyDetails.industry ? 'gray.700' : '#aab4c0'}
                 rightIcon={<ChevronDownIcon />}
-              >
-                {/* {(companyDetails && companyDetails.industry) ||
-                  'Pick an industry'} */}
-              </MenuButton>
-              {/* <MenuList
-                w="28rem"
-                fontSize="1.5rem"
-                fontWeight={500}
-                color="gray.400"
-              >
-                {IndustryList.map((industry: any) => (
-                  <MenuItem
-                    key={industry}
-                    onClick={() =>
-                      // setCompanyDetails({ ...companyDetails, industry })
-                    }
-                  >
-                    {industry}
-                  </MenuItem>
-                ))}
-              </MenuList> */}
+              ></MenuButton>
             </Menu>
-            {/* {errors.industry && (
-              <FormErrorMessage fontSize="1.1rem">
-                {errors.industry}
-              </FormErrorMessage>
-            )} */}
           </FormControl>
           <Box w="50%">
             <FormControl isInvalid={!!errors.twitter}>
@@ -275,7 +225,7 @@ export const CreateCompanies = () => {
                     <Flex align="center" justify="center" w="2rem" h="2rem">
                       <Image
                         alt="Twitter Icon"
-                        src={'/assets/logo/twitter.svg'}
+                        src={"/assets/logo/twitter.svg"}
                       />
                     </Flex>
                   }
@@ -308,7 +258,7 @@ export const CreateCompanies = () => {
               fontWeight={600}
               textAlign="start"
             >
-              Company Short bio
+              BIO ngắn của công ty
             </Text>
             <Input
               h="4.3rem"
@@ -331,7 +281,7 @@ export const CreateCompanies = () => {
           onClick={onSubmit}
           variant="primary"
         >
-          Continue
+          Tiếp tục
         </Button>
       </form>
     </>

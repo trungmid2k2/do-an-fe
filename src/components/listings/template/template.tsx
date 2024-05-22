@@ -26,28 +26,6 @@ const Template = ({
   setJobBasic,
   type,
 }: Props) => {
-  // const [jobsTemplates, setJobsTemplates] = useState([]);
-  // const [isJobsTemplatesLoading, setIsJobsTemplatesLoading] = useState(false);
-
-  // // const getJobTemplates = async () => {
-  // //   setIsJobsTemplatesLoading(true);
-  // //   try {
-  // //     const templates: any = dataTemplate
-  // //     console.log(dataTemplate)
-  // //     setJobsTemplates(templates?.data || []);
-  // //     setIsJobsTemplatesLoading(false);
-  // //   } catch (e) {
-  // //     setIsJobsTemplatesLoading(false);
-  // //   }
-  // // };
-
-  // console
-  // useEffect(() => {
-  //   if (!isJobsTemplatesLoading) {
-  //     getJobTemplates();
-  //   }
-  // }, []);
-
   const createTemplate = (templateId: string) => {
     const template: any = jobsTemplates.find((t: any) => {
       return t?.id === templateId;
@@ -98,7 +76,7 @@ const Template = ({
             >
               <AddIcon color="gray.500" mb="1rem" />
               <Text color="gray.500" fontSize="1rem" fontWeight={500}>
-                Start from Scratch
+                Bắt đầu lại từ đầu
               </Text>
             </Box>
             {jobsTemplates.map((template: any) => {
@@ -169,7 +147,7 @@ const Template = ({
                             fontSize="xs"
                             wordBreak={"break-word"}
                           >
-                            Used by{" "}
+                            Được dùng bởi{" "}
                             {companies.length >= 1 && (
                               <Text as="span">{companies[0]?.name}</Text>
                             )}
@@ -209,7 +187,7 @@ const Template = ({
                         size="sm"
                         variant="ghost"
                       >
-                        Preview
+                        Xem trước
                       </Button>
                       <Button
                         w="full"
@@ -217,7 +195,7 @@ const Template = ({
                         size="sm"
                         variant="solid"
                       >
-                        Use
+                        Sử dụng
                       </Button>
                     </Flex>
                   </Flex>

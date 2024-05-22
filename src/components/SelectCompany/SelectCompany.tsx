@@ -26,7 +26,6 @@ function SelectCompany() {
   );
 
   useEffect(() => {
-    
     if (userInfo?.currentCompany?.id) {
       setSelectedCompany({
         value: userInfo?.currentCompany?.id,
@@ -35,7 +34,6 @@ function SelectCompany() {
       });
     }
   }, [userInfo]);
-
 
   const loadCompanies = (
     inputValue: string,
@@ -61,7 +59,7 @@ function SelectCompany() {
         endpoint: "/api/user/update",
         body: JSON.stringify({ id: userInfo?.id, currentCompanyId: companyId }),
       });
-      
+
       return userUpdatedDetails.data;
     } catch (error) {
       return userInfo;
@@ -144,7 +142,7 @@ function SelectCompany() {
       components={{ SingleValue, Option }}
       value={selectedCompany}
       onChange={(e) => handleChange(e)}
-      placeholder="Select Company"
+      placeholder="Chọn công ty"
       loadOptions={loadCompanies}
       defaultOptions
       isClearable={false}

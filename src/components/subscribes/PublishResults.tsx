@@ -63,7 +63,7 @@ function PublishResults({
         <ModalHeader>Results</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          The job will be marked as closed for the selected talent.
+          Công việc sẽ được cho là đã đóng đối với ứng viên đã chọn.
         </ModalBody>
         <ModalFooter>
           <>
@@ -78,7 +78,7 @@ function PublishResults({
               onClick={() => publishResults()}
               variant="solid"
             >
-              Agree
+              Đồng ý
             </Button>
           </>
         </ModalFooter>
