@@ -26,7 +26,9 @@ import { signIn } from "next-auth/react";
 
 export default function SignupCard() {
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClick = () => setShow(!show);
   const { showAlert } = useAlert();
 
   const formik = useFormik({
@@ -74,7 +76,7 @@ export default function SignupCard() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Sign up
+            Đăng kí
           </Heading>
         </Stack>
         <form onSubmit={formik.handleSubmit}>
@@ -88,7 +90,7 @@ export default function SignupCard() {
               <HStack>
                 <Box>
                   <FormControl id="firstname" isRequired>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>Tên</FormLabel>
                     <Input
                       name="firstname"
                       type="text"
@@ -99,7 +101,7 @@ export default function SignupCard() {
                 </Box>
                 <Box>
                   <FormControl id="lastname">
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>Họ</FormLabel>
                     <Input
                       name="lastname"
                       type="text"
@@ -110,7 +112,7 @@ export default function SignupCard() {
                 </Box>
               </HStack>
               <FormControl id="username" isRequired>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Tên đăng nhập</FormLabel>
                 <Input
                   name="username"
                   type="text"
@@ -119,7 +121,7 @@ export default function SignupCard() {
                 />
               </FormControl>
               <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
+                <FormLabel>Email </FormLabel>
                 <Input
                   name="email"
                   type="email"
@@ -128,43 +130,33 @@ export default function SignupCard() {
                 />
               </FormControl>
               <FormControl id="password" isRequired>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Mật khẩu</FormLabel>
                 <InputGroup>
                   <Input
                     name="password"
                     onChange={formik.handleChange}
                     value={formik.values.password}
-                    type={showPassword ? "text" : "password"}
+                    type={show ? "text" : "password"}
                   />
                   <InputRightElement h={"full"}>
-                    <Button
-                      variant={"ghost"}
-                      onClick={() =>
-                        setShowPassword((showPassword) => !showPassword)
-                      }
-                    >
-                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    <Button variant={"ghost"} onClick={handleClick}>
+                      {show ? <ViewIcon /> : <ViewOffIcon />}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
               <FormControl id="password_confirmation" isRequired>
-                <FormLabel>Confirm Password</FormLabel>
+                <FormLabel>Xác nhận mật khẩu</FormLabel>
                 <InputGroup>
                   <Input
                     name="password_confirmation"
                     onChange={formik.handleChange}
                     value={formik.values.password_confirmation}
-                    type={showPassword ? "text" : "password"}
+                    type={show ? "text" : "password"}
                   />
                   <InputRightElement h={"full"}>
-                    <Button
-                      variant={"ghost"}
-                      onClick={() =>
-                        setShowPassword((showPassword) => !showPassword)
-                      }
-                    >
-                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    <Button variant={"ghost"} onClick={handleClick}>
+                      {show ? <ViewIcon /> : <ViewOffIcon />}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
@@ -172,7 +164,7 @@ export default function SignupCard() {
               <Stack spacing={10} pt={2}>
                 <Button
                   type="submit"
-                  loadingText="Submitting"
+                  loadingText="Đang xử lý..."
                   size="lg"
                   bg={"blue.400"}
                   color={"white"}
@@ -180,14 +172,14 @@ export default function SignupCard() {
                     bg: "blue.500",
                   }}
                 >
-                  Sign up
+                  Đăng kí
                 </Button>
               </Stack>
               <Stack pt={6}>
                 <Text align={"center"}>
-                  Already a user?{" "}
+                  Đã có tài khoản?{" "}
                   <Link color={"blue.400"} onClick={() => router.push("/")}>
-                    Login
+                    Đăng nhập
                   </Link>
                 </Text>
               </Stack>

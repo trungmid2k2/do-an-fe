@@ -150,7 +150,7 @@ function JobSubscribes({ slug }: Props) {
                   <BreadcrumbLink color="brand.slate.400">
                     <Flex align="center">
                       <ChevronLeftIcon mr={1} w={6} h={6} />
-                      Jobs
+                      Công việc
                     </Flex>
                   </BreadcrumbLink>
                 </NextLink>
@@ -186,14 +186,14 @@ function JobSubscribes({ slug }: Props) {
             <Text color="brand.slate.500">
               {totalSubscribes}{" "}
               <Text as="span" color="brand.slate.400">
-                Subscribes
+                Đăng ký
               </Text>
             </Text>
           </Flex>
           {!subscribes?.length ? (
             <ErrorSection
-              title="No subscribes found!"
-              message="View your job subscribes here once they are submitted"
+              title="Không tìm thấy người đăng kí!"
+              message="Xem đăng ký công việc của bạn ở đây sau khi được gửi"
             />
           ) : (
             <Flex align={"start"} bg="white">
@@ -221,7 +221,7 @@ function JobSubscribes({ slug }: Props) {
                               fontWeight={500}
                               textTransform={"capitalize"}
                             >
-                              Name
+                              Tên
                             </Th>
                             <Th
                               align="right"
@@ -241,7 +241,7 @@ function JobSubscribes({ slug }: Props) {
                               textAlign="right"
                               textTransform={"capitalize"}
                             >
-                              Phone Number
+                              Số điện thoại
                             </Th>
                             <Th
                               align="right"
@@ -251,7 +251,7 @@ function JobSubscribes({ slug }: Props) {
                               textAlign="right"
                               textTransform={"capitalize"}
                             >
-                              More information
+                              Thêm thông tin
                             </Th>
                             <Th
                               align="center"
@@ -261,7 +261,7 @@ function JobSubscribes({ slug }: Props) {
                               textAlign="center"
                               textTransform={"capitalize"}
                             >
-                              Apply At ↓
+                              Áp dụng khi ↓
                             </Th>
                             <Th pl={0} />
                             <Th pl={0} />
@@ -349,27 +349,9 @@ function JobSubscribes({ slug }: Props) {
                                       size="sm"
                                       variant="outline"
                                     >
-                                      Chose Talent
+                                      Chọn ứng viên
                                     </Button>
                                   )}
-
-                                  {/* {talentChosen > 0 ? (
-                                    {
-                                      talentChosen == sub.userId ? (<>1</>):(<>2</>)
-                                    }
-                                    
-                                    
-                                  ) : (
-                                    <Button
-                                      w="full"
-                                      leftIcon={<AiOutlineOrderedList />}
-                                      onClick={() => onOpenModal(sub?.userId)}
-                                      size="sm"
-                                      variant="outline"
-                                    >
-                                      Chose Talent
-                                    </Button>
-                                  )} */}
                                 </Td>
                               </Tr>
                             );
@@ -392,7 +374,7 @@ function JobSubscribes({ slug }: Props) {
               size="sm"
               variant="outline"
             >
-              Previous
+              Trước
             </Button>
             <Text color="brand.slate.400" fontSize="sm">
               <Text as="span" fontWeight={700}>
@@ -406,7 +388,7 @@ function JobSubscribes({ slug }: Props) {
               <Text as="span" fontWeight={700}>
                 {totalSubscribes}
               </Text>{" "}
-              Subscribes
+              Người đăng ký
             </Text>
             <Button
               isDisabled={
@@ -418,7 +400,7 @@ function JobSubscribes({ slug }: Props) {
               size="sm"
               variant="outline"
             >
-              Next
+              Tiếp
             </Button>
           </Flex>
         </>

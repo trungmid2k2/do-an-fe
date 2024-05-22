@@ -74,8 +74,8 @@ export default function HomeBanner({ setTriggerLogin }: BannerProps) {
           fontWeight={"700"}
           lineHeight={"2.2rem"}
         >
-          How work
-          <br /> should work
+          Làm thế nào
+          <br /> nên làm như nào
         </Text>
         <Text
           maxW={{ base: "100%", md: "460px" }}
@@ -83,8 +83,8 @@ export default function HomeBanner({ setTriggerLogin }: BannerProps) {
           color={"white"}
           fontSize={{ base: "sm", md: "lg" }}
         >
-          Forget the old rules. You can have the best people. Right now. Right
-          here.
+          Hãy quên đi những quy tắc cũ. Bạn có thể có những người tốt nhất. Ngay
+          lập tức. Phải đây.
         </Text>
         <Flex
           align={"center"}
@@ -101,7 +101,7 @@ export default function HomeBanner({ setTriggerLogin }: BannerProps) {
             bg={"white"}
             onClick={() => router.push("/auth/SignUp")}
           >
-            Sign Up
+            Đăng kí
           </Button>
           <Flex align="center">
             <AvatarGroup max={3} size="sm">
@@ -117,7 +117,7 @@ export default function HomeBanner({ setTriggerLogin }: BannerProps) {
             </AvatarGroup>
             {usersCount !== null && (
               <Text ml={"0.6875rem"} color="white" fontSize={"0.875rem"}>
-                Join {usersCount.toLocaleString()}+ others
+                Tham gia ngay {usersCount.toLocaleString()}+ những người khác
               </Text>
             )}
           </Flex>

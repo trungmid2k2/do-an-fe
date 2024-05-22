@@ -1,4 +1,4 @@
-import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
+import { CheckIcon, CopyIcon } from "@chakra-ui/icons";
 import {
   Box,
   Divider,
@@ -12,11 +12,11 @@ import {
   ModalOverlay,
   Text,
   useClipboard,
-} from '@chakra-ui/react';
-import React from 'react';
+} from "@chakra-ui/react";
+import React from "react";
 
-import { userStore } from '@/store/user';
-import { getURL } from '@/utils/validUrl';
+import { userStore } from "@/store/user";
+import { getURL } from "@/utils/validUrl";
 
 interface Props {
   onClose: () => void;
@@ -38,42 +38,42 @@ export const ShareProfile = ({ isOpen, onClose, username, id }: Props) => {
 
   const shareMessage =
     id === userInfo?.id
-      ? 'Check out my profile on FreLan!'
-      : 'Check out this profile on FreLan!';
+      ? "Hãy xem hồ sơ của tôi trên FreLan!"
+      : "Hãy xem hồ sờ này trên FreLan!";
 
   const socialPlatforms: SocialPlatform[] = [
     {
-      name: 'Twitter',
-      icon: '/assets/icons/socials/Twitter.png',
+      name: "Twitter",
+      icon: "/assets/icons/socials/Twitter.png",
       share: (url, message) => {
         const encodedMessage = encodeURIComponent(message);
         const encodedUrl = encodeURIComponent(url);
         window.open(
           `https://twitter.com/intent/tweet?text=${encodedMessage}&url=${encodedUrl}`,
-          '_blank'
+          "_blank"
         );
       },
     },
     {
-      name: 'Telegram',
-      icon: '/assets/icons/socials/Telegram.png',
+      name: "Telegram",
+      icon: "/assets/icons/socials/Telegram.png",
       share: (url, message) => {
         const encodedMessage = encodeURIComponent(message);
         const encodedUrl = encodeURIComponent(url);
         window.open(
           `https://t.me/share/url?url=${encodedUrl}&text=${encodedMessage}`,
-          '_blank'
+          "_blank"
         );
       },
     },
     {
-      name: 'WhatsApp',
-      icon: '/assets/icons/socials/WhatsApp.png',
+      name: "WhatsApp",
+      icon: "/assets/icons/socials/WhatsApp.png",
       share: (url, message) => {
         const encodedMessage = encodeURIComponent(`${message} ${url}`);
         window.open(
           `https://api.whatsapp.com/send?text=${encodedMessage}`,
-          '_blank'
+          "_blank"
         );
       },
     },
@@ -82,17 +82,16 @@ export const ShareProfile = ({ isOpen, onClose, username, id }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent h={'max'} py={5}>
+      <ModalContent h={"max"} py={5}>
         <Box px={6} py={3}>
-          <Text color={'brand.slate.900'} fontSize="lg" fontWeight={500}>
-            Share Profile
+          <Text color={"brand.slate.900"} fontSize="lg" fontWeight={500}>
+            Chia sẻ hồ sơ của bạn
           </Text>
-          <Text mt={3} color={'brand.slate.500'} fontSize="lg" fontWeight={500}>
-            With your friends or on social media to showcase your proof of work,
-            all in one place
+          <Text mt={3} color={"brand.slate.500"} fontSize="lg" fontWeight={500}>
+            Với bạn bè hoặc trên mạng xã hội để giới thiệu bằng chứng công việc
           </Text>
         </Box>
-        <Divider mt={2} mb={4} borderColor={'brand.slate.200'} />
+        <Divider mt={2} mb={4} borderColor={"brand.slate.200"} />
         <Box px={6}>
           <InputGroup>
             <Input
@@ -122,11 +121,11 @@ export const ShareProfile = ({ isOpen, onClose, username, id }: Props) => {
           </InputGroup>
           <Text
             mt={6}
-            color={'brand.slate.400'}
-            fontSize={'sm'}
+            color={"brand.slate.400"}
+            fontSize={"sm"}
             fontWeight={500}
           >
-            SHARE TO
+            Chia sẻ tới
           </Text>
           <Flex gap={3} mt={3} mb={4}>
             {socialPlatforms.map(({ name, icon, share }) => (

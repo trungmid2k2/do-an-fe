@@ -23,7 +23,7 @@ function InviteView({ invite }: Props) {
   const acceptUser = async (user: User) => {
     setIsAccepting(true);
     if (user?.id && user?.isVerified && user?.email !== invite?.email) {
-      setAcceptError("You are not logged in!");
+      setAcceptError("Bạn phải đăng nhập!");
       setIsAccepting(false);
     } else if (user?.id && user?.isVerified && user?.email === invite?.email) {
       try {
@@ -42,7 +42,7 @@ function InviteView({ invite }: Props) {
 
   const handleSubmit = () => {
     if (!userInfo?.id) {
-      setAcceptError("You are not logged in!");
+      setAcceptError("Bạn phải đăng nhập!");
       setIsError(true);
     } else {
       acceptUser(userInfo);
@@ -65,12 +65,12 @@ function InviteView({ invite }: Props) {
           !
         </Heading>
         <Text pt={2} color={"brand.slate.500"}>
-          you have an invitation from
+          Bạn có lời mời từ
           <br />
           <Text as="span" fontWeight={700}>
             {`${invite?.sender?.firstname} ${invite?.sender?.lastname} `}
           </Text>
-          to join
+          để tham gia{" "}
           <Text as="span" fontWeight={700}>{` ${invite?.company?.name}.`}</Text>
         </Text>
         <Stack
@@ -83,13 +83,13 @@ function InviteView({ invite }: Props) {
           <Button
             px={6}
             isLoading={isAccepting}
-            loadingText="Accepting Invite..."
+            loadingText="Đang chấp nhận..."
             onClick={() => handleSubmit()}
             rounded={"full"}
             size="lg"
             variant="solid"
           >
-            Accept Invite
+            Chấp nhận lời mời
           </Button>
         </Stack>
         <Text pt={2} color={"red"}>

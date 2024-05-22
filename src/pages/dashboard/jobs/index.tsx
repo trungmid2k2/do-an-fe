@@ -210,18 +210,18 @@ function Jobs() {
       <Modal isOpen={publishIsOpen} onClose={publishOnClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Publish Job?</ModalHeader>
+          <ModalHeader>Đăng bài?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Text color="brand.slate.500">
-              All talent will be able to see this job once published. Are you
-              sure you want to publish?
+              Tất cả ứng sẽ có thể nhìn thấy công việc này sau khi đăng. Bạn có
+              phải chắc chắn bạn muốn xuất bản?
             </Text>
           </ModalBody>
 
           <ModalFooter>
             <Button mr={4} onClick={publishOnClose} variant="ghost">
-              Close
+              Đóng
             </Button>
             <Button
               isLoading={isChangingStatus}
@@ -230,7 +230,7 @@ function Jobs() {
               onClick={() => changeJobStatus(true)}
               variant="solid"
             >
-              Publish
+              Xuất bản
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -238,18 +238,18 @@ function Jobs() {
       <Modal isOpen={unpublishIsOpen} onClose={unpublishOnClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Unpublish Job?</ModalHeader>
+          <ModalHeader>Ẩn ?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Text color="brand.slate.500">
-              No talent will be able to see this job once unpublished. Are you
-              sure you want to unpublish?
+              Sẽ không có ứng viên nào có thể nhìn thấy công việc này một khi
+              chưa được công bố. Bạn có phải chắc chắn bạn muốn ẩn?
             </Text>
           </ModalBody>
 
           <ModalFooter>
             <Button mr={4} onClick={unpublishOnClose} variant="ghost">
-              Close
+              Đóng
             </Button>
             <Button
               isLoading={isChangingStatus}
@@ -258,7 +258,7 @@ function Jobs() {
               onClick={() => changeJobStatus(false)}
               variant="solid"
             >
-              Unpublish
+              Ẩn
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -266,17 +266,17 @@ function Jobs() {
       <Modal isOpen={closeJobIsOpen} onClose={closeJobOnClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Close this Job?</ModalHeader>
+          <ModalHeader>Đóng bài đăng công việc?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Text color="brand.slate.500">
-              you will not be able to undo this action
+              Bạn sẽ không thể hoàn tác hành động này
             </Text>
           </ModalBody>
 
           <ModalFooter>
             <Button mr={4} onClick={closeJobOnClose} variant="ghost">
-              No, Take me Back
+              Không, hãy quay lại
             </Button>
             <Button
               isLoading={isChangingStatus}
@@ -285,7 +285,7 @@ function Jobs() {
               onClick={() => closeJobHanlde(false)}
               variant="solid"
             >
-              Confirm
+              Đồng ý
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -300,7 +300,7 @@ function Jobs() {
             }}
             focusBorderColor="brand.purple"
             onChange={(e) => debouncedSetSearchText(e.target.value)}
-            placeholder="Search jobs..."
+            placeholder="Tìm kiếm công việc..."
             type="text"
           />
           <InputRightElement pointerEvents="none">
@@ -310,10 +310,7 @@ function Jobs() {
       </Flex>
       {isJobsLoading && <LoadingSection />}
       {!isJobsLoading && !jobs?.length && (
-        <ErrorSection
-          title="No jobs found!"
-          message="Create new job from the sidebar"
-        />
+        <ErrorSection title="Không tìm thấy!" message="Tạo công việc mới!" />
       )}
       {!isJobsLoading && jobs?.length && (
         <TableContainer mb={8}>
@@ -331,7 +328,7 @@ function Jobs() {
                   fontWeight={500}
                   textTransform={"capitalize"}
                 >
-                  Job Name
+                  Tên
                 </Th>
                 <Th
                   align="right"
@@ -341,7 +338,7 @@ function Jobs() {
                   textAlign="right"
                   textTransform={"capitalize"}
                 >
-                  Subscribes
+                  Người đăng kí
                 </Th>
                 <Th
                   align="center"
@@ -351,7 +348,7 @@ function Jobs() {
                   textAlign="center"
                   textTransform={"capitalize"}
                 >
-                  Expires on
+                  Hết hạn vào
                 </Th>
                 <Th
                   color="brand.slate.400"
@@ -359,16 +356,7 @@ function Jobs() {
                   fontWeight={500}
                   textTransform={"capitalize"}
                 >
-                  Prize
-                </Th>
-                <Th
-                  color="brand.slate.400"
-                  fontSize="sm"
-                  fontWeight={500}
-                  textAlign="center"
-                  textTransform={"capitalize"}
-                >
-                  Draft
+                  Lương
                 </Th>
                 <Th
                   color="brand.slate.400"
@@ -377,7 +365,16 @@ function Jobs() {
                   textAlign="center"
                   textTransform={"capitalize"}
                 >
-                  Status
+                  Nháp
+                </Th>
+                <Th
+                  color="brand.slate.400"
+                  fontSize="sm"
+                  fontWeight={500}
+                  textAlign="center"
+                  textTransform={"capitalize"}
+                >
+                  Trạng thái
                 </Th>
                 <Th pl={0} />
                 <Th pl={0} />
@@ -504,7 +501,7 @@ function Jobs() {
                         size="sm"
                         variant="outline"
                       >
-                        Subscribes
+                        Người đăng kí
                       </Button>
 
                       {currentJob.status === "OPEN" &&
@@ -516,7 +513,7 @@ function Jobs() {
                             size="sm"
                             variant="outline"
                           >
-                            Publish
+                            Xuất bản
                           </Button>
                         )}
                     </Td>
@@ -539,7 +536,7 @@ function Jobs() {
                               )
                             }
                           >
-                            View Job
+                            Xem
                           </MenuItem>
                           <MenuDivider />
                           <NextLink
@@ -547,7 +544,7 @@ function Jobs() {
                             passHref
                           >
                             <MenuItem icon={<AiOutlineEdit />}>
-                              Edit Job
+                              Chỉnh sửa
                             </MenuItem>
                           </NextLink>
                           {currentJob.status === "OPEN" &&
@@ -558,7 +555,7 @@ function Jobs() {
                                   icon={<ViewOffIcon />}
                                   onClick={() => handleUnpublish(currentJob)}
                                 >
-                                  Unpublish
+                                  Ẩn
                                 </MenuItem>
                               </>
                             )}
@@ -569,7 +566,7 @@ function Jobs() {
                                 icon={<ViewOffIcon />}
                                 onClick={() => handleClosejob(currentJob)}
                               >
-                                Close Job
+                                Đóng
                               </MenuItem>
                             </>
                           )}
@@ -592,11 +589,11 @@ function Jobs() {
           <Text as="span" fontWeight={700}>
             {Math.min(skip + length, totalJobs)}
           </Text>{" "}
-          of{" "}
+          của{" "}
           <Text as="span" fontWeight={700}>
             {totalJobs}
           </Text>{" "}
-          Jobs
+          công việc
         </Text>
         <Button
           mr={4}
@@ -606,7 +603,7 @@ function Jobs() {
           size="sm"
           variant="outline"
         >
-          Previous
+          Trước
         </Button>
         <Button
           isDisabled={
@@ -617,7 +614,7 @@ function Jobs() {
           size="sm"
           variant="outline"
         >
-          Next
+          Tiếp
         </Button>
       </Flex>
     </Sidebar>

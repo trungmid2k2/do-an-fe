@@ -80,14 +80,14 @@ export const SubscribeModal = ({
             : null,
         }),
       });
-      
+
       reset();
       setIsSubmitted(true);
       setSubscribeNumber(subscribeNumber + 1);
 
       onClose();
     } catch (e) {
-      setError("Sorry! Please try again or contact support.");
+      setError("Hãy thử lại sau hoặc liên hệ với chúng tôi.");
       setIsLoading(false);
     }
   };
@@ -104,7 +104,7 @@ export const SubscribeModal = ({
       <ModalOverlay></ModalOverlay>
       <ModalContent>
         <ModalHeader color="brand.slate.800">
-          {isPermissioned ? "Submit Your Application" : "Job Subscribe"}
+          {isPermissioned ? "Nộp đơn" : "Đăng kí công việc"}
         </ModalHeader>
         <ModalCloseButton />
         <VStack
@@ -118,12 +118,12 @@ export const SubscribeModal = ({
           <Box>
             <Text mb={1} color={"brand.slate.500"} fontSize="sm">
               {isPermissioned
-                ? "Don't start working just yet! Apply first, and then begin working only once you've been hired for the project by the company."
-                : `Leave some of your information, maybe we will contact you soon`}
+                ? "Nộp đơn để dành cơ hội làm việc tốt nhất cho bạn"
+                : `Hãy để lại liên lạc. Chúng tôi sẽ liên hệ cho bạn sau`}
             </Text>
             <Text color={"brand.slate.500"} fontSize="sm">
               {!!isPermissioned &&
-                "The company has received your application and may contact you in the near future"}
+                "Công ty đã nhận được đơn ứng tuyển của bạn và sẽ liên hệ với bạn sớm nhất có thể."}
             </Text>
           </Box>
           <form
@@ -163,7 +163,7 @@ export const SubscribeModal = ({
                       fontWeight={600}
                       htmlFor={"phoneNumber"}
                     >
-                      Phone number
+                      Số điện thoại
                     </FormLabel>
                     <Input
                       borderColor={"brand.slate.300"}
@@ -203,10 +203,11 @@ export const SubscribeModal = ({
                   fontWeight={600}
                   htmlFor={"phoneNumber"}
                 >
-                  Anything Else?
+                  Còn gì khác?
                 </FormLabel>
                 <FormHelperText mt={0} mb={2} color="brand.slate.500">
-                  You can leave a message or anything that makes an impression!
+                  Để lại tin nhắn hay bất kì ấn tượng nào bạn muốn chia sẻ với
+                  chúng tôi
                 </FormHelperText>
                 <Input
                   borderColor={"brand.slate.300"}
@@ -214,7 +215,7 @@ export const SubscribeModal = ({
                   focusBorderColor="brand.purple"
                   id="otherInfo"
                   maxLength={180}
-                  placeholder="Add info or link"
+                  placeholder="Thêm thông tin khác..."
                   {...register("otherInfo")}
                 />
                 <Text
@@ -235,18 +236,19 @@ export const SubscribeModal = ({
             </VStack>
             {!!error && (
               <Text align="center" mb={2} color="red">
-                Sorry! Error occurred which submitting application. <br />
-                Please try again or contact support.
+                Cố lỗi xảy ra khi nộp đơn ứng tuyển
+                <br />
+                Hãy thử lại và liên lạc với chúng tôi nếu cần
               </Text>
             )}
             <Button
               w={"full"}
               isLoading={!!isLoading}
-              loadingText="Submitting..."
+              loadingText="Đang nộp..."
               type="submit"
               variant="solid"
             >
-              {!isPermissioned ? "Submit" : "Apply"}
+              {!isPermissioned ? "Nộp đơn" : "Áp dụng"}
             </Button>
           </form>
         </VStack>

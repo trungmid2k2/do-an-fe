@@ -29,7 +29,7 @@ function CompanyButton() {
             userId: userInfo?.id,
           }),
         });
-        
+
         if (companies?.data?.length > 0) {
           setCurrentCompany(companies?.data[0]);
           router.push("/new/jobs");
@@ -37,7 +37,7 @@ function CompanyButton() {
           router.push("/new/company");
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
         setIsLoading(false);
       }
     }
@@ -48,7 +48,7 @@ function CompanyButton() {
       {!!showMessage && (
         <Alert mb={4} status="warning">
           <AlertIcon />
-          Please log in to continue!
+          Hãy đăng nhập để tiếp tục
         </Alert>
       )}
       <Button
@@ -63,7 +63,7 @@ function CompanyButton() {
         loadingText="Redirecting..."
         onClick={() => checkCompany()}
       >
-        Make Your Company Profile
+        Tạo hồ sơ công ty/nhà tuyển dụng
       </Button>
     </>
   );

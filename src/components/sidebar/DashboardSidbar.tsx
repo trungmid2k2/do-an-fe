@@ -1,9 +1,9 @@
-import { Box, Flex, Image, Select, Text } from '@chakra-ui/react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React from 'react';
+import { Box, Flex, Image, Select, Text } from "@chakra-ui/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 
-import type { CompanyType } from '../../interface/company';
+import type { CompanyType } from "../../interface/company";
 
 interface Props {
   companies: CompanyType[];
@@ -17,19 +17,19 @@ type NavOption = {
 
 const navOptions: NavOption[] = [
   {
-    title: 'Team Member',
-    href: '/dashboard/team',
-    icon: '/assets/icons/nav/blue-person.svg',
+    title: "Nhóm thành viên",
+    href: "/dashboard/team",
+    icon: "/assets/icons/nav/blue-person.svg",
   },
   {
-    title: 'My jobs',
-    href: '/dashboard/listings',
-    icon: '/assets/icons/nav/fire.svg',
+    title: "Công việc của tôi",
+    href: "/dashboard/listings",
+    icon: "/assets/icons/nav/fire.svg",
   },
   {
-    title: 'My Drafts',
-    href: '/dashboard/drafts',
-    icon: '/assets/icons/nav/frontend.svg',
+    title: "Bản nháp",
+    href: "/dashboard/drafts",
+    icon: "/assets/icons/nav/frontend.svg",
   },
 ];
 
@@ -42,9 +42,9 @@ export const DashboardSidbar = ({ companies }: Props) => {
         className="sidebar_link"
         w="100%"
         h="2.5rem"
-        bg={router.asPath === href ? 'rgba(98, 255, 217, 0.09)' : ''}
+        bg={router.asPath === href ? "rgba(98, 255, 217, 0.09)" : ""}
         _hover={{
-          bg: 'rgba(98, 255, 217, 0.09)',
+          bg: "rgba(98, 255, 217, 0.09)",
         }}
         cursor="pointer"
         transition="100ms"
@@ -55,18 +55,18 @@ export const DashboardSidbar = ({ companies }: Props) => {
               <Flex
                 filter={
                   router.asPath !== href
-                    ? 'grayscale(100%) brightness(150%)'
-                    : ''
+                    ? "grayscale(100%) brightness(150%)"
+                    : ""
                 }
               >
                 <Box
                   w={{
-                    sm: '10px',
-                    xl: '25px',
+                    sm: "10px",
+                    xl: "25px",
                   }}
                   h={{
-                    sm: '10px',
-                    xl: '25px',
+                    sm: "10px",
+                    xl: "25px",
                   }}
                 >
                   <Image
@@ -79,10 +79,10 @@ export const DashboardSidbar = ({ companies }: Props) => {
                 </Box>
               </Flex>
               <Text
-                color={'gray.700'}
+                color={"gray.700"}
                 fontSize={{
-                  sm: '1.4rem',
-                  md: '1rem',
+                  sm: "1.4rem",
+                  md: "1rem",
                 }}
                 fontWeight={500}
               >
@@ -98,18 +98,18 @@ export const DashboardSidbar = ({ companies }: Props) => {
   return (
     <>
       <Flex
-        pos={'fixed'}
+        pos={"fixed"}
         left={0}
-        direction={'column'}
+        direction={"column"}
         gap={4}
-        w={'17rem'}
+        w={"17rem"}
         h="100%"
         mt={10}
         pt={5}
         fontFamily="Inter"
         bg="white"
         borderRight={{
-          lg: '1px solid #F1F5F9',
+          lg: "1px solid #F1F5F9",
         }}
       >
         <Box px={5}>

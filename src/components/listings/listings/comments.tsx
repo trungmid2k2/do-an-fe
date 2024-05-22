@@ -97,11 +97,9 @@ export const Comments = ({ refId, refType }: Props) => {
         <WarningModal
           isOpen={isOpen}
           onClose={onClose}
-          title={"Complete your profile"}
-          bodyText={
-            "Please complete your profile before commenting on the job."
-          }
-          primaryCtaText={"Complete Profile"}
+          title={"Hãy hoàn thiện hồ sơ của bạn"}
+          bodyText={"Hãy hoàn thành hồ sơ của bạn để có thể bình luận."}
+          primaryCtaText={"Hoàn thành hồ sơ"}
           primaryCtaLink={"/new/talent"}
         />
       )}
@@ -120,7 +118,7 @@ export const Comments = ({ refId, refType }: Props) => {
               {comments?.length ?? 0}
             </Text>
             <Text color={"#64758B"} fontSize={"1.1rem"} fontWeight={400}>
-              {comments?.length === 1 ? "Comment" : "Comments"}
+              {comments?.length === 1 ? "Bình luận" : "Bình luận"}
             </Text>
           </HStack>
         </HStack>
@@ -134,12 +132,12 @@ export const Comments = ({ refId, refType }: Props) => {
             onChange={(e) => {
               setNewComment(e.target.value);
             }}
-            placeholder="Write a comment..."
+            placeholder="Viết bình luận..."
             value={newComment}
           ></Textarea>
           {!!newCommentError && (
             <Text mt={4} color="red">
-              Error in adding your comment! Please try again!
+              Có lỗi xảy ra khi bạn bình luận
             </Text>
           )}
           <Flex justify={"end"} w="full">
@@ -150,7 +148,7 @@ export const Comments = ({ refId, refType }: Props) => {
               onClick={() => handleSubmit()}
               variant="solid"
             >
-              Comment
+              Bình luận
             </Button>
           </Flex>
         </VStack>
@@ -200,13 +198,13 @@ export const Comments = ({ refId, refType }: Props) => {
             <Button
               isDisabled={!!isLoading}
               isLoading={!!isLoading}
-              loadingText="Fetching Comments..."
+              loadingText="Đang tải bình luận..."
               onClick={() => getComments(comments.length)}
               rounded="md"
               size="sm"
               variant="ghost"
             >
-              Show More Comments
+              Hiện thêm bình luận
             </Button>
           </Flex>
         )}

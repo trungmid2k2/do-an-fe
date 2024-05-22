@@ -1,11 +1,11 @@
-import { Flex, FormControl, FormLabel, Image, Tooltip } from '@chakra-ui/react';
-import type { Dispatch, SetStateAction } from 'react';
-import React, { useState } from 'react';
-import ReactSelect from 'react-select';
-import makeAnimated from 'react-select/animated';
+import { Flex, FormControl, FormLabel, Image, Tooltip } from "@chakra-ui/react";
+import type { Dispatch, SetStateAction } from "react";
+import React, { useState } from "react";
+import ReactSelect from "react-select";
+import makeAnimated from "react-select/animated";
 
-import type { MultiSelectOptions } from '../../constants';
-import { MainSkills, skillSubSkillMap } from '../../constants';
+import type { MultiSelectOptions } from "../../constants";
+import { MainSkills, skillSubSkillMap } from "../../constants";
 
 interface Props {
   skills: MultiSelectOptions[];
@@ -40,8 +40,8 @@ export const SkillSelect = ({
   return (
     <>
       <FormControl my={6} isRequired>
-        <Flex align={'center'} justify={'start'}>
-          <FormLabel color={'brand.slate.500'} htmlFor={'skills'}>
+        <Flex align={"center"} justify={"start"}>
+          <FormLabel color={"brand.slate.500"} htmlFor={"skills"}>
             Skills
           </FormLabel>
           <Tooltip
@@ -53,13 +53,13 @@ export const SkillSelect = ({
             bg="#6562FF"
             borderRadius="0.5rem"
             hasArrow
-            label={`Select all that apply`}
+            label={`Chọn tất cả những gì áp dụng`}
             placement="right-end"
           >
             <Image
               mt={-2}
-              alt={'Info Icon'}
-              src={'/assets/icons/info-icon.svg'}
+              alt={"Info Icon"}
+              src={"/assets/icons/info-icon.svg"}
             />
           </Tooltip>
         </Flex>
@@ -67,9 +67,9 @@ export const SkillSelect = ({
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
-              border: errorSkill ? '2px solid red' : baseStyles.border,
-              backgroundColor: 'brand.slate.500',
-              borderColor: state.isFocused ? 'brand.purple' : 'brand.slate.300',
+              border: errorSkill ? "2px solid red" : baseStyles.border,
+              backgroundColor: "brand.slate.500",
+              borderColor: state.isFocused ? "brand.purple" : "brand.slate.300",
             }),
           }}
           closeMenuOnSelect={false}
@@ -85,8 +85,8 @@ export const SkillSelect = ({
         />
       </FormControl>
       <FormControl my={6}>
-        <Flex align={'center'} justify={'start'}>
-          <FormLabel color={'brand.slate.500'} htmlFor={'skills'}>
+        <Flex align={"center"} justify={"start"}>
+          <FormLabel color={"brand.slate.500"} htmlFor={"skills"}>
             Sub Skills
           </FormLabel>
           <Tooltip
@@ -98,13 +98,13 @@ export const SkillSelect = ({
             bg="#6562FF"
             borderRadius="0.5rem"
             hasArrow
-            label={`Select all that apply`}
+            label={`Chọn tất cả những gì áp dụng`}
             placement="right-end"
           >
             <Image
               mt={-2}
-              alt={'Info Icon'}
-              src={'/assets/icons/info-icon.svg'}
+              alt={"Info Icon"}
+              src={"/assets/icons/info-icon.svg"}
             />
           </Tooltip>
         </Flex>
@@ -112,9 +112,9 @@ export const SkillSelect = ({
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
-              border: errorSubSkill ? '2px solid red' : baseStyles.border,
-              backgroundColor: 'brand.slate.500',
-              borderColor: state.isFocused ? 'brand.purple' : 'brand.slate.300',
+              border: errorSubSkill ? "2px solid red" : baseStyles.border,
+              backgroundColor: "brand.slate.500",
+              borderColor: state.isFocused ? "brand.purple" : "brand.slate.300",
             }),
           }}
           closeMenuOnSelect={false}

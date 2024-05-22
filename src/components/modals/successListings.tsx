@@ -1,4 +1,4 @@
-import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
+import { CheckIcon, CopyIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -12,11 +12,11 @@ import {
   Text,
   useClipboard,
   VStack,
-} from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import React from 'react';
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import React from "react";
 
-import { getURL } from '@/utils/validUrl';
+import { getURL } from "@/utils/validUrl";
 
 interface Props {
   onClose: () => void;
@@ -30,13 +30,13 @@ export const SuccessListings = ({ isOpen, onClose, slug }: Props) => {
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent h={'max'} py={5}>
+        <ModalContent h={"max"} py={5}>
           <VStack gap={4} px={10}>
             <Box>
-              <Image w={14} alt={'Cong Svg'} src={'/assets/icons/cong.svg'} />
+              <Image w={14} alt={"Cong Svg"} src={"/assets/icons/cong.svg"} />
             </Box>
-            <Text color={'gray.700'} fontFamily={'Inter'} fontWeight={600}>
-              You Have Successfully Created A Listing
+            <Text color={"gray.700"} fontFamily={"Inter"} fontWeight={600}>
+              Bạn đã tạo danh sách thành công
             </Text>
             <InputGroup mt={5}>
               <Input
@@ -64,7 +64,7 @@ export const SuccessListings = ({ isOpen, onClose, slug }: Props) => {
                 )}
               </InputRightElement>
             </InputGroup>
-            <VStack gap={2} w={'full'}>
+            <VStack gap={2} w={"full"}>
               <Button
                 w="100%"
                 onClick={() => {
@@ -77,7 +77,7 @@ export const SuccessListings = ({ isOpen, onClose, slug }: Props) => {
               <Button
                 w="100%"
                 onClick={() => {
-                  router.push('/dashboard/jobs');
+                  router.push("/dashboard/jobs");
                 }}
                 variant="outline"
               >

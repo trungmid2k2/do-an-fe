@@ -187,11 +187,11 @@ function DetailSideCard({
   type PrizeKey = keyof Rewards;
 
   const prizeMapping = [
-    { key: "first" as PrizeKey, label: "1st", description: "First Prize" },
-    { key: "second" as PrizeKey, label: "2nd", description: "Second Prize" },
-    { key: "third" as PrizeKey, label: "3rd", description: "Third Prize" },
-    { key: "fourth" as PrizeKey, label: "4th", description: "Fourth Prize" },
-    { key: "fifth" as PrizeKey, label: "5th", description: "Fifth Prize" },
+    { key: "first" as PrizeKey, label: "1st", description: "Giải nhất" },
+    { key: "second" as PrizeKey, label: "2nd", description: "Giải nhì" },
+    { key: "third" as PrizeKey, label: "3rd", description: "Giải ba" },
+    { key: "fourth" as PrizeKey, label: "4th", description: "Giải bốn" },
+    { key: "fifth" as PrizeKey, label: "5th", description: "Giải năm" },
   ];
 
   return (
@@ -213,9 +213,9 @@ function DetailSideCard({
         <WarningModal
           isOpen={warningIsOpen}
           onClose={warningOnClose}
-          title={"Complete your profile"}
-          bodyText={"Please complete your profile before submitting to a job."}
-          primaryCtaText={"Complete Profile"}
+          title={"Hoàn thành hồ sơ"}
+          bodyText={"Hãy hoàn thiện hồ sơ của bạn trước khi nộp đơn xin việc"}
+          primaryCtaText={"Hoàn thành hồ sơ"}
           primaryCtaLink={"/new/talent"}
         />
       )}
@@ -263,7 +263,7 @@ function DetailSideCard({
             </Flex>
             {type === "open" && (
               <Text color={"brand.slate.300"} fontSize={"lg"} fontWeight={400}>
-                Total Prizes
+                Tổng tiền
               </Text>
             )}
           </HStack>
@@ -347,11 +347,11 @@ function DetailSideCard({
               <Text color={"#94A3B8"}>
                 {type === "open"
                   ? subscribeNumber === 1
-                    ? "Subscribe"
-                    : "Subscribes"
+                    ? "Người đăng kí"
+                    : "Người đăng kí"
                   : subscribeNumber === 1
-                  ? "Application"
-                  : "Applications"}
+                  ? "Đơn nộp"
+                  : "Đơn nộp"}
               </Text>
             </Flex>
 
@@ -381,7 +381,7 @@ function DetailSideCard({
                     )}
                   </Text>
                   <Text color={"#94A3B8"}>
-                    {applicationType === "fixed" ? "Remaining" : "Deadline"}
+                    {applicationType === "fixed" ? "Còn lại" : "Hạn"}
                   </Text>
                 </VStack>
               </Flex>
@@ -394,7 +394,7 @@ function DetailSideCard({
                 <Text color={"#000000"} fontSize="1.3rem" fontWeight={500}>
                   {timeToComplete}
                 </Text>
-                <Text color={"#94A3B8"}>Time to Complete</Text>
+                <Text color={"#94A3B8"}>Thời gian hoàn thành</Text>
               </Flex>
             )}
             {isSubmitted || status === "CLOSED" ? (
@@ -407,8 +407,8 @@ function DetailSideCard({
                 variant="solid"
               >
                 {isSubmitted
-                  ? "Applied Successfully"
-                  : status === "CLOSED" && "Job Close"}
+                  ? "Nộp thành công"
+                  : status === "CLOSED" && "Đã đóng"}
               </Button>
             ) : (
               <Button
@@ -423,15 +423,15 @@ function DetailSideCard({
                 size="lg"
                 variant="solid"
               >
-                {type === "permissioned" ? "Apply Now" : "Apply Now"}
+                {type === "permissioned" ? "Nộp đơn ngay" : "Nộp đơn ngay"}
               </Button>
             )}
             {type === "permissioned" && (
               <Flex gap="2" w="20rem" mt={4} p="3" bg={"#62F6FF10"}>
                 <WarningIcon color="#1A7F86" />
                 <Text color="#1A7F86" fontSize={"xs"} fontWeight={500}>
-                  Don&apos;t start working just yet! Apply first, and then begin
-                  working only once you&apos;ve been hired for the project.
+                  Đừng bắt đầu làm việc vội! Trước tiên hãy đăng ký và sau đó
+                  chỉ bắt đầu làm việc khi bạn đã được thuê cho dự án.
                 </Text>
               </Flex>
             )}
@@ -455,8 +455,8 @@ function DetailSideCard({
             </Text>
             <Text color={"#94A3B8"} fontSize="1rem" fontWeight={400}>
               {type === "permissioned"
-                ? "Don't start working just yet! Apply first, and then you'll be notified if you're selected to work on this job."
-                : "This is an open competition job! Anyone can start working and submit their work before the deadline!"}
+                ? " Đừng bắt đầu làm việc vội! Trước tiên hãy đăng ký và sau đó chỉ bắt đầu làm việc khi bạn đã được thuê cho dự án."
+                : "Đây là một công việc cạnh tranh cho mọi người! Bất cứ ai cũng có thể bắt đầu làm việc và nộp tác phẩm của mình trước thời hạn!"}
             </Text>
           </VStack>
         )}
@@ -470,7 +470,7 @@ function DetailSideCard({
             rounded={"xl"}
           >
             <Text h="100%" color={"#94A3B8"} fontSize="1rem" textAlign="center">
-              ELIGIBILITY
+              ĐIỀU KIỆN
             </Text>
             <Text color={"gray.500"} fontSize={"md"} fontWeight={400}>
               {requirements}
@@ -488,7 +488,7 @@ function DetailSideCard({
             rounded={"xl"}
           >
             <Text h="100%" color={"#94A3B8"} fontSize="1rem" textAlign="center">
-              CONTACT
+              LIÊN HỆ
             </Text>
             <Text>
               <Link
@@ -498,7 +498,7 @@ function DetailSideCard({
                 href={pocSocials}
                 isExternal
               >
-                Reach out
+                Hỏi
                 <ExternalLinkIcon color={"#64768b"} mb={1} as="span" mx={1} />
               </Link>
               <Text
@@ -507,7 +507,7 @@ function DetailSideCard({
                 fontSize="1rem"
                 fontWeight={400}
               >
-                if you have any questions about this listing
+                nếu bạn có bất kì câu hỏi
               </Text>
             </Text>
           </VStack>
@@ -523,7 +523,7 @@ function DetailSideCard({
             rounded={"xl"}
           >
             <VerticalStep
-              sublabel={"Give your best shot!"}
+              sublabel={"Cố gắng hết mình!"}
               currentStep={subscribeStatus + 1}
               thisStep={1}
               label={"Subscribes Open"}
@@ -539,8 +539,8 @@ function DetailSideCard({
             <VerticalStep
               currentStep={subscribeStatus + 1}
               thisStep={2}
-              label={"Subscribes Review"}
-              sublabel={"Subscribes being assessed"}
+              label={"Đăng kí đánh giá"}
+              sublabel={"Số lượt đăng ký đang được đánh giá"}
             />
             <Divider
               h={10}
@@ -554,7 +554,7 @@ function DetailSideCard({
               thisStep={3}
               sublabel={
                 isWinnersAnnounced
-                  ? "Congratulations!"
+                  ? "Chúc mừng bạn!"
                   : `Around ${moment(endingTime)
                       .add(8, "d")
                       .format("Do MMM, YY")}`

@@ -1,10 +1,10 @@
-import { DeleteIcon } from '@chakra-ui/icons';
-import { Button, Flex, HStack, Image, Text, VStack } from '@chakra-ui/react';
-import type { Dispatch, SetStateAction } from 'react';
-import React, { useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { DeleteIcon } from "@chakra-ui/icons";
+import { Button, Flex, HStack, Image, Text, VStack } from "@chakra-ui/react";
+import type { Dispatch, SetStateAction } from "react";
+import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
-import { QuestionCard } from './questionCard';
+import { QuestionCard } from "./questionCard";
 
 interface Props {
   setSteps: Dispatch<SetStateAction<number>>;
@@ -16,12 +16,12 @@ interface Props {
   isNewOrDraft?: boolean;
 }
 export type QuestionType =
-  | 'text'
-  | 'single-choice'
-  | 'long-text'
-  | 'checkbox'
-  | 'multi-choice'
-  | 'url';
+  | "text"
+  | "single-choice"
+  | "long-text"
+  | "checkbox"
+  | "multi-choice"
+  | "url";
 export interface Ques {
   order: number;
   question: string;
@@ -52,17 +52,16 @@ const Builder = ({
   };
   return (
     <>
-      <VStack align={'start'} gap={3} w={'2xl'} pt={7}>
-        <HStack gap={3} w={'full'} p={5} bg={'#F7FAFC'} rounded={'md'}>
-          <Image alt={'hands'} src={'/assets/icons/hands.svg'} />
-          <VStack align={'start'} justify={'start'}>
-            <Text color={'#334254'} fontSize={'0.88rem'} fontWeight={600}>
-              Note
+      <VStack align={"start"} gap={3} w={"2xl"} pt={7}>
+        <HStack gap={3} w={"full"} p={5} bg={"#F7FAFC"} rounded={"md"}>
+          <Image alt={"hands"} src={"/assets/icons/hands.svg"} />
+          <VStack align={"start"} justify={"start"}>
+            <Text color={"#334254"} fontSize={"0.88rem"} fontWeight={600}>
+              Ghi chú
             </Text>
-            <Text mt={'0px !important'} color={'#94A3B8'} fontSize={'0.88rem'}>
-              Names, Emails, Discord / Twitter IDs, SOL wallet and Profile Links
-              are collected by default. Please use this space to ask about
-              anything else!
+            <Text mt={"0px !important"} color={"#94A3B8"} fontSize={"0.88rem"}>
+              Names, Emails, Discord / Twitter IDs, ví SOL and đường dẫn tới hồ
+              sơ được nhận bản gốc.
             </Text>
           </VStack>
         </HStack>
@@ -85,38 +84,38 @@ const Builder = ({
           );
         })}
         <Button
-          w={'full'}
+          w={"full"}
           h={12}
-          color={'#64758B'}
-          bg={'#F1F5F9'}
+          color={"#64758B"}
+          bg={"#F1F5F9"}
           onClick={() => {
             setQuestions([
               ...questions,
               {
                 order: (questions?.length || 0) + 1,
-                question: '',
-                type: 'text',
-                label: '',
+                question: "",
+                type: "text",
+                label: "",
               },
             ]);
           }}
         >
-          + Add Question
+          Thêm câu hỏi
         </Button>
         <Toaster />
-        <VStack gap={6} w={'full'} pt={10}>
+        <VStack gap={6} w={"full"} pt={10}>
           <Button
             w="100%"
             onClick={() => {
               if (questions.length === 0) {
-                toast.error('Add minimun of one question');
+                toast.error("Add minimun of one question");
                 return;
               }
               const rejectedQuestion: any[] = [];
 
               questions
                 .filter(
-                  (e) => e.type === 'single-choice' || e.type === 'multi-choice'
+                  (e) => e.type === "single-choice" || e.type === "multi-choice"
                 )
                 .map((e) => {
                   if (e.options?.length === 0) {
@@ -126,7 +125,7 @@ const Builder = ({
                       {
                         order: e.order,
                         errMessage:
-                          'Please add at least one more option for this question',
+                          "Please add at least one more option for this question",
                       },
                     ]);
                     return e;
@@ -138,7 +137,7 @@ const Builder = ({
                       {
                         order: e.order,
                         errMessage:
-                          'Please add at least one more option for this question',
+                          "Please add at least one more option for this question",
                       },
                     ]);
                     return e;
@@ -153,7 +152,7 @@ const Builder = ({
                     ...error,
                     {
                       order: e.order,
-                      errMessage: 'Add question',
+                      errMessage: "Add question",
                     },
                   ]);
                 }
@@ -166,7 +165,7 @@ const Builder = ({
             }}
             variant="solid"
           >
-            Continue
+            Tiếp tục
           </Button>
           <Button
             w="100%"
@@ -176,7 +175,7 @@ const Builder = ({
             }}
             variant="outline"
           >
-            {isNewOrDraft ? 'Save Draft' : 'Update Job'}
+            {isNewOrDraft ? "Lưu bản nháp" : "Cập nhật công việc"}
           </Button>
         </VStack>
       </VStack>

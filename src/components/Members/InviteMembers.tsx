@@ -93,21 +93,14 @@ function InviteMembers({ isOpen, onClose }: Props) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Invite Member</ModalHeader>
+        <ModalHeader>Mời thêm thành viên</ModalHeader>
         <ModalCloseButton />
         {isInviteSuccess ? (
           <>
             <ModalBody>
               <Box>
-                {/* <AlertTitle>Sent Invite!</AlertTitle>
-                  <AlertDescription>
-                    Your team member will receive a link to join
-                    FreLan.
-                  </AlertDescription>
-                   */}
-
                 <Text color={"gray.700"} fontFamily={"Inter"} fontWeight={600}>
-                  You Have Successfully Created A Invite Link
+                  Bạn có thể chia sẻ link mời sau đây cho thành viên mới
                 </Text>
                 <InputGroup mt={5}>
                   <Input
@@ -143,14 +136,14 @@ function InviteMembers({ isOpen, onClose }: Props) {
                     }}
                     variant="outline"
                   >
-                    Back to Dashboard
+                    Quay lại dashboard
                   </Button>
                 </VStack>
               </Box>
             </ModalBody>
             <ModalFooter>
               <Button onClick={onClose} variant="solid">
-                Close
+                Đóng
               </Button>
             </ModalFooter>
           </>
@@ -158,7 +151,7 @@ function InviteMembers({ isOpen, onClose }: Props) {
           <>
             <ModalBody>
               <FormControl isInvalid={isInviteError}>
-                <FormLabel mb={0}>Add Email Address</FormLabel>
+                <FormLabel mb={0}>Thêm địa chỉ email</FormLabel>
                 <Input
                   color="brand.slate.500"
                   borderColor="brand.slate.300"
@@ -169,12 +162,10 @@ function InviteMembers({ isOpen, onClose }: Props) {
                   onChange={(e) => handleInput(e.target.value)}
                   type="email"
                 />
-                <FormErrorMessage>
-                  Sorry! Error occurred while sending invite.
-                </FormErrorMessage>
+                <FormErrorMessage>Có lỗi xảy ra!</FormErrorMessage>
               </FormControl>
               <Stack pt={4}>
-                <FormLabel mb={0}>Member Type</FormLabel>
+                <FormLabel mb={0}>Loại thành viên</FormLabel>
                 <RadioGroup
                   defaultValue={memberType}
                   onChange={(value) => setMemberType(value)}
@@ -188,10 +179,10 @@ function InviteMembers({ isOpen, onClose }: Props) {
                   >
                     <Box ml={2}>
                       <Text fontSize="sm" fontWeight={700}>
-                        Member
+                        Thành viên
                       </Text>
                       <Text fontSize="sm">
-                        Members can manage jobs & projects
+                        Thành viên có thể quản lý công việc và dự án
                       </Text>
                     </Box>
                   </Radio>
@@ -208,8 +199,7 @@ function InviteMembers({ isOpen, onClose }: Props) {
                         Admin
                       </Text>
                       <Text fontSize="sm">
-                        Admin have all Member privileges, and they can manage
-                        all members.
+                        Admin có tất cả quyển quản lý thành viên và dự án
                       </Text>
                     </Box>
                   </Radio>
@@ -225,10 +215,10 @@ function InviteMembers({ isOpen, onClose }: Props) {
                 isDisabled={!email}
                 isLoading={isInviting}
                 leftIcon={<AiOutlineSend />}
-                loadingText="Inviting..."
+                loadingText="Đang mời..."
                 onClick={() => sendInvites()}
               >
-                Send Invite
+                Gửi lời mời
               </Button>
             </ModalFooter>
           </>

@@ -1,17 +1,17 @@
-import { Box, Flex } from '@chakra-ui/react';
-import type { NextPageContext } from 'next';
-import { useEffect, useState } from 'react';
+import { Box, Flex } from "@chakra-ui/react";
+import type { NextPageContext } from "next";
+import { useEffect, useState } from "react";
 
 import {
   JobsCard,
   GrantsCard,
   ListingSection,
-} from '@/components/misc/listingsCard';
-import EmptySection from '@/components/shared/EmptySection';
-import Loading from '@/components/shared/Loading';
-import type { Job } from '@/interface/job';
-import Home from '@/layouts/Home';
-import axios from '@/lib/axios';
+} from "@/components/misc/listingsCard";
+import EmptySection from "@/components/shared/EmptySection";
+import Loading from "@/components/shared/Loading";
+import type { Job } from "@/interface/job";
+import Home from "@/layouts/Home";
+import axios from "@/lib/axios";
 
 interface Listings {
   jobs?: Job[];
@@ -26,11 +26,11 @@ function ListingCategoryPage({ slug }: { slug: string }) {
   const getListings = async () => {
     setIsListingsLoading(true);
     const params =
-      slug === 'Hyperdrive'
-        ? { category: 'hyperdrive' }
-        : { category: 'all', take: 100, filter: slug };
+      slug === "Hyperdrive"
+        ? { category: "hyperdrive" }
+        : { category: "all", take: 100, filter: slug };
     try {
-      const listingsData = await axios.get('/api/listings', { params });
+      const listingsData = await axios.get("/api/listings", { params });
       setListings(listingsData.data);
       setIsListingsLoading(false);
     } catch (e) {
@@ -45,7 +45,7 @@ function ListingCategoryPage({ slug }: { slug: string }) {
 
   return (
     <Home type="category">
-      <Box w={'100%'}>
+      <Box w={"100%"}>
         <ListingSection
           type="jobs"
           title={`${slug} Gigs`}
@@ -61,8 +61,8 @@ function ListingCategoryPage({ slug }: { slug: string }) {
           {!isListingsLoading && !listings?.jobs?.length && (
             <Flex align="center" justify="center" mt={8}>
               <EmptySection
-                title="No jobs available!"
-                message="Subscribe to notifications to get notified about new jobs."
+                title="Không có bài đăng khả dụng!"
+                message="Hãy thử lại sau."
               />
             </Flex>
           )}
@@ -84,7 +84,6 @@ function ListingCategoryPage({ slug }: { slug: string }) {
               );
             })}
         </ListingSection>
-        
       </Box>
     </Home>
   );
@@ -93,7 +92,7 @@ function ListingCategoryPage({ slug }: { slug: string }) {
 export async function getServerSideProps(context: NextPageContext) {
   const { slug } = context.query;
 
-  const validCategories = ['Design', 'Content', 'Development', 'jobs'];
+  const validCategories = ["Design", "Content", "Development", "jobs"];
 
   if (!validCategories.includes(slug as string)) {
     return {
@@ -104,6 +103,6 @@ export async function getServerSideProps(context: NextPageContext) {
   return {
     props: { slug },
   };
-} 
+}
 
 export default ListingCategoryPage;

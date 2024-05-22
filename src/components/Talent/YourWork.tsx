@@ -18,11 +18,7 @@ import makeAnimated from "react-select/animated";
 
 import { SkillSelect } from "@/components/misc/SkillSelectTalent";
 import type { MultiSelectOptions } from "@/constants";
-import {
-  IndustryList,
-  workExp,
-  workType,
-} from "@/constants";
+import { IndustryList, workExp, workType } from "@/constants";
 import type { SubSkillsType } from "@/interface/skills";
 import { SkillList } from "@/interface/skills";
 
@@ -58,7 +54,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
   });
 
   const onSubmit = (data: any) => {
-      setPost(true);
+    setPost(true);
     if (
       skills.length === 0 ||
       subSkills.length === 0 ||
@@ -107,7 +103,9 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
             outline={"0.3125rem"}
           >
             <Box w={"full"}>
-              <FormLabel color={"brand.slate.500"}>Work Experience</FormLabel>
+              <FormLabel color={"brand.slate.500"}>
+                Kinh nghiệm việc làm
+              </FormLabel>
               <Select
                 color={watch().experience.length === 0 ? "brand.slate.300" : ""}
                 borderColor="brand.slate.300"
@@ -116,7 +114,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
                 }}
                 focusBorderColor="brand.purple"
                 id="experience"
-                placeholder="Pick your experience"
+                placeholder="Chọn kinh nghiệm việc làm của bạn"
                 {...register("experience", { required: true })}
               >
                 {workExp.map((ct) => {
@@ -130,7 +128,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
             </Box>
           </Flex>
           <Box w={"full"} mb={"1.25rem"}>
-            <FormLabel color={"brand.slate.500"}>Work Preference</FormLabel>
+            <FormLabel color={"brand.slate.500"}>Sở thích công việc</FormLabel>
             <Select
               color={
                 watch().workPrefernce.length === 0 ? "brand.slate.300" : ""
@@ -141,7 +139,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
               }}
               focusBorderColor="brand.purple"
               id="workPrefernce"
-              placeholder="Type of work"
+              placeholder="Loại công việc"
               {...register("workPrefernce", { required: true })}
             >
               {workType.map((ct) => {
@@ -154,7 +152,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
             </Select>
           </Box>
           <Box w={"full"} mb={"1.25rem"}>
-            <FormLabel color={"brand.slate.500"}>Current Employer</FormLabel>
+            <FormLabel color={"brand.slate.500"}>Việc làm hiện tại</FormLabel>
             <Input
               color={"gray.800"}
               borderColor="brand.slate.300"
@@ -163,14 +161,14 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
               }}
               focusBorderColor="brand.purple"
               id="currentEmployer"
-              placeholder="Current Employer"
+              placeholder="Việc làm hiện tại"
               {...register("currentEmployer", { required: true })}
             />
           </Box>
 
           <Box w={"full"} mb={"1.25rem"}>
             <FormLabel color={"brand.slate.500"}>
-              What areas are you most interested in?
+              Bạn quan tâm đến lĩnh vực nào nhất?
             </FormLabel>
             <ReactSelect
               closeMenuOnSelect={false}
@@ -221,7 +219,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
                 size="md"
                 {...register("private")}
               >
-                Keep my info private
+                Giữ thông tin riêng tư
               </Checkbox>
             </FormControl>
             <Tooltip
@@ -233,7 +231,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
               bg="#6562FF"
               borderRadius="0.5rem"
               hasArrow
-              label={`Your "Work Preference" information will be hidden from your public talent profile. However, you will continue to receive updates about new opportunities on your email.`}
+              label={`Thông tin "Sở thích công việc" sẽ bị ẩn khỏi hồ sơ tài năng công khai của bạn. Tuy nhiên, bạn sẽ tiếp tục nhận được thông tin cập nhật về các cơ hội mới qua email của mình.`}
               placement="right-end"
             >
               <InfoOutlineIcon color="brand.slate.500" />
@@ -246,7 +244,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
             bg={"rgb(101, 98, 255)"}
             type="submit"
           >
-            Continue
+            Tiếp tục
           </Button>
         </FormControl>
       </form>

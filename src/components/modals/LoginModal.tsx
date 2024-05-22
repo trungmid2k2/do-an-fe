@@ -6,6 +6,8 @@ import {
   HStack,
   Image,
   Input,
+  InputGroup,
+  InputRightElement,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,7 +19,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFormik } from "formik";
 
 interface Props {
@@ -26,10 +28,14 @@ interface Props {
 }
 import { useAlert } from "@/context/AlertContext";
 import { signIn } from "next-auth/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 export const LoginModal = ({ isOpen, onClose }: Props) => {
   const router = useRouter();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
+  const [show, setShow] = useState(false);
+
+  const handleClick = () => setShow(!show);
 
   const formik = useFormik({
     initialValues: {
@@ -37,11 +43,12 @@ export const LoginModal = ({ isOpen, onClose }: Props) => {
       password: "",
     },
     onSubmit: async (values) => {
-      const res = await signIn("credentials", { ...values, callbackUrl : "/" });
+      const res = await signIn("credentials", { ...values, callbackUrl: "/" });
       console.log(res);
       onClose();
     },
   });
+
   return (
     <>
       <Modal
@@ -54,39 +61,46 @@ export const LoginModal = ({ isOpen, onClose }: Props) => {
         <ModalOverlay />
         <ModalContent>
           <form onSubmit={formik.handleSubmit}>
-            <ModalHeader>Login</ModalHeader>
+            <ModalHeader>Đăng nhập</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl>
-                <FormLabel>UserName</FormLabel>
+                <FormLabel>Tên đăng nhập</FormLabel>
                 <Input
                   id="username"
                   name="username"
                   type="text"
                   onChange={formik.handleChange}
                   value={formik.values.username}
-                  placeholder="UserName"
+                  placeholder="Tên đăng nhập"
                 />
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                  placeholder="Password"
-                />
+                <FormLabel>Mật khẩu</FormLabel>
+                <InputGroup>
+                  <Input
+                    id="password"
+                    name="password"
+                    type={show ? "text" : "password"}
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                    placeholder="Mật khẩu"
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button h="1.75rem" size="sm" onClick={handleClick}>
+                      {show ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
             </ModalBody>
 
             <ModalFooter>
               <Button type="submit" colorScheme="blue" mr={3}>
-                Login
+                Đăng nhập
               </Button>
-              <Button onClick={onClose}>Cancel</Button>
+              <Button onClick={onClose}>Hủy</Button>
             </ModalFooter>
           </form>
         </ModalContent>

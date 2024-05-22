@@ -1,5 +1,5 @@
 /* tslint:disable */
-import { AddIcon, CloseIcon } from '@chakra-ui/icons';
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Button,
   FormControl,
@@ -9,11 +9,11 @@ import {
   Input,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import type { Dispatch, SetStateAction } from 'react';
-import { useState } from 'react';
+} from "@chakra-ui/react";
+import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 
-import type { Ques } from './builder';
+import type { Ques } from "./builder";
 
 interface Props {
   setQuestions: Dispatch<SetStateAction<Ques[]>>;
@@ -33,8 +33,8 @@ export const QuestionCard = ({
   index,
   errorState,
 }: Props) => {
-  console.log('file: questionCard.tsx:36 ~ questions:', questions);
-  const [option, setOption] = useState<string>('');
+  console.log("file: questionCard.tsx:36 ~ questions:", questions);
+  const [option, setOption] = useState<string>("");
   const handleChangeQuestion = (newq: string) => {
     setQuestions((prev) => {
       return prev.map((q) => {
@@ -49,37 +49,25 @@ export const QuestionCard = ({
       });
     });
   };
-  // const handleChangeType = (newType: QuestionType) => {
-  //   setQuestions((prev) => {
-  //     return prev.map((q) => {
-  //       if (q.order === curentQuestion.order) {
-  //         return {
-  //           ...q,
-  //           type: newType,
-  //         };
-  //       }
-  //       return q;
-  //     });
-  //   });
-  // };
+
   return (
     <>
-      <VStack align={'start'} w={'full'}>
+      <VStack align={"start"} w={"full"}>
         <FormControl
-          w={'full'}
+          w={"full"}
           isInvalid={
             !!errorState.filter((e) => e.order === curentQuestion.order)[0]
           }
         >
-          <FormLabel color={'gray.500'}>
-            <Text color={'gray.500'} fontSize={'0.88rem'} fontWeight={600}>
+          <FormLabel color={"gray.500"}>
+            <Text color={"gray.500"} fontSize={"0.88rem"} fontWeight={600}>
               Question {index + 1}
             </Text>
           </FormLabel>
           <Input
             borderColor="brand.slate.300"
             _placeholder={{
-              color: 'brand.slate.300',
+              color: "brand.slate.300",
             }}
             focusBorderColor="brand.purple"
             onChange={(e) => {
@@ -94,92 +82,18 @@ export const QuestionCard = ({
                 ?.errMessage}
           </FormErrorMessage>
         </FormControl>
-        {/* <HStack justify={'space-between'} w={'full'}>
-          <Select
-            w={'10rem'}
-            borderColor="brand.slate.300"
-            _placeholder={{
-              color: 'brand.slate.300',
-            }}
-            focusBorderColor="brand.purple"
-            onChange={(e) => {
-              handleChangeType(e.target.value as QuestionType);
-            }}
-            value={curentQuestion.type}
-          >
-            <option value="text">Text</option>
-            <option value="checkbox">Checkbox</option>
-            <option value="long-text">Long Text</option>
-            <option value="single-choice">Single Choice</option>
-            <option value="multi-choice">Multiple Choice</option>
-            <option value="url">URL</option>
-          </Select>
-          <HStack>
-            {index + 1 !== 1 && (
-              <Button
-                onClick={() => {
-                  setQuestions((prev: any) => {
-                    return prev.map((q: any, i: number) => {
-                      if (i === index) {
-                        return prev[i - 1];
-                      }
-                      if (i === index - 1) {
-                        return prev[i + 1];
-                      }
-                      return q;
-                    });
-                  });
-                }}
-                variant={'unstyled'}
-              >
-                <ChevronUpIcon />
-              </Button>
-            )}
-            {index + 1 !== questions.length && (
-              <Button
-                onClick={() => {
-                  setQuestions((prev: any) => {
-                    return prev?.map((q: any, i: number) => {
-                      if (i === index) {
-                        return prev[i + 1];
-                      }
-                      if (i === index + 1) {
-                        return prev[i - 1];
-                      }
-                      return q;
-                    });
-                  });
-                }}
-                variant={'unstyled'}
-              >
-                <ChevronDownIcon />
-              </Button>
-            )}
-            {questions.length !== 1 && curentQuestion.delete && (
-              <Button
-                onClick={() => {
-                  setQuestions((prev) => {
-                    return prev.filter((q) => q.id !== curentQuestion.id);
-                  });
-                }}
-                variant={'unstyled'}
-              >
-                <DeleteIcon />
-              </Button>
-            )}
-          </HStack>
-        </HStack> */}
-        {(curentQuestion.type === 'single-choice' ||
-          curentQuestion.type === 'multi-choice') && (
+
+        {(curentQuestion.type === "single-choice" ||
+          curentQuestion.type === "multi-choice") && (
           <>
-            <VStack w={'full'}>
+            <VStack w={"full"}>
               {curentQuestion.options?.map((currentOption, currentIndex) => {
                 return (
-                  <HStack key={currentIndex} w={'full'}>
-                    <HStack w={'full'}>
+                  <HStack key={currentIndex} w={"full"}>
+                    <HStack w={"full"}>
                       <Text
-                        color={'gray.600'}
-                        fontSize={'0.88rem'}
+                        color={"gray.600"}
+                        fontSize={"0.88rem"}
                         fontWeight={600}
                       >
                         <svg
@@ -215,14 +129,14 @@ export const QuestionCard = ({
                           });
                         });
                       }}
-                      variant={'unstyled'}
+                      variant={"unstyled"}
                     >
                       <CloseIcon />
                     </Button>
                   </HStack>
                 );
               })}
-              <HStack w={'full'}>
+              <HStack w={"full"}>
                 <FormControl
                   isInvalid={
                     !!errorState.filter(
@@ -232,7 +146,7 @@ export const QuestionCard = ({
                 >
                   <Input
                     _placeholder={{
-                      color: 'gray.400',
+                      color: "gray.400",
                     }}
                     onChange={(e) => {
                       setOption(e.target.value);
@@ -254,7 +168,7 @@ export const QuestionCard = ({
                         return q;
                       });
                     });
-                    setOption('');
+                    setOption("");
                   }}
                 >
                   <AddIcon />

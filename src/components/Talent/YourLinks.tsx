@@ -1,4 +1,4 @@
-import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -9,50 +9,51 @@ import {
   Input,
   Text,
   useDisclosure,
-} from '@chakra-ui/react';
-import type { Dispatch, SetStateAction } from 'react';
-import { useState } from 'react';
-import type { FieldValues, UseFormRegister } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
+} from "@chakra-ui/react";
+import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
+import type { FieldValues, UseFormRegister } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-import type { PoW } from '@/interface/pow';
-import { useSession } from "next-auth/react";import { isValidHttpUrl } from '@/utils/validUrl';
+import type { PoW } from "@/interface/pow";
+import { useSession } from "next-auth/react";
+import { isValidHttpUrl } from "@/utils/validUrl";
 
-import { AddProject } from '../Form/AddProject';
-import type { UserStoreType } from './types';
-import fetchClient from '@/lib/fetch-client';
-import { userStore } from '@/store/user';
+import { AddProject } from "../Form/AddProject";
+import type { UserStoreType } from "./types";
+import fetchClient from "@/lib/fetch-client";
+import { userStore } from "@/store/user";
 
 export const socials = [
   {
-    label: 'Discord',
-    placeHolder: 'TonyStark#7589',
-    icon: '/assets/talent/discord.png',
+    label: "Discord",
+    placeHolder: "TonyStark#7589",
+    icon: "/assets/talent/discord.png",
   },
   {
-    label: 'Twitter',
-    placeHolder: 'https://twitter.com/TonyStark',
-    icon: '/assets/talent/twitter.png',
+    label: "Twitter",
+    placeHolder: "https://twitter.com/TonyStark",
+    icon: "/assets/talent/twitter.png",
   },
   {
-    label: 'GitHub',
-    placeHolder: 'https://github.com/tonystark',
-    icon: '/assets/talent/github.png',
+    label: "GitHub",
+    placeHolder: "https://github.com/tonystark",
+    icon: "/assets/talent/github.png",
   },
   {
-    label: 'LinkedIn',
-    placeHolder: 'https://linkedin.com/in/tony-stark',
-    icon: '/assets/talent/link.png',
+    label: "LinkedIn",
+    placeHolder: "https://linkedin.com/in/tony-stark",
+    icon: "/assets/talent/link.png",
   },
   {
-    label: 'Telegram',
-    placeHolder: 'https://t.me/tonystark',
-    icon: '/assets/talent/telegram.png',
+    label: "Telegram",
+    placeHolder: "https://t.me/tonystark",
+    icon: "/assets/talent/telegram.png",
   },
   {
-    label: 'Website',
-    placeHolder: 'https://starkindustries.com',
-    icon: '/assets/talent/site.png',
+    label: "Website",
+    placeHolder: "https://starkindustries.com",
+    icon: "/assets/talent/site.png",
   },
 ];
 
@@ -70,29 +71,29 @@ const SocialInput = ({
   register,
 }: TypeSocialInput) => {
   return (
-    <Flex align="center" justify="center" direction="row" mb={'1.25rem'}>
+    <Flex align="center" justify="center" direction="row" mb={"1.25rem"}>
       <Box
         w="30%"
         h="2.6875rem"
         pl={{
-          sm: '5px',
-          md: '20px',
+          sm: "5px",
+          md: "20px",
         }}
         border="1px solid"
-        borderColor={'brand.slate.300'}
+        borderColor={"brand.slate.300"}
         borderRight="none"
-        borderLeftRadius={'md'}
+        borderLeftRadius={"md"}
       >
         <Flex
           align="center"
-          justify={{ base: 'center', md: 'start' }}
-          w={'100%'}
-          h={'100%'}
+          justify={{ base: "center", md: "start" }}
+          w={"100%"}
+          h={"100%"}
         >
-          <Box w={'1rem'}>
+          <Box w={"1rem"}>
             <Image
-              w={'100%'}
-              h={'100%'}
+              w={"100%"}
+              h={"100%"}
               objectFit="contain"
               alt={label}
               src={icon}
@@ -101,13 +102,13 @@ const SocialInput = ({
           <Text
             h="4.3rem"
             pl="10px"
-            fontSize={{ base: '0.7rem', md: '0.875rem' }}
+            fontSize={{ base: "0.7rem", md: "0.875rem" }}
             fontWeight={500}
             lineHeight="4.3rem"
             textAlign="left"
           >
             {label}
-            {label === 'Discord' && (
+            {label === "Discord" && (
               <Text as="sup" ml={1} color="red">
                 *
               </Text>
@@ -118,13 +119,13 @@ const SocialInput = ({
       <Input
         w="70%"
         h="2.6875rem"
-        color={'gray.800'}
+        color={"gray.800"}
         fontSize="0.875rem"
         fontWeight={500}
-        borderColor={'brand.slate.300'}
+        borderColor={"brand.slate.300"}
         borderLeftRadius="0"
         _placeholder={{
-          color: 'brand.slate.300',
+          color: "brand.slate.300",
         }}
         focusBorderColor="brand.purple"
         placeholder={placeHolder}
@@ -203,8 +204,11 @@ function YourLinks({ success, useFormStore }: Props) {
     updateState({ ...socials });
     setisLoading(true);
     try {
-      await fetchClient({method : "POST", endpoint: '/api/pow/create',body : JSON.stringify( {pows: pow})});
-
+      await fetchClient({
+        method: "POST",
+        endpoint: "/api/pow/create",
+        body: JSON.stringify({ pows: pow }),
+      });
 
       const updateOptions = {
         id: userInfo?.id,
@@ -213,14 +217,18 @@ function YourLinks({ success, useFormStore }: Props) {
         isTalentFilled: true,
       };
       const { subSkills, ...finalOptions } = updateOptions;
-      console.log(finalOptions)
-      const updatedUser = await fetchClient({method : "POST", endpoint: '/api/user/update',body : JSON.stringify(finalOptions)});
+      console.log(finalOptions);
+      const updatedUser = await fetchClient({
+        method: "POST",
+        endpoint: "/api/user/update",
+        body: JSON.stringify(finalOptions),
+      });
       // console.log(updatedUser)
 
       // setUserInfo(updatedUser.data);
       success();
     } catch (e) {
-      console.log(e)
+      console.log(e);
       setisLoading(false);
     }
   };
@@ -242,45 +250,45 @@ function YourLinks({ success, useFormStore }: Props) {
   };
   return (
     <>
-      <Box w={'full'}>
-        <form style={{ width: '100%' }} onSubmit={handleSubmit(onSubmit)}>
+      <Box w={"full"}>
+        <form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
           <FormControl w="full" mb={5}>
             {socials.map((sc, idx: number) => {
               return (
                 <SocialInput register={register} {...sc} key={`sc${idx}`} />
               );
             })}
-            <Text color={'brand.slate.500'} fontWeight={'500'}>
-              Other Proof of Work
+            <Text color={"brand.slate.500"} fontWeight={"500"}>
+              Chứng chỉ việc làm khác(POW)
             </Text>
-            <Text mb={3} color={'brand.slate.400'} fontWeight={400}>
-              Adding more PoW increases your chance of getting work
+            <Text mb={3} color={"brand.slate.400"} fontWeight={400}>
+              Thêm nhiều chứng chỉ việc làm sẽ tăng cơ hội nhận được việc làm
             </Text>
             <Box>
               {pow.map((data, idx) => (
                 <Flex
                   key={data.id}
-                  align={'center'}
+                  align={"center"}
                   mt="2"
-                  mb={'1.5'}
-                  px={'1rem'}
-                  py={'0.5rem'}
-                  color={'brand.slate.500'}
-                  border={'1px solid gray'}
+                  mb={"1.5"}
+                  px={"1rem"}
+                  py={"0.5rem"}
+                  color={"brand.slate.500"}
+                  border={"1px solid gray"}
                   borderColor="brand.slate.300"
-                  rounded={'md'}
+                  rounded={"md"}
                 >
-                  <Text w={'full'} color={'gray.800'} fontSize={'0.8rem'}>
+                  <Text w={"full"} color={"gray.800"} fontSize={"0.8rem"}>
                     {data.title}
                   </Text>
-                  <Center columnGap={'0.8rem'}>
+                  <Center columnGap={"0.8rem"}>
                     <EditIcon
                       onClick={() => {
                         setSelectedProject(idx);
                         onOpen();
                       }}
-                      cursor={'pointer'}
-                      fontSize={'0.8rem'}
+                      cursor={"pointer"}
+                      fontSize={"0.8rem"}
                     />
                     <DeleteIcon
                       onClick={() => {
@@ -288,15 +296,15 @@ function YourLinks({ success, useFormStore }: Props) {
                           prevPow.filter((_ele, id) => idx !== id)
                         );
                       }}
-                      cursor={'pointer'}
-                      fontSize={'0.8rem'}
+                      cursor={"pointer"}
+                      fontSize={"0.8rem"}
                     />
                   </Center>
                 </Flex>
               ))}
             </Box>
             <Button
-              w={'full'}
+              w={"full"}
               mb={8}
               leftIcon={<AddIcon />}
               onClick={() => {
@@ -304,29 +312,29 @@ function YourLinks({ success, useFormStore }: Props) {
               }}
               variant="outline"
             >
-              Add Project
+              Thêm dự án
             </Button>
             {socialsError && (
-              <Text align="center" mb={'0.5rem'} color={'red'}>
-                Please fill at least one social link to continue!
+              <Text align="center" mb={"0.5rem"} color={"red"}>
+                Vui lòng điền vào ít nhất một liên kết xã hội để tiếp tục!
               </Text>
             )}
 
             {urlError && (
-              <Text align="center" mb={'0.5rem'} color={'red'}>
-                Link URL needs to contain &quot;https://&quot; prefix
+              <Text align="center" mb={"0.5rem"} color={"red"}>
+                Đường dẫn URL cần chứa &quot;https://&quot; phía trước
               </Text>
             )}
             <Button
-              w={'full'}
+              w={"full"}
               h="50px"
-              color={'white'}
-              bg={'rgb(101, 98, 255)'}
+              color={"white"}
+              bg={"rgb(101, 98, 255)"}
               isLoading={isLoading}
               spinnerPlacement="start"
               type="submit"
             >
-              Finish Profile
+              Hoàn thành hồ sơ
             </Button>
           </FormControl>
         </form>

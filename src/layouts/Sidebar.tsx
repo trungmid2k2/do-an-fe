@@ -1,5 +1,5 @@
-import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import type { BoxProps, FlexProps } from '@chakra-ui/react';
+import { AddIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import type { BoxProps, FlexProps } from "@chakra-ui/react";
 import {
   Box,
   Button,
@@ -12,20 +12,20 @@ import {
   MenuItem,
   MenuList,
   Text,
-} from '@chakra-ui/react';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import type { ReactNode, ReactText } from 'react';
-import React from 'react';
-import type { IconType } from 'react-icons';
-import { AiFillFire, AiOutlineUsergroupAdd } from 'react-icons/ai';
+} from "@chakra-ui/react";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import type { ReactNode, ReactText } from "react";
+import React from "react";
+import type { IconType } from "react-icons";
+import { AiFillFire, AiOutlineUsergroupAdd } from "react-icons/ai";
 
-import SelectCompany from '@/components/SelectCompany/SelectCompany';
-import LoadingSection from '@/components/shared/LoadingSection';
-import Banner from '@/components/sidebar/Banner';
-import { Default } from '@/layouts/Default';
-import { Meta } from '@/layouts/Meta';
-import { userStore } from '@/store/user';
+import SelectCompany from "@/components/SelectCompany/SelectCompany";
+import LoadingSection from "@/components/shared/LoadingSection";
+import Banner from "@/components/sidebar/Banner";
+import { Default } from "@/layouts/Default";
+import { Meta } from "@/layouts/Meta";
+import { userStore } from "@/store/user";
 
 interface LinkItemProps {
   name: string;
@@ -34,8 +34,8 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Listings', link: '/jobs', icon: AiFillFire },
-  { name: 'Members', link: '/members', icon: AiOutlineUsergroupAdd },
+  { name: "Listings", link: "/jobs", icon: AiFillFire },
+  { name: "Members", link: "/members", icon: AiOutlineUsergroupAdd },
 ];
 
 interface NavItemProps extends FlexProps {
@@ -49,20 +49,20 @@ const NavItem = ({ icon, link, isActive, children, ...rest }: NavItemProps) => {
   return (
     <Link
       as={NextLink}
-      _focus={{ boxShadow: 'none' }}
+      _focus={{ boxShadow: "none" }}
       href={`/dashboard${link}`}
-      style={{ textDecoration: 'none' }}
+      style={{ textDecoration: "none" }}
     >
       <Flex
         align="center"
         mb={2}
         px={6}
         py={3}
-        color={isActive ? 'brand.purple' : 'brand.slate.500'}
-        bg={isActive ? 'brand.slate.100' : 'transparent'}
+        color={isActive ? "brand.purple" : "brand.slate.500"}
+        bg={isActive ? "brand.slate.100" : "transparent"}
         _hover={{
-          bg: 'brand.slate.100',
-          color: 'brand.purple',
+          bg: "brand.slate.100",
+          color: "brand.purple",
         }}
         cursor="pointer"
         role="group"
@@ -74,7 +74,7 @@ const NavItem = ({ icon, link, isActive, children, ...rest }: NavItemProps) => {
             mr="4"
             fontSize="16"
             _groupHover={{
-              color: 'brand.purple',
+              color: "brand.purple",
             }}
           />
         )}
@@ -86,7 +86,7 @@ const NavItem = ({ icon, link, isActive, children, ...rest }: NavItemProps) => {
 
 const SidebarContent = ({ ...rest }: BoxProps) => {
   const router = useRouter();
-  const currentPath = `/${router.route?.split('/')[2]}` || '';
+  const currentPath = `/${router.route?.split("/")[2]}` || "";
   return (
     <Box
       w={{ base: 0, md: 80 }}
@@ -94,8 +94,8 @@ const SidebarContent = ({ ...rest }: BoxProps) => {
       pt={8}
       pb={80}
       bg="white"
-      borderRight={'1px solid'}
-      borderRightColor={'blackAlpha.200'}
+      borderRight={"1px solid"}
+      borderRightColor={"blackAlpha.200"}
       {...rest}
     >
       <Box pb={6} px={6}>
@@ -110,7 +110,7 @@ const SidebarContent = ({ ...rest }: BoxProps) => {
             leftIcon={<AddIcon w={3} h={3} />}
             variant="solid"
           >
-            Create Listing <ChevronDownIcon w={3} h={3} />
+            Tạo danh sách <ChevronDownIcon w={3} h={3} />
           </MenuButton>
           <MenuList>
             <NextLink href="/dashboard/create-job">
@@ -120,10 +120,10 @@ const SidebarContent = ({ ...rest }: BoxProps) => {
                   mr={3}
                   ml={1}
                   alt="new job"
-                  src={'/assets/icons/bolt.svg'}
-                />{' '}
+                  src={"/assets/icons/bolt.svg"}
+                />{" "}
                 <Text color="brand.slate.500" fontWeight={500}>
-                  New job
+                  Công việc mới
                 </Text>
               </MenuItem>
             </NextLink>
@@ -134,10 +134,10 @@ const SidebarContent = ({ ...rest }: BoxProps) => {
                   mr={3}
                   ml={1}
                   alt="new project"
-                  src={'/assets/icons/briefcase.svg'}
-                />{' '}
+                  src={"/assets/icons/briefcase.svg"}
+                />{" "}
                 <Text color="brand.slate.500" fontWeight={500}>
-                  New Project
+                  Dự án mới
                 </Text>
               </MenuItem>
             </NextLink>
@@ -176,7 +176,7 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
         <LoadingSection />
       ) : (
         <Flex justify="start">
-          <SidebarContent display={{ base: 'none', md: 'block' }} />
+          <SidebarContent display={{ base: "none", md: "block" }} />
           {!userInfo?.currentCompany?.id ? (
             <LoadingSection />
           ) : (

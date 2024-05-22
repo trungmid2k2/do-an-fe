@@ -10,16 +10,16 @@ import {
   Text,
   Tooltip,
   VStack,
-} from '@chakra-ui/react';
-import type { Dispatch, SetStateAction } from 'react';
-import { useState } from 'react';
+} from "@chakra-ui/react";
+import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 
-import { SkillSelect } from '@/components/misc/SkillSelect';
-import { userStore } from '@/store/user';
-import { dayjs } from '@/utils/dayjs';
+import { SkillSelect } from "@/components/misc/SkillSelect";
+import { userStore } from "@/store/user";
+import { dayjs } from "@/utils/dayjs";
 
-import type { MultiSelectOptions } from '../../../constants';
-import type { JobBasicType } from './Createjob';
+import type { MultiSelectOptions } from "../../../constants";
+import type { JobBasicType } from "./Createjob";
 
 interface Props {
   jobBasic: JobBasicType | undefined;
@@ -34,7 +34,7 @@ interface Props {
   isEditMode: boolean;
   regions: any;
   setRegions: Dispatch<SetStateAction<any>>;
-  type: 'open' | 'permissioned';
+  type: "open" | "permissioned";
   timeToComplete?: string;
   isNewOrDraft?: boolean;
 }
@@ -76,8 +76,8 @@ export const CreateJobBasic = ({
 
   const [isUrlValid, setIsUrlValid] = useState(true);
 
-  const date = dayjs().format('YYYY-MM-DD');
-  const thirtyDaysFromNow = dayjs().add(30, 'day').format('YYYY-MM-DDTHH:mm');
+  const date = dayjs().format("YYYY-MM-DD");
+  const thirtyDaysFromNow = dayjs().add(30, "day").format("YYYY-MM-DDTHH:mm");
 
   const hasBasicInfo =
     jobBasic?.title &&
@@ -88,16 +88,16 @@ export const CreateJobBasic = ({
 
   return (
     <>
-      <VStack align={'start'} gap={3} w={'2xl'} pt={7} pb={12}>
+      <VStack align={"start"} gap={3} w={"2xl"} pt={7} pb={12}>
         <FormControl w="full" mb={5} isInvalid={errorState.title} isRequired>
           <Flex>
             <FormLabel
-              color={'brand.slate.500'}
-              fontSize={'15px'}
+              color={"brand.slate.500"}
+              fontSize={"15px"}
               fontWeight={600}
-              htmlFor={'title'}
+              htmlFor={"title"}
             >
-              Listing Title
+              Danh sách tiều đề
             </FormLabel>
             <Tooltip
               w="max"
@@ -113,8 +113,8 @@ export const CreateJobBasic = ({
             >
               <Image
                 mt={-2}
-                alt={'Info Icon'}
-                src={'/assets/icons/info-icon.svg'}
+                alt={"Info Icon"}
+                src={"/assets/icons/info-icon.svg"}
               />
             </Tooltip>
           </Flex>
@@ -122,7 +122,7 @@ export const CreateJobBasic = ({
           <Input
             borderColor="brand.slate.300"
             _placeholder={{
-              color: 'brand.slate.300',
+              color: "brand.slate.300",
             }}
             focusBorderColor="brand.purple"
             id="title"
@@ -148,16 +148,16 @@ export const CreateJobBasic = ({
           skills={skills}
           subSkills={subSkills}
         />
-        {userInfo?.role === 'GOD' && (
+        {userInfo?.role === "GOD" && (
           <>
             <FormControl w="full" mb={5}>
               <Flex>
                 <FormLabel
-                  color={'brand.slate.500'}
-                  fontSize={'15px'}
+                  color={"brand.slate.500"}
+                  fontSize={"15px"}
                   fontWeight={600}
                 >
-                  Listing Geography
+                  Đại lý niêm yết
                 </FormLabel>
                 <Tooltip
                   w="max"
@@ -173,8 +173,8 @@ export const CreateJobBasic = ({
                 >
                   <Image
                     mt={-2}
-                    alt={'Info Icon'}
-                    src={'/assets/icons/info-icon.svg'}
+                    alt={"Info Icon"}
+                    src={"/assets/icons/info-icon.svg"}
                   />
                 </Tooltip>
               </Flex>
@@ -185,14 +185,14 @@ export const CreateJobBasic = ({
                 }}
                 value={regions}
               >
-                <option value={`GLOBAL`}>Global</option>
-                <option value={`INDIA`}>India</option>
-                <option value={`GERMANY`}>Germany</option>
+                <option value={`GLOBAL`}>Toàn cầu</option>
+                <option value={`INDIA`}>Ấn Độ</option>
+                <option value={`GERMANY`}>Đức</option>
                 <option value={`MEXICO`}>Mexico</option>
-                <option value={`TURKEY`}>Turkey</option>
-                <option value={`VIETNAM`}>Vietnam</option>
-                <option value={`UK`}>UK</option>
-                <option value={`UAE`}>UAE</option>
+                <option value={`TURKEY`}>Thổ Nhĩ Kỳ</option>
+                <option value={`VIETNAM`}>Việt Nam</option>
+                <option value={`UK`}>Anh</option>
+                <option value={`UAE`}>Ả Rập</option>
                 <option value={`NIGERIA`}>Nigeria</option>
                 <option value={`ISRAEL`}>Israel</option>
               </Select>
@@ -207,12 +207,12 @@ export const CreateJobBasic = ({
         >
           <Flex>
             <FormLabel
-              color={'brand.slate.500'}
-              fontSize={'15px'}
+              color={"brand.slate.500"}
+              fontSize={"15px"}
               fontWeight={600}
-              htmlFor={'pocSocials'}
+              htmlFor={"pocSocials"}
             >
-              Point of Contact
+              Liên lạc
             </FormLabel>
             <Tooltip
               w="max"
@@ -228,8 +228,8 @@ export const CreateJobBasic = ({
             >
               <Image
                 mt={-2}
-                alt={'Info Icon'}
-                src={'/assets/icons/info-icon.svg'}
+                alt={"Info Icon"}
+                src={"/assets/icons/info-icon.svg"}
               />
             </Tooltip>
           </Flex>
@@ -237,11 +237,10 @@ export const CreateJobBasic = ({
           <Input
             borderColor="brand.slate.300"
             _placeholder={{
-              color: 'brand.slate.300',
+              color: "brand.slate.300",
             }}
             focusBorderColor="brand.purple"
             id="pocSocials"
-            
             onChange={(e) => {
               setjobBasic({
                 ...(jobBasic as JobBasicType),
@@ -252,29 +251,27 @@ export const CreateJobBasic = ({
             placeholder="https://twitter.com/elonmusk"
             value={jobBasic?.pocSocials}
           />
-          <FormErrorMessage>
-            {/* {errors.title ? <>{errors.title.message}</> : <></>} */}
-          </FormErrorMessage>
+          <FormErrorMessage></FormErrorMessage>
           {!isUrlValid && (
-            <Text color={'red'}>
-              URL needs to contain &quot;https://&quot; prefix
+            <Text color={"red"}>
+              Đường dẫn cần chứa &quot;https://&quot; đằng trước
             </Text>
           )}
         </FormControl>
-        {type === 'permissioned' && (
+        {type === "permissioned" && (
           <FormControl
             w="full"
             mb={5}
             isInvalid={errorState.applicationType}
-            isRequired={type === 'permissioned'}
+            isRequired={type === "permissioned"}
           >
             <Flex>
               <FormLabel
-                color={'brand.slate.500'}
-                fontSize={'15px'}
+                color={"brand.slate.500"}
+                fontSize={"15px"}
                 fontWeight={600}
               >
-                Application Type
+                Loại đơn nộp
               </FormLabel>
             </Flex>
 
@@ -282,32 +279,32 @@ export const CreateJobBasic = ({
               onChange={(e) => {
                 setjobBasic({
                   ...(jobBasic as JobBasicType),
-                  applicationType: e.target.value as 'fixed' | 'rolling',
+                  applicationType: e.target.value as "fixed" | "rolling",
                 });
               }}
               value={jobBasic?.applicationType}
             >
-              <option value="fixed">Fixed Deadline</option>
-              <option value="rolling">Rolling Deadline</option>
+              <option value="fixed">Thời hạn cố định</option>
+              <option value="rolling">Thời hạn luân chuyển</option>
             </Select>
           </FormControl>
         )}
-        {jobBasic?.applicationType !== 'rolling' && (
+        {jobBasic?.applicationType !== "rolling" && (
           <FormControl
             mb={5}
             isInvalid={errorState.deadline}
             isRequired={
               jobBasic?.applicationType
-                ? jobBasic.applicationType === 'fixed'
+                ? jobBasic.applicationType === "fixed"
                 : true
             }
           >
-            <Flex align={'center'} justify={'start'}>
+            <Flex align={"center"} justify={"start"}>
               <FormLabel
-                color={'brand.slate.500'}
-                fontSize={'15px'}
+                color={"brand.slate.500"}
+                fontSize={"15px"}
                 fontWeight={600}
-                htmlFor={'deadline'}
+                htmlFor={"deadline"}
               >
                 Deadline (in {Intl.DateTimeFormat().resolvedOptions().timeZone})
               </FormLabel>
@@ -325,17 +322,17 @@ export const CreateJobBasic = ({
               >
                 <Image
                   mt={-2}
-                  alt={'Info Icon'}
-                  src={'/assets/icons/info-icon.svg'}
+                  alt={"Info Icon"}
+                  src={"/assets/icons/info-icon.svg"}
                 />
               </Tooltip>
             </Flex>
             <Input
-              w={'full'}
-              color={'brand.slate.500'}
+              w={"full"}
+              color={"brand.slate.500"}
               borderColor="brand.slate.300"
               _placeholder={{
-                color: 'brand.slate.300',
+                color: "brand.slate.300",
               }}
               focusBorderColor="brand.purple"
               id="deadline"
@@ -347,7 +344,7 @@ export const CreateJobBasic = ({
                 });
               }}
               placeholder="deadline"
-              type={'datetime-local'}
+              type={"datetime-local"}
               value={jobBasic?.deadline}
             />
             <FormErrorMessage>
@@ -355,26 +352,26 @@ export const CreateJobBasic = ({
             </FormErrorMessage>
           </FormControl>
         )}
-        {type === 'permissioned' && (
+        {type === "permissioned" && (
           <FormControl
             w="full"
             mb={5}
             isInvalid={errorState.timeToComplete}
-            isRequired={type === 'permissioned'}
+            isRequired={type === "permissioned"}
           >
             <Flex>
               <FormLabel
-                color={'brand.slate.500'}
-                fontSize={'15px'}
+                color={"brand.slate.500"}
+                fontSize={"15px"}
                 fontWeight={600}
               >
-                Estimated Time to Complete
+                Ước tính thời gian hoàn thành
               </FormLabel>
             </Flex>
 
             <Select
               _placeholder={{
-                color: 'brand.slate.300',
+                color: "brand.slate.300",
               }}
               onChange={(e) => {
                 setjobBasic({
@@ -385,21 +382,21 @@ export const CreateJobBasic = ({
               placeholder="Select time to complete"
               value={jobBasic?.timeToComplete}
             >
-              <option value="<1 Week">{'<1 Week'}</option>
-              <option value="1-2 Weeks">1-2 Weeks</option>
-              <option value="2-4 Weeks">2-4 Weeks</option>
-              <option value="4-8 Weeks">4-8 Weeks</option>
-              <option value=">8 Week">{'>8 Weeks'}</option>
+              <option value="<1 Week">{"<1 Week"}</option>
+              <option value="1-2 Weeks">1-2 Tuần</option>
+              <option value="2-4 Weeks">2-4 Tuần</option>
+              <option value="4-8 Weeks">4-8 Tuần</option>
+              <option value=">8 Week">{">8 Weeks"}</option>
             </Select>
           </FormControl>
         )}
-        <VStack gap={4} w={'full'} mt={6}>
+        <VStack gap={4} w={"full"} mt={6}>
           <Button
             w="100%"
             onClick={() => {
               setErrorState({
                 deadline:
-                  jobBasic?.applicationType === 'fixed'
+                  jobBasic?.applicationType === "fixed"
                     ? !jobBasic?.deadline
                     : false,
                 skills: skills.length === 0,
@@ -408,21 +405,19 @@ export const CreateJobBasic = ({
                 pocSocials: !jobBasic?.pocSocials,
                 applicationType: !jobBasic?.applicationType,
                 timeToComplete:
-                  type === 'permissioned'
-                    ? !jobBasic?.timeToComplete
-                    : false,
+                  type === "permissioned" ? !jobBasic?.timeToComplete : false,
               });
 
               if (hasBasicInfo && jobBasic?.deadline) {
                 setSteps(3);
               }
               if (
-                type === 'permissioned' &&
+                type === "permissioned" &&
                 hasBasicInfo &&
                 jobBasic?.timeToComplete
               ) {
                 if (
-                  jobBasic?.applicationType === 'rolling' &&
+                  jobBasic?.applicationType === "rolling" &&
                   !jobBasic?.deadline
                 ) {
                   setjobBasic({
@@ -435,7 +430,7 @@ export const CreateJobBasic = ({
             }}
             variant="solid"
           >
-            Continue
+            Tiếp tục
           </Button>
           <Button
             w="100%"
@@ -446,7 +441,7 @@ export const CreateJobBasic = ({
             }}
             variant="outline"
           >
-            {isNewOrDraft ? 'Save Draft' : 'Update Job'}
+            {isNewOrDraft ? "Lưu bản nháp" : "Cập nhật"}
           </Button>
         </VStack>
       </VStack>

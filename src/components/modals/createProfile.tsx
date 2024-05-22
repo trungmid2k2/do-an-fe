@@ -8,8 +8,8 @@ import {
   ModalOverlay,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 interface Props {
   onClose: () => void;
@@ -20,39 +20,37 @@ export const CreateProfileModal = ({ isOpen, onClose }: Props) => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size={'sm'}>
+      <Modal isOpen={isOpen} onClose={onClose} size={"sm"}>
         <ModalOverlay />
-        <ModalContent h={'max'} p={5}>
-          <Box w={'full'} h={36} bg={'#F0E4FF'} rounded={'lg'}></Box>
-          <VStack align={'center'} gap={5} mt={5}>
-            <Text color={'#000000'} fontSize={'1.1rem'} fontWeight={600}>
-              Ready to Get Involved?
+        <ModalContent h={"max"} p={5}>
+          <Box w={"full"} h={36} bg={"#F0E4FF"} rounded={"lg"}></Box>
+          <VStack align={"center"} gap={5} mt={5}>
+            <Text color={"#000000"} fontSize={"1.1rem"} fontWeight={600}>
+              Sẵn sàng tham gia?
             </Text>
             <VStack>
               <HStack gap={2}>
-                <Image alt={'tick'} src={'/assets/icons/purple-tick.svg'} />
-                <Text color={'gray.700'} fontSize={'1rem'} fontWeight={500}>
-                  Create a profile to leave comments, get personalized
-                  notifications
+                <Image alt={"tick"} src={"/assets/icons/purple-tick.svg"} />
+                <Text color={"gray.700"} fontSize={"1rem"} fontWeight={500}>
+                  Tạo hồ sơ để để lại bình luận
                 </Text>
               </HStack>
               <HStack gap={2}>
-                <Image alt={'tick'} src={'/assets/icons/purple-tick.svg'} />
-                <Text color={'gray.700'} fontSize={'1rem'} fontWeight={500}>
-                  Get access to exclusive earning opportunities. It takes 2
-                  minutes and is entirely free.
+                <Image alt={"tick"} src={"/assets/icons/purple-tick.svg"} />
+                <Text color={"gray.700"} fontSize={"1rem"} fontWeight={500}>
+                  Nhận truy cập vào cơ hội kiếm tiền độc quyền
                 </Text>
               </HStack>
             </VStack>
             <Button
-              w={'full'}
-              color={'white'}
-              bg={'#6562FF'}
+              w={"full"}
+              color={"white"}
+              bg={"#6562FF"}
               onClick={() => {
-                router.push('/new/talent');
+                router.push("/new/talent");
               }}
             >
-              Create Your Profile
+              Tạo hồ sơ
             </Button>
           </VStack>
         </ModalContent>

@@ -21,11 +21,7 @@ import type { SubscribesType } from "@/interface/listings";
 import type { CompanyType } from "@/interface/company";
 import { TalentStore } from "@/store/talent";
 import { userStore } from "@/store/user";
-// import {
-//   createSubscription,
-//   removeSubscription,
-// } from "@/utils/functions";
-// import { genrateuuid } from "@/utils/helpers";
+
 import { CreateProfileModal } from "../../modals/createProfile";
 
 type Eligibility = "permission" | "permission-less";
@@ -54,22 +50,7 @@ export const ListingHeader = ({
   const { userInfo } = userStore();
   const { talentInfo } = TalentStore();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  // const subMutation = useMutation({
-  //   mutationFn: createSubscription,
-  //   mutationKey: ["subscribe"],
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries(["jobs", router.query.id ?? ""]);
-  //     toast.success("Alerts For Job Is Active");
-  //   },
-  // });
-  // const subDeleteMutation = useMutation({
-  //   mutationFn: removeSubscription,
-  //   mutationKey: ["subscribe", "delete"],
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries(["jobs", router.query.id ?? ""]);
-  //     toast.success("Alerts For Job Is Active");
-  //   },
-  // });
+
   return (
     <>
       {isOpen && <CreateProfileModal isOpen={isOpen} onClose={onClose} />}
@@ -116,7 +97,7 @@ export const ListingHeader = ({
                       bg={"green.100"}
                       rounded={"full"}
                     >
-                      Subscribe Open
+                      Đăng kí mở
                     </Text>
                   ) : (
                     <Text
@@ -127,7 +108,7 @@ export const ListingHeader = ({
                       bg={"orange.100"}
                       rounded={"full"}
                     >
-                      In Review
+                      Đang xem xét
                     </Text>
                   )
                 ) : (
@@ -139,7 +120,7 @@ export const ListingHeader = ({
                     bg={"green.100"}
                     rounded={"full"}
                   >
-                    Open
+                    Mở
                   </Text>
                 )}
               </HStack>
@@ -164,21 +145,7 @@ export const ListingHeader = ({
                     <TbBellRinging color="rgb(107 114 128)" />
                   </Button>
                 ) : (
-                  <Button
-                    bg="gray.50"
-                    // isLoading={subMutation.isLoading}
-                    // onClick={() => {
-                    //   if (!userInfo?.talent) {
-                    //     onOpen();
-                    //   }
-
-                    //   subMutation.mutate({
-                    //     jobsId: id as string,
-                    //     talentId: talentInfo?.id as string,
-                    //     id: genrateuuid(),
-                    //   });
-                    // }}
-                  >
+                  <Button bg="gray.50">
                     <BsBell color="rgb(107 114 128)" />
                   </Button>
                 )}
@@ -222,9 +189,9 @@ export const ListingHeader = ({
                     fontWeight={500}
                   >
                     {(sub?.length ? sub.length + 1 : 1) === 1
-                      ? "Person"
-                      : "People"}{" "}
-                    Interested
+                      ? "Người"
+                      : "Người"}{" "}
+                    Cảm thấy hứng thú với công việc này
                   </Text>
                 </VStack>
               </HStack>
@@ -253,7 +220,7 @@ export const ListingHeader = ({
             rounded={0}
             variant={"ghost"}
           >
-            Details
+            Chi tiết
           </Button>
           {tabs && eligibility === "permission-less" && (
             <Button
@@ -272,7 +239,7 @@ export const ListingHeader = ({
               rounded={0}
               variant={"ghost"}
             >
-              Subscribes
+              Đăng kí
             </Button>
           )}
         </HStack>
