@@ -4,7 +4,7 @@ import {
   ChevronUpIcon,
   EditIcon,
   EmailIcon,
-} from '@chakra-ui/icons';
+} from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -17,26 +17,26 @@ import {
   Text,
   useBreakpointValue,
   useDisclosure,
-} from '@chakra-ui/react';
-import type { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
-import React, { useEffect, useMemo, useState } from 'react';
+} from "@chakra-ui/react";
+import type { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import React, { useEffect, useMemo, useState } from "react";
 
-import { AddProject } from '@/components/Form/AddProject';
-import ShareIcon from '@/components/misc/shareIcon';
-import { ShareProfile } from '@/components/modals/shareProfile';
-import PowCard from '@/components/ProfileFeed/powCard';
+import { AddProject } from "@/components/Form/AddProject";
+import ShareIcon from "@/components/misc/shareIcon";
+import { ShareProfile } from "@/components/modals/shareProfile";
+import PowCard from "@/components/ProfileFeed/powCard";
 // import SubscribeCard from '@/components/ProfileFeed/submissionCard';
-import ErrorSection from '@/components/shared/EmptySection';
-import LoadingSection from '@/components/shared/LoadingSection';
-import type { PoW } from '@/interface/pow';
-import type { SubscribeWithUser } from '@/interface/subscribes';
-import type { User } from '@/interface/user';
-import { Default } from '@/layouts/Default';
-import { Meta } from '@/layouts/Meta';
+import ErrorSection from "@/components/shared/EmptySection";
+import LoadingSection from "@/components/shared/LoadingSection";
+import type { PoW } from "@/interface/pow";
+import type { SubscribeWithUser } from "@/interface/subscribes";
+import type { User } from "@/interface/user";
+import { Default } from "@/layouts/Default";
+import { Meta } from "@/layouts/Meta";
 import { useSession } from "next-auth/react";
-import axios from '@/lib/axios';
-import { userStore } from '@/store/user';
+import axios from "@/lib/axios";
+import { userStore } from "@/store/user";
 interface TalentProps {
   slug: string;
 }
@@ -45,8 +45,8 @@ function TalentProfile({ slug }: TalentProps) {
   const [talent, setTalent] = useState<User>();
   const [isloading, setIsloading] = useState<boolean>(false);
   const [error, setError] = useState(false);
-  const [activeTab, setActiveTab] = useState<'activity' | 'projects'>(
-    'activity'
+  const [activeTab, setActiveTab] = useState<"activity" | "projects">(
+    "activity"
   );
   const [randomIndex, setRandomIndex] = useState<number>(0);
   const [showSubskills, setShowSubskills] = useState<Record<number, boolean>>(
@@ -59,7 +59,7 @@ function TalentProfile({ slug }: TalentProps) {
       [index]: !showSubskills[index],
     });
   };
-  const {userInfo} = userStore()
+  const { userInfo } = userStore();
 
   const {
     isOpen: isOpenPow,
@@ -77,13 +77,11 @@ function TalentProfile({ slug }: TalentProps) {
           username: slug,
         });
 
-        if (res) {          
+        if (res) {
           setTalent(res?.data);
           setError(false);
           setIsloading(false);
         }
-        
-       
       } catch (err) {
         setError(true);
         setIsloading(false);
@@ -92,16 +90,15 @@ function TalentProfile({ slug }: TalentProps) {
     fetch();
   }, []);
 
-  const bgImages = ['1.png', '2.png', '3.png', '4.png', '5.png'];
+  const bgImages = ["1.png", "2.png", "3.png", "4.png", "5.png"];
 
-  
   useEffect(() => {
-    if(talent?.private && talent?.id != userInfo?.id){
-      setError(true)
-    }else{
-      setError(false)
+    if (talent?.private && talent?.id != userInfo?.id) {
+      setError(true);
+    } else {
+      setError(false);
     }
-  }, [talent,  userInfo]);
+  }, [talent, userInfo]);
 
   useEffect(() => {
     setRandomIndex(Math.floor(Math.random() * bgImages.length));
@@ -109,22 +106,22 @@ function TalentProfile({ slug }: TalentProps) {
 
   const socialLinks = [
     {
-      icon: '/assets/talent/twitter.png',
+      icon: "/assets/talent/twitter.png",
       link: talent?.twitter,
     },
 
     {
-      icon: '/assets/talent/link.png',
+      icon: "/assets/talent/link.png",
       link: talent?.linkedin,
     },
 
     {
-      icon: '/assets/talent/github.png',
+      icon: "/assets/talent/github.png",
       link: talent?.github,
     },
 
     {
-      icon: '/assets/talent/site.png',
+      icon: "/assets/talent/site.png",
       link: talent?.website,
     },
   ];
@@ -142,9 +139,9 @@ function TalentProfile({ slug }: TalentProps) {
     const pows = talent?.PoW ?? [];
     const typedSubscribes = submissions.map((s) => ({
       ...s,
-      type: 'submission',
+      type: "submission",
     }));
-    const typedPows = pows.map((p) => ({ ...p, type: 'pow' }));
+    const typedPows = pows.map((p) => ({ ...p, type: "pow" }));
 
     return [...typedSubscribes, ...typedPows].sort((a, b) => {
       const dateA = new Date(a.created_at ?? 0).getTime();
@@ -155,11 +152,11 @@ function TalentProfile({ slug }: TalentProps) {
   }, [talent]);
 
   const filteredFeed = useMemo(() => {
-    if (activeTab === 'activity') {
+    if (activeTab === "activity") {
       return combinedAndSortedFeed;
     }
 
-    return combinedAndSortedFeed.filter((item) => item.type === 'pow');
+    return combinedAndSortedFeed.filter((item) => item.type === "pow");
   }, [activeTab, combinedAndSortedFeed]);
 
   const addNewPow = (newPow: PoW) => {
@@ -179,39 +176,38 @@ function TalentProfile({ slug }: TalentProps) {
   const isMD = useBreakpointValue({ base: false, md: true });
 
   const getWorkPreferenceText = (workPrefernce?: string): string | null => {
-    if (!workPrefernce || workPrefernce === 'Not looking for Work') {
+    if (!workPrefernce || workPrefernce === "Not looking for Work") {
       return null;
     }
     const fullTimePatterns = [
-      'Passively looking for fulltime positions',
-      'Actively looking for fulltime positions',
-      'Fulltime',
+      "Bị động tìm kiếm cơ hội làm việc toàn thời gian",
+      "Chủ động tìm kiếm cơ hội làm việc toàn thời gian",
+      "Toàn thời gian",
     ];
     const freelancePatterns = [
-      'Passively looking for freelance work',
-      'Actively looking for freelance work',
-      'Freelance',
+      "Bị động tìm kiếm cơ hội làm việc tự do",
+      "Chủ động tìm kiếm cơ hội làm việc tự do",
+      "Freelancer",
     ];
     const internshipPatterns = [
-      'Actively looking for internships',
-      'Internship',
+      "Chủ động tìm kiếm vị trí thực tập",
+      "Thực tập",
     ];
 
     if (fullTimePatterns.includes(workPrefernce)) {
-      return 'Fulltime Roles';
+      return "Fulltime Roles";
     }
     if (freelancePatterns.includes(workPrefernce)) {
-      return 'Freelance Opportunities';
+      return "Freelance Opportunities";
     }
     if (internshipPatterns.includes(workPrefernce)) {
-      return 'Internship Opportunities';
+      return "Internship Opportunities";
     }
 
     return workPrefernce;
   };
 
   const workPreferenceText = getWorkPreferenceText(talent?.workPrefernce);
-
 
   const renderButton = (
     icon: JSX.Element,
@@ -222,14 +218,14 @@ function TalentProfile({ slug }: TalentProps) {
     if (isMD) {
       return (
         <Button
-          color={outline ? 'brand.slate.500' : '#6366F1'}
+          color={outline ? "brand.slate.500" : "#6366F1"}
           fontSize="sm"
           fontWeight={500}
-          bg={outline ? 'white' : '#EDE9FE'}
-          borderColor={outline ? 'brand.slate.400' : '#EDE9FE'}
+          bg={outline ? "white" : "#EDE9FE"}
+          borderColor={outline ? "brand.slate.400" : "#EDE9FE"}
           leftIcon={icon}
           onClick={onClickHandler}
-          variant={outline ? 'outline' : 'solid'}
+          variant={outline ? "outline" : "solid"}
         >
           {text}
         </Button>
@@ -238,15 +234,15 @@ function TalentProfile({ slug }: TalentProps) {
 
     return (
       <IconButton
-        color={outline ? 'brand.slate.500' : '#6366F1'}
+        color={outline ? "brand.slate.500" : "#6366F1"}
         fontSize="sm"
         fontWeight={500}
-        bg={outline ? 'white' : '#EDE9FE'}
-        borderColor={outline ? 'brand.slate.400' : '#EDE9FE'}
+        bg={outline ? "white" : "#EDE9FE"}
+        borderColor={outline ? "brand.slate.400" : "#EDE9FE"}
         aria-label={text}
         icon={icon}
         onClick={onClickHandler}
-        variant={outline ? 'outline' : 'solid'}
+        variant={outline ? "outline" : "solid"}
       />
     );
   };
@@ -259,9 +255,9 @@ function TalentProfile({ slug }: TalentProps) {
             title={
               talent?.firstname && talent?.lastname
                 ? `${talent?.firstname} ${talent?.lastname}`
-                : 'FreLan'
+                : "FreLan"
             }
-            description="Every Solana opportunity in one place!"
+            description="Cơ hội đều ở đây!"
             canonical="/assets/logo/og.svg"
           />
         }
@@ -269,48 +265,48 @@ function TalentProfile({ slug }: TalentProps) {
         {isloading && <LoadingSection />}
         {!isloading && !!error && <ErrorSection />}
         {!isloading && !error && !talent?.id && (
-          <ErrorSection message="Sorry! The profile you are looking for is not available." />
+          <ErrorSection message="Hồ sơ bạn tìm kiếm không khả dụng" />
         )}
         {!isloading && !error && !!talent?.id && (
           <Box bg="white">
             <Box
               w="100%"
-              h={{ base: '100px', md: '30vh' }}
+              h={{ base: "100px", md: "30vh" }}
               bgImage={`/assets/bg/profile-cover/${bgImages[randomIndex]}`}
-              bgSize={'cover'}
-              bgRepeat={'no-repeat'}
-              objectFit={'cover'}
+              bgSize={"cover"}
+              bgRepeat={"no-repeat"}
+              objectFit={"cover"}
             />
             <Box
-              pos={'relative'}
-              top={{ base: '0', md: '-40' }}
-              maxW={'700px'}
+              pos={"relative"}
+              top={{ base: "0", md: "-40" }}
+              maxW={"700px"}
               mx="auto"
-              px={{ base: '4', md: '7' }}
+              px={{ base: "4", md: "7" }}
               py={7}
               bg="white"
-              borderRadius={'20px'}
+              borderRadius={"20px"}
             >
-              <Flex justify={'space-between'}>
+              <Flex justify={"space-between"}>
                 <Box>
                   <Avatar
-                    w={{ base: '60px', md: '80px' }}
-                    h={{ base: '60px', md: '80px' }}
+                    w={{ base: "60px", md: "80px" }}
+                    h={{ base: "60px", md: "80px" }}
                     name={`${talent?.firstname}${talent?.lastname}`}
                     src={talent?.photo as string}
                   />
                   <Text
                     mt={6}
-                    color={'brand.slate.900'}
-                    fontSize={{ base: 'lg', md: 'xl' }}
-                    fontWeight={'600'}
+                    color={"brand.slate.900"}
+                    fontSize={{ base: "lg", md: "xl" }}
+                    fontWeight={"600"}
                   >
                     {talent?.firstname} {talent?.lastname}
                   </Text>
                   <Text
-                    color={'brand.slate.500'}
-                    fontSize={{ base: 'md', md: 'md' }}
-                    fontWeight={'600'}
+                    color={"brand.slate.500"}
+                    fontSize={{ base: "md", md: "md" }}
+                    fontWeight={"600"}
                   >
                     @
                     {isMD
@@ -321,27 +317,25 @@ function TalentProfile({ slug }: TalentProps) {
                   </Text>
                 </Box>
                 <Flex
-                  direction={{ base: 'row', md: 'column' }}
+                  direction={{ base: "row", md: "column" }}
                   gap={3}
-                  w={{ base: 'auto', md: '160px' }}
+                  w={{ base: "auto", md: "160px" }}
                 >
                   {userInfo?.id === talent?.id
                     ? renderButton(
                         <EditIcon />,
-                        'Edit Profile',
+                        "Sửa hồ sơ",
                         handleEditProfileClick
                       )
-                    : renderButton(<EmailIcon />, 'Reach Out', () => {
-                        const email = encodeURIComponent(talent?.email || '');
+                    : renderButton(<EmailIcon />, "Liên hệ", () => {
+                        const email = encodeURIComponent(talent?.email || "");
                         const subject = encodeURIComponent(
-                          'Saw Your ST Earn Profile!'
+                          "Đã thấy hồ sơ của bạn!"
                         );
-                        const bcc = encodeURIComponent(
-                          'hello@superteamearn.com'
-                        );
+                        const bcc = encodeURIComponent("facebook.com");
                         window.location.href = `mailto:${email}?subject=${subject}&bcc=${bcc}`;
                       })}
-                  {renderButton(<ShareIcon />, 'Share', onOpen, true)}
+                  {renderButton(<ShareIcon />, "Chia sẻ", onOpen, true)}
                 </Flex>
               </Flex>
               <ShareProfile
@@ -352,63 +346,63 @@ function TalentProfile({ slug }: TalentProps) {
               />
               <Divider my={8} />
               <Flex
-                direction={{ base: 'column', md: 'row' }}
-                gap={{ base: '12', md: '100' }}
+                direction={{ base: "column", md: "row" }}
+                gap={{ base: "12", md: "100" }}
               >
-                <Box w={{ base: '100%', md: '50%' }}>
-                  <Text mb={4} color={'brand.slate.900'} fontWeight={500}>
-                    Details
+                <Box w={{ base: "100%", md: "50%" }}>
+                  <Text mb={4} color={"brand.slate.900"} fontWeight={500}>
+                    Chi tiết
                   </Text>
                   {workPreferenceText && (
-                    <Text mt={3} color={'brand.slate.400'}>
-                      Looking for{' '}
-                      <Text as={'span'} color={'brand.slate.500'}>
+                    <Text mt={3} color={"brand.slate.400"}>
+                      Tìm kiếm{" "}
+                      <Text as={"span"} color={"brand.slate.500"}>
                         {workPreferenceText}
                       </Text>
                     </Text>
                   )}
-                  <Text mt={3} color={'brand.slate.400'}>
-                    Works at{' '}
-                    <Text as={'span'} color={'brand.slate.500'}>
+                  <Text mt={3} color={"brand.slate.400"}>
+                    Làm việc tại{" "}
+                    <Text as={"span"} color={"brand.slate.500"}>
                       {talent?.currentEmployer}
                     </Text>
                   </Text>
-                  <Text mt={3} color={'brand.slate.400'}>
-                    Based in{' '}
-                    <Text as={'span'} color={'brand.slate.500'}>
+                  <Text mt={3} color={"brand.slate.400"}>
+                    Trụ sở tại{" "}
+                    <Text as={"span"} color={"brand.slate.500"}>
                       {talent?.location}
                     </Text>
                   </Text>
                 </Box>
-                <Box w={{ base: '100%', md: '50%' }}>
-                  <Text color={'brand.slate.900'} fontWeight={500}>
-                    Skills
+                <Box w={{ base: "100%", md: "50%" }}>
+                  <Text color={"brand.slate.900"} fontWeight={500}>
+                    Mảng
                   </Text>
                   {Array.isArray(talent.skills) ? (
                     talent.skills.map((skillItem: any, index: number) => {
                       return skillItem ? (
                         <Box key={index} mt={4}>
                           <Text
-                            color={'brand.slate.400'}
+                            color={"brand.slate.400"}
                             fontSize="xs"
                             fontWeight={500}
                           >
                             {skillItem.skills.toUpperCase()}
                           </Text>
                           <Flex align="center">
-                            <Flex wrap={'wrap'} gap={2} mt={2}>
+                            <Flex wrap={"wrap"} gap={2} mt={2}>
                               {skillItem.subskills
                                 .slice(0, 3)
                                 .map((subskill: string, subIndex: number) => (
                                   <Box
                                     key={subIndex}
-                                    px={'12px'}
-                                    py={'4px'}
-                                    color={'#64739C'}
-                                    fontSize={'sm'}
+                                    px={"12px"}
+                                    py={"4px"}
+                                    color={"#64739C"}
+                                    fontSize={"sm"}
                                     fontWeight={500}
-                                    borderRadius={'4px'}
-                                    bgColor={'#EFF1F5'}
+                                    borderRadius={"4px"}
+                                    bgColor={"#EFF1F5"}
                                   >
                                     {subskill}
                                   </Box>
@@ -426,25 +420,25 @@ function TalentProfile({ slug }: TalentProps) {
                                 }
                                 onClick={() => handleToggleSubskills(index)}
                                 size="sm"
-                                variant={'unstyled'}
+                                variant={"unstyled"}
                               />
                             )}
                           </Flex>
 
                           <Collapse in={showSubskills[index] ?? false}>
-                            <Flex wrap={'wrap'} gap={2} mt={2}>
+                            <Flex wrap={"wrap"} gap={2} mt={2}>
                               {skillItem.subskills
                                 .slice(3)
                                 .map((subskill: string, subIndex: number) => (
                                   <Box
                                     key={subIndex}
-                                    px={'12px'}
-                                    py={'4px'}
-                                    color={'#64739C'}
-                                    fontSize={'sm'}
+                                    px={"12px"}
+                                    py={"4px"}
+                                    color={"#64739C"}
+                                    fontSize={"sm"}
                                     fontWeight={500}
-                                    borderRadius={'4px'}
-                                    bgColor={'#EFF1F5'}
+                                    borderRadius={"4px"}
+                                    bgColor={"#EFF1F5"}
                                   >
                                     {subskill}
                                   </Box>
@@ -455,34 +449,34 @@ function TalentProfile({ slug }: TalentProps) {
                       ) : null;
                     })
                   ) : (
-                    <Text>No skills available</Text>
+                    <Text>Không có mảng nào nào!</Text>
                   )}
                 </Box>
               </Flex>
               <Divider my={8} />
               <Flex
-                direction={{ base: 'column', md: 'row' }}
-                gap={{ base: '12', md: '100' }}
+                direction={{ base: "column", md: "row" }}
+                gap={{ base: "12", md: "100" }}
               >
-                <Flex gap={6} w={{ base: '100%', md: '50%' }}>
+                <Flex gap={6} w={{ base: "100%", md: "50%" }}>
                   {socialLinks.map((ele, eleIndex) => {
                     return (
                       <Box
                         key={eleIndex}
                         onClick={() => {
                           if (ele.link) {
-                            window.open(ele.link, '_blank');
+                            window.open(ele.link, "_blank");
                           }
                         }}
                       >
                         <Image
                           w={6}
                           h={6}
-                          opacity={!ele.link ? '0.3' : ''}
-                          cursor={ele.link! && 'pointer'}
+                          opacity={!ele.link ? "0.3" : ""}
+                          cursor={ele.link! && "pointer"}
                           objectFit="contain"
                           alt=""
-                          filter={!ele.link ? 'grayscale(100%)' : ''}
+                          filter={!ele.link ? "grayscale(100%)" : ""}
                           src={ele.icon}
                         />
                       </Box>
@@ -490,82 +484,84 @@ function TalentProfile({ slug }: TalentProps) {
                   })}
                 </Flex>
                 <Flex
-                  gap={{ base: '8', md: '6' }}
-                  w={{ base: '100%', md: '50%' }}
+                  gap={{ base: "8", md: "6" }}
+                  w={{ base: "100%", md: "50%" }}
                 >
-                  <Flex direction={'column'}>
+                  <Flex direction={"column"}>
                     <Text fontWeight={600}>${talent?.totalEarned}</Text>
-                    <Text color={'brand.slate.500'} fontWeight={500}>
-                      Earned
+                    <Text color={"brand.slate.500"} fontWeight={500}>
+                      Kiếm được
                     </Text>
                   </Flex>
-                  <Flex direction={'column'}>
-                    <Text fontWeight={600}>{talent?.Subscribe?.length || 0}</Text>
-                    <Text color={'brand.slate.500'} fontWeight={500}>
+                  <Flex direction={"column"}>
+                    <Text fontWeight={600}>
+                      {talent?.Subscribe?.length || 0}
+                    </Text>
+                    <Text color={"brand.slate.500"} fontWeight={500}>
                       {talent?.Subscribe?.length === 1
-                        ? 'Subscribe'
-                        : 'Subscribes'}
+                        ? "Người đăng kí"
+                        : "Người đăng kí"}
                     </Text>
                   </Flex>
-                  <Flex direction={'column'}>
+                  <Flex direction={"column"}>
                     <Text fontWeight={600}>{winnerCount}</Text>
-                    <Text color={'brand.slate.500'} fontWeight={500}>
-                      Won
+                    <Text color={"brand.slate.500"} fontWeight={500}>
+                      Nhận được
                     </Text>
                   </Flex>
                 </Flex>
               </Flex>
-              <Box mt={{ base: '12', md: '16' }}>
+              <Box mt={{ base: "12", md: "16" }}>
                 <Flex
-                  align={{ base: 'right', md: 'center' }}
-                  justify={'space-between'}
-                  direction={{ base: 'column', md: 'row' }}
+                  align={{ base: "right", md: "center" }}
+                  justify={"space-between"}
+                  direction={{ base: "column", md: "row" }}
                 >
                   <Flex align="center" gap={3}>
-                    <Text color={'brand.slate.900'} fontWeight={500}>
-                      Proof of Work
+                    <Text color={"brand.slate.900"} fontWeight={500}>
+                      Chứng chỉ làm việc
                     </Text>
                     {userInfo?.id === talent?.id && (
                       <Button
-                        color={'brand.slate.400'}
+                        color={"brand.slate.400"}
                         fontSize="sm"
                         fontWeight={600}
                         onClick={onOpenPow}
                         size="xs"
-                        variant={'ghost'}
+                        variant={"ghost"}
                       >
-                        +ADD
+                        +THÊM
                       </Button>
                     )}
                   </Flex>
                   <Flex
-                    justify={{ base: 'space-between', md: 'flex-end' }}
+                    justify={{ base: "space-between", md: "flex-end" }}
                     gap={6}
-                    mt={{ base: '12', md: '0' }}
+                    mt={{ base: "12", md: "0" }}
                   >
                     <Text
                       color={
-                        activeTab === 'activity'
-                          ? 'brand.slate.900'
-                          : 'brand.slate.400'
+                        activeTab === "activity"
+                          ? "brand.slate.900"
+                          : "brand.slate.400"
                       }
                       fontWeight={500}
                       cursor="pointer"
-                      onClick={() => setActiveTab('activity')}
+                      onClick={() => setActiveTab("activity")}
                     >
-                      Activity Feed
+                      Nguồn cấp
                     </Text>
                     <Text
                       color={
-                        activeTab === 'projects'
-                          ? 'brand.slate.900'
-                          : 'brand.slate.400'
+                        activeTab === "projects"
+                          ? "brand.slate.900"
+                          : "brand.slate.400"
                       }
                       fontWeight={500}
                       cursor="pointer"
-                      onClick={() => setActiveTab('projects')}
+                      onClick={() => setActiveTab("projects")}
                     >
-                      Personal Projects
+                      Dự án cá nhân
                     </Text>
                   </Flex>
                 </Flex>
@@ -578,20 +574,20 @@ function TalentProfile({ slug }: TalentProps) {
                       w={32}
                       mt={32}
                       mx="auto"
-                      alt={'talent empty'}
+                      alt={"talent empty"}
                       src="/assets/bg/talent-empty.svg"
                     />
                     <Text
                       w="200px"
                       mt={5}
                       mx="auto"
-                      color={'brand.slate.400'}
+                      color={"brand.slate.400"}
                       fontWeight={500}
-                      textAlign={'center'}
+                      textAlign={"center"}
                     >
                       {userInfo?.id === talent?.id
-                        ? 'Add some proof of work to build your profile'
-                        : 'Nothing to see here yet ...'}
+                        ? "Thêm vài chứng chỉ cho hồ sơ của bạn!"
+                        : "Không có gì để xem..."}
                     </Text>
                     {userInfo?.id === talent?.id ? (
                       <Button
@@ -601,7 +597,7 @@ function TalentProfile({ slug }: TalentProps) {
                         mx="auto"
                         onClick={onOpenPow}
                       >
-                        Add
+                        Thêm
                       </Button>
                     ) : (
                       <Box mt={5} />
@@ -612,20 +608,20 @@ function TalentProfile({ slug }: TalentProps) {
                       w="200px"
                       mt={2}
                       mx="auto"
-                      color={'brand.slate.500'}
+                      color={"brand.slate.500"}
                       fontWeight={500}
                       bg="white"
-                      borderColor={'brand.slate.400'}
-                      onClick={() => router.push('/')}
-                      variant={'outline'}
+                      borderColor={"brand.slate.400"}
+                      onClick={() => router.push("/")}
+                      variant={"outline"}
                     >
-                      Browse Jobs
+                      Duyệt
                     </Button>
                   </>
                 ) : (
                   filteredFeed.map((item, index) => {
-                    if (item.type === 'submission') {
-                      return
+                    if (item.type === "submission") {
+                      return;
                       // (
                       //   <SubscribeCard
                       //     key={index}
@@ -634,7 +630,7 @@ function TalentProfile({ slug }: TalentProps) {
                       //   />
                       // );
                     }
-                    if (item.type === 'pow') {
+                    if (item.type === "pow") {
                       return (
                         <PowCard
                           key={index}

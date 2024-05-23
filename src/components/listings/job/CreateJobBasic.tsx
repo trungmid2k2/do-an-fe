@@ -97,7 +97,7 @@ export const CreateJobBasic = ({
               fontWeight={600}
               htmlFor={"title"}
             >
-              Danh sách tiều đề
+              Tiêu đề việc làm
             </FormLabel>
             <Tooltip
               w="max"
@@ -108,7 +108,7 @@ export const CreateJobBasic = ({
               bg="#6562FF"
               borderRadius="0.5rem"
               hasArrow
-              label={`Use a short title to describe the Listing`}
+              label={`Sử dụng mô tả ngắn cho dự án`}
               placement="right-end"
             >
               <Image
@@ -132,7 +132,7 @@ export const CreateJobBasic = ({
                 title: e.target.value,
               });
             }}
-            placeholder="Develop a new landing page"
+            placeholder="Phát triển"
             value={jobBasic?.title}
           />
           <FormErrorMessage>
@@ -168,7 +168,7 @@ export const CreateJobBasic = ({
                   bg="#6562FF"
                   borderRadius="0.5rem"
                   hasArrow
-                  label={`Select the Superteam region this listing will be available and relevant to. The geography selected here will determine which Superteam Geography page it shows up on. If the listing is open to all, please select global; otherwise, please select the specific country`}
+                  label={`Chọn nước cụ thể`}
                   placement="right-end"
                 >
                   <Image
@@ -223,7 +223,7 @@ export const CreateJobBasic = ({
               bg="#6562FF"
               borderRadius="0.5rem"
               hasArrow
-              label={`Please add a social link of the person people reach out to in case they have questions about this listing.`}
+              label={`Vui lòng thêm liên kết xã hội mà mọi người liên hệ trong trường hợp họ có thắc mắc về công việc này.`}
               placement="right-end"
             >
               <Image
@@ -306,7 +306,7 @@ export const CreateJobBasic = ({
                 fontWeight={600}
                 htmlFor={"deadline"}
               >
-                Deadline (in {Intl.DateTimeFormat().resolvedOptions().timeZone})
+                Hạn (trong {Intl.DateTimeFormat().resolvedOptions().timeZone})
               </FormLabel>
               <Tooltip
                 w="max"
@@ -317,7 +317,7 @@ export const CreateJobBasic = ({
                 bg="#6562FF"
                 borderRadius="0.5rem"
                 hasArrow
-                label={`Select the deadline date for accepting submissions`}
+                label={`Chọn ngày hết hạn để chấp nhận bài nộp`}
                 placement="right-end"
               >
                 <Image
@@ -379,7 +379,7 @@ export const CreateJobBasic = ({
                   timeToComplete: e.target.value,
                 });
               }}
-              placeholder="Select time to complete"
+              placeholder="Chọn thời gian để hoàn thành"
               value={jobBasic?.timeToComplete}
             >
               <option value="<1 Week">{"<1 Week"}</option>

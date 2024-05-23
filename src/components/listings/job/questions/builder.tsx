@@ -108,7 +108,7 @@ const Builder = ({
             w="100%"
             onClick={() => {
               if (questions.length === 0) {
-                toast.error("Add minimun of one question");
+                toast.error("Hỏi thêm tối thiểu 1 câu hỏi");
                 return;
               }
               const rejectedQuestion: any[] = [];
@@ -152,7 +152,7 @@ const Builder = ({
                     ...error,
                     {
                       order: e.order,
-                      errMessage: "Add question",
+                      errMessage: "Thêm câu hỏi",
                     },
                   ]);
                 }

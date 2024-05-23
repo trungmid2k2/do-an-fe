@@ -31,7 +31,7 @@ function DetailDescription({ skills, description }: Props) {
         px={5}
       >
         <Text color={"brand.slate.400"} fontWeight={500}>
-          Kĩ năng cần
+         Kỹ năng
         </Text>
         <HStack flexWrap={"wrap"} gap={3}>
           {skills?.map((skill) => (

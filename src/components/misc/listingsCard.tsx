@@ -253,10 +253,10 @@ export const JobsCard = ({
                   fontSize={["x-small", "xs", "xs", "xs"]}
                 >
                   {applicationType === "rolling"
-                    ? "Rolling Deadline"
+                    ? "Linh hoạt"
                     : dayjs().isBefore(dayjs(deadline))
-                    ? `Closing ${dayjs(deadline).fromNow()}`
-                    : `Closed ${dayjs(deadline).fromNow()}`}
+                    ? `Sẽ đóng ${dayjs(deadline).fromNow()}`
+                    : `Đã đóng ${dayjs(deadline).fromNow()}`}
                 </Text>
               </Flex>
             </Flex>
@@ -431,17 +431,17 @@ export const CategoryBanner = ({ type }: { type: string }) => {
     Design: {
       bg: `/assets/category_assets/bg/design.png`,
       color: "#FEFBA8",
-      desc: "If delighting users with eye-catching designs is your jam, you should check out the earning opportunities below.",
+      desc: "Nếu làm hài lòng người dùng bằng những thiết kế bắt mắt là sở thích của bạn, bạn nên xem các cơ hội kiếm tiền bên dưới.",
       icon: "/assets/category_assets/icon/design.png",
     },
     Content: {
       bg: `/assets/category_assets/bg/content.png`,
       color: "#FEB8A8",
-      desc: "If you can write insightful essays, make stunning videos, or create killer memes, the opportunities below are calling your name.",
+      desc: "Nếu bạn có thể viết những bài luận sâu sắc, tạo những video ấn tượng hoặc tạo ra những meme hấp dẫn, thì những cơ hội dưới đây đang gọi tên bạn.",
       icon: "/assets/category_assets/icon/content.png",
     },
     Development: {
-      desc: "If building robust applications and scalable solutions is your forte, don't miss out on the earning opportunities listed below",
+      desc: "Nếu sở trường của bạn là xây dựng các ứng dụng mạnh mẽ và giải pháp có thể mở rộng, đừng bỏ lỡ các cơ hội kiếm tiền được liệt kê bên dưới",
       bg: `/assets/category_assets/bg/frontend.png`,
       color: "#FEA8EB",
       icon: "/assets/category_assets/icon/backend.png",
@@ -527,7 +527,7 @@ export const CategoryBanner = ({ type }: { type: string }) => {
             {categoryAssets[type]?.desc}
           </Text>
         </Box>
-        {!router.asPath.includes("Hyperdrive") && (
+        {/* {!router.asPath.includes("Hyperdrive") && (
           <Button
             mt={{ base: 4, md: "" }}
             ml={{ base: "", md: "auto" }}
@@ -545,7 +545,7 @@ export const CategoryBanner = ({ type }: { type: string }) => {
           >
             {isSubscribed ? "Subscribed" : "Notify Me"}
           </Button>
-        )}
+        )} */}
         <Toaster />
       </Flex>
     </>

@@ -42,7 +42,7 @@ export const SkillSelect = ({
       <FormControl my={6} isRequired>
         <Flex align={"center"} justify={"start"}>
           <FormLabel color={"brand.slate.500"} htmlFor={"skills"}>
-            Skills
+            Mảng
           </FormLabel>
           <Tooltip
             w="max"
@@ -72,6 +72,7 @@ export const SkillSelect = ({
               borderColor: state.isFocused ? "brand.purple" : "brand.slate.300",
             }),
           }}
+          placeholder="Chọn..."
           closeMenuOnSelect={false}
           components={animatedComponents}
           isMulti
@@ -87,7 +88,7 @@ export const SkillSelect = ({
       <FormControl my={6}>
         <Flex align={"center"} justify={"start"}>
           <FormLabel color={"brand.slate.500"} htmlFor={"skills"}>
-            Sub Skills
+            Kỹ năng
           </FormLabel>
           <Tooltip
             w="max"
@@ -117,6 +118,7 @@ export const SkillSelect = ({
               borderColor: state.isFocused ? "brand.purple" : "brand.slate.300",
             }),
           }}
+          placeholder="Chọn"
           closeMenuOnSelect={false}
           components={animatedComponents}
           isMulti

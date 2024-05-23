@@ -34,8 +34,8 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Listings", link: "/jobs", icon: AiFillFire },
-  { name: "Members", link: "/members", icon: AiOutlineUsergroupAdd },
+  { name: "Bài đăng", link: "/jobs", icon: AiFillFire },
+  { name: "Thành viên", link: "/members", icon: AiOutlineUsergroupAdd },
 ];
 
 interface NavItemProps extends FlexProps {
@@ -127,7 +127,7 @@ const SidebarContent = ({ ...rest }: BoxProps) => {
                 </Text>
               </MenuItem>
             </NextLink>
-            <NextLink href="/dashboard/create-project">
+            {/* <NextLink href="/dashboard/create-project">
               <MenuItem>
                 <Image
                   h={5}
@@ -140,7 +140,7 @@ const SidebarContent = ({ ...rest }: BoxProps) => {
                   Dự án mới
                 </Text>
               </MenuItem>
-            </NextLink>
+            </NextLink> */}
           </MenuList>
         </Menu>
       </Flex>
@@ -167,7 +167,7 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
       meta={
         <Meta
           title="Dashboard | Frelan"
-          description="Every Solana opportunity in one place!"
+          description="Cơ hội đều ở đây"
           canonical="/assets/logo/og.svg"
         />
       }

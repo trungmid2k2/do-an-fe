@@ -128,7 +128,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
             </Box>
           </Flex>
           <Box w={"full"} mb={"1.25rem"}>
-            <FormLabel color={"brand.slate.500"}>Sở thích công việc</FormLabel>
+            <FormLabel color={"brand.slate.500"}>Loại công việc</FormLabel>
             <Select
               color={
                 watch().workPrefernce.length === 0 ? "brand.slate.300" : ""
@@ -176,6 +176,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
               isMulti
               options={IndustryList}
               required
+              placeholder="Chọn..."
               onChange={(e: any) => {
                 setDropDownValues((st) => {
                   return {
@@ -231,7 +232,7 @@ function YourWork({ setStep, useFormStore }: Step1Props) {
               bg="#6562FF"
               borderRadius="0.5rem"
               hasArrow
-              label={`Thông tin "Sở thích công việc" sẽ bị ẩn khỏi hồ sơ tài năng công khai của bạn. Tuy nhiên, bạn sẽ tiếp tục nhận được thông tin cập nhật về các cơ hội mới qua email của mình.`}
+              label={`Thông tin "Loại công việc" sẽ bị ẩn khỏi hồ sơ tài năng công khai của bạn. Tuy nhiên, bạn sẽ tiếp tục nhận được thông tin cập nhật về các cơ hội mới qua email của mình.`}
               placement="right-end"
             >
               <InfoOutlineIcon color="brand.slate.500" />

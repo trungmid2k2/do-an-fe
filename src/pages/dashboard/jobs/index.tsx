@@ -281,7 +281,7 @@ function Jobs() {
             <Button
               isLoading={isChangingStatus}
               leftIcon={<ViewOffIcon />}
-              loadingText="Closing..."
+              loadingText="Đang đóng"
               onClick={() => closeJobHanlde(false)}
               variant="solid"
             >

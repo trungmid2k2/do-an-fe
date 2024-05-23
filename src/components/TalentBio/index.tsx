@@ -157,13 +157,13 @@ function TalentBio({
         {!user?.private && (
           <Chip
             icon={"/assets/talent/eyes.png"}
-            label={"Interested In"}
+            label={"Quan tâm"}
             value={user?.workPrefernce as string}
           />
         )}
         <Chip
           icon={"/assets/talent/cap.png"}
-          label={"Works At"}
+          label={"Làm việc tại"}
           value={user?.currentEmployer as string}
         />
       </Flex>

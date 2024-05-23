@@ -195,7 +195,7 @@ function ListingHeader({
             {!isTemplate && (
               <HStack>
                 <Text color={"#94A3B8"} fontWeight={500}>
-                  by {company?.name}
+                  bởi {company?.name}
                 </Text>
                 <Text color={"#E2E8EF"} fontWeight={500}>
                   |

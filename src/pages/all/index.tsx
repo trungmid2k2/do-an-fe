@@ -44,8 +44,8 @@ function AllListingsPage() {
       <Box w={"100%"}>
         <ListingSection
           type="jobs"
-          title="Freelance Gigs"
-          sub="Bite sized tasks for freelancers"
+          title="Bài đăng Freelance"
+          sub=" "
           emoji="/assets/home/emojis/moneyman.png"
           all
         >
