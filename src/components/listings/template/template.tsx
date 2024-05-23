@@ -76,7 +76,7 @@ const Template = ({
             >
               <AddIcon color="gray.500" mb="1rem" />
               <Text color="gray.500" fontSize="1rem" fontWeight={500}>
-                Bắt đầu lại từ đầu
+                Bắt đầu từ đầu
               </Text>
             </Box>
             {jobsTemplates.map((template: any) => {
@@ -165,7 +165,7 @@ const Template = ({
                       ) : (
                         <Text color="brand.slate.400" fontSize="sm">
                           {template?.templateDescription ||
-                            `Pre-fill info with "${template?.templateTitle}" template`}
+                            `Điền thông tin "${template?.templateTitle}" với mẫu `}
                         </Text>
                       )}
                     </Box>

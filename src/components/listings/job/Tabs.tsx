@@ -97,10 +97,7 @@ export const JobTabs = ({
               ))
           ) : (
             <Flex align="center" justify="center" mt={8}>
-              <EmptySection
-                title="No jobs announced!"
-                message="Subscribes to notifications to get notified about announcements."
-              />
+              <EmptySection title="Không tìm thấy!" message="Thử lại sau!" />
             </Flex>
           )}
         </Flex>

@@ -163,7 +163,7 @@ export const AddProject = ({
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl isRequired>
               <Box w={"full"} mb={"1.25rem"}>
-                <FormLabel color={"brand.slate.500"}>Project Title</FormLabel>
+                <FormLabel color={"brand.slate.500"}>Tiêu đề dự án</FormLabel>
                 <Input
                   borderColor="brand.slate.300"
                   _placeholder={{
@@ -171,14 +171,12 @@ export const AddProject = ({
                   }}
                   focusBorderColor="brand.purple"
                   id="title"
-                  placeholder="Project Title"
+                  placeholder="Tiêu đề dự án"
                   {...register("title", { required: true })}
                 />
               </Box>
               <Box w={"full"} mb={"1.25rem"}>
-                <FormLabel color={"brand.slate.500"}>
-                  Describe Your Work
-                </FormLabel>
+                <FormLabel color={"brand.slate.500"}>Mô tả</FormLabel>
                 <Textarea
                   borderColor="brand.slate.300"
                   _placeholder={{
@@ -187,7 +185,7 @@ export const AddProject = ({
                   focusBorderColor="brand.purple"
                   id={"description"}
                   maxLength={180}
-                  placeholder="About the Project"
+                  placeholder="Mô tả dự án"
                   {...register("description", { required: true })}
                 />
                 <Text
@@ -199,7 +197,7 @@ export const AddProject = ({
                   fontSize={"xs"}
                   textAlign="right"
                 >
-                  {180 - (watch("description")?.length || 0)} characters left
+                  còn {180 - (watch("description")?.length || 0)} ký tự
                 </Text>
               </Box>
               <SkillSelect
@@ -207,8 +205,8 @@ export const AddProject = ({
                 subSkills={subSkills}
                 setSkills={setSkills}
                 setSubSkills={setSubSkills}
-                skillLabel="Skills Used"
-                subSkillLabel="Sub Skills Used"
+                skillLabel="Mảng được dùng trong dự án"
+                subSkillLabel="Kỹ năng được dùng trong dự án"
               />
 
               <Box w={"full"} mb={"1.25rem"}>
@@ -233,11 +231,11 @@ export const AddProject = ({
               </Box>
               <Box w={"full"} mb={"1.25rem"}>
                 {skillsError && (
-                  <Text color={"red"}>Please add Skills and Sub Skills</Text>
+                  <Text color={"red"}>Hãy thêm mảng và kỹ năng</Text>
                 )}
                 {linkError && (
                   <Text color={"red"}>
-                    Link URL needs to contain &quot;https://&quot; prefix
+                    Đường dẫn URL cần &quot;https://&quot; phía trước
                   </Text>
                 )}
               </Box>
@@ -248,7 +246,7 @@ export const AddProject = ({
                 bg={"rgb(101, 98, 255)"}
                 type="submit"
               >
-                Add Project
+                Thêm
               </Button>
             </FormControl>
           </form>

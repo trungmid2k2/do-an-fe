@@ -9,39 +9,39 @@ import {
   Spinner,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import React, { Fragment, useState } from 'react';
-import { create } from 'zustand';
+} from "@chakra-ui/react";
+import React, { Fragment, useState } from "react";
+import { create } from "zustand";
 
-import AboutYou from '@/components/Talent/AboutYou';
-import type { UserStoreType } from '@/components/Talent/types';
-import WelcomeMessage from '@/components/Talent/WelcomeMessage';
-import YourLinks from '@/components/Talent/YourLinks';
-import YourWork from '@/components/Talent/YourWork';
-import { Default } from '@/layouts/Default';
-import { Meta } from '@/layouts/Meta';
+import AboutYou from "@/components/Talent/AboutYou";
+import type { UserStoreType } from "@/components/Talent/types";
+import WelcomeMessage from "@/components/Talent/WelcomeMessage";
+import YourLinks from "@/components/Talent/YourLinks";
+import YourWork from "@/components/Talent/YourWork";
+import { Default } from "@/layouts/Default";
+import { Meta } from "@/layouts/Meta";
 
-import { Steps } from '@/components/misc/steps';
-import TalentBio from '@/components/TalentBio';
-import { User } from '@/interface/user';
+import { Steps } from "@/components/misc/steps";
+import TalentBio from "@/components/TalentBio";
+import { User } from "@/interface/user";
 
 const useFormStore = create<UserStoreType>()((set) => ({
   form: {
-    bio: '',
-    location: '',
-    photo: '',
-    experience: '',
-    currentEmployer: '',
-    interests: '',
+    bio: "",
+    location: "",
+    photo: "",
+    experience: "",
+    currentEmployer: "",
+    interests: "",
     skills: [],
-    subSkills: '',
-    workPrefernce: '',
-    discord: '',
-    twitter: '',
-    github: '',
-    linkedin: '',
-    website: '',
-    telegram: '',
+    subSkills: "",
+    workPrefernce: "",
+    discord: "",
+    twitter: "",
+    github: "",
+    linkedin: "",
+    website: "",
+    telegram: "",
     private: false,
   },
   updateState: (data) => {
@@ -56,52 +56,52 @@ const StepsCon = ({ setSuccess }: { setSuccess: () => void }) => {
   const [currentStep, setSteps] = useState<number>(1);
   const stepList = [
     {
-      label: 'About You',
+      label: "Về bạn",
       number: 1,
     },
     {
-      label: 'Your Work',
+      label: "Việc làm của bạn",
       number: 2,
     },
     {
-      label: 'Links',
+      label: "Links",
       number: 3,
     },
   ];
 
   const TitleArray = [
     {
-      title: 'Create Your Profile',
+      title: "Tạo hồ sơ",
+      subTitle: "",
+    },
+    {
+      title: "Nói cho chúng tôi về công việc của bạn",
       subTitle:
-        "",
+        "Bạn càng cho chúng tôi biết nhiều thì chúng tôi càng có thể phù hợp với bạn hơn!",
     },
     {
-      title: 'Tell Us About Your Work',
-      subTitle: 'The more you tell us, the better we can match you!',
-    },
-    {
-      title: 'Socials & Proof of Work',
-      subTitle: 'Where can people learn more about your work?',
+      title: "Mạng xã hội và chứng chỉ việc làm",
+      subTitle: " Nơi mà người khác có thể học hỏi về việc làm của bạn!",
     },
   ];
 
   return (
-    <VStack gap={4} w={{ base: 'auto', md: 'xl' }} px={4}>
+    <VStack gap={4} w={{ base: "auto", md: "xl" }} px={4}>
       <VStack mt={8}>
         <Heading
-          color={'#334254'}
-          fontFamily={'Inter'}
-          fontSize={{ base: '18px', md: '24px' }}
+          color={"#334254"}
+          fontFamily={"Inter"}
+          fontSize={{ base: "18px", md: "24px" }}
           fontWeight={700}
         >
           {TitleArray[currentStep - 1]?.title}
         </Heading>
         <Text
-          color={'#94A3B8'}
-          fontFamily={'Inter'}
-          fontSize={{ base: '16px', md: '20px' }}
+          color={"#94A3B8"}
+          fontFamily={"Inter"}
+          fontSize={{ base: "16px", md: "20px" }}
           fontWeight={500}
-          textAlign={'center'}
+          textAlign={"center"}
         >
           {TitleArray[currentStep - 1]?.subTitle}
         </Text>
@@ -119,12 +119,12 @@ const StepsCon = ({ setSuccess }: { setSuccess: () => void }) => {
               {step.number !== stepList.length && (
                 <hr
                   style={{
-                    width: '50%',
+                    width: "50%",
                     outline:
                       currentStep >= step.number
-                        ? '1px solid #6562FF'
-                        : '1px solid #CBD5E1',
-                    border: 'none',
+                        ? "1px solid #6562FF"
+                        : "1px solid #CBD5E1",
+                    border: "none",
                   }}
                 />
               )}
@@ -156,7 +156,7 @@ const SuccessScreen = () => {
 
   if (!form) {
     return (
-      <Center w={'100%'} h={'100vh'} pt={'3rem'}>
+      <Center w={"100%"} h={"100vh"} pt={"3rem"}>
         <Spinner
           color="blue.500"
           emptyColor="gray.200"
@@ -170,68 +170,68 @@ const SuccessScreen = () => {
 
   return (
     <Box
-      w={'100%'}
-      h={'100%'}
-      minH={'100vh'}
-      pt={'6.25rem'}
+      w={"100%"}
+      h={"100%"}
+      minH={"100vh"}
+      pt={"6.25rem"}
       bgImage="url('/assets/bg/success-bg.png')"
-      bgSize={'cover'}
-      bgRepeat={'no-repeat'}
+      bgSize={"cover"}
+      bgRepeat={"no-repeat"}
     >
       <VStack>
-        <Image w={'40px'} h={'40px'} alt={''} src="/assets/icons/success.png" />
+        <Image w={"40px"} h={"40px"} alt={""} src="/assets/icons/success.png" />
         <Text
-          color={'white'}
-          fontSize={{ base: '1.25rem', md: '1.8125rem' }}
-          fontWeight={'700'}
-          textAlign={'center'}
+          color={"white"}
+          fontSize={{ base: "1.25rem", md: "1.8125rem" }}
+          fontWeight={"700"}
+          textAlign={"center"}
         >
-          Your Earn Profile is Ready!
+          Hồ sơ của bạn đã sẵn sàng
         </Text>
         <Text
-          color={'rgba(255, 255, 255, 0.53)'}
-          fontSize={{ base: '18px', md: '28px' }}
-          fontWeight={'500'}
-          textAlign={'center'}
+          color={"rgba(255, 255, 255, 0.53)"}
+          fontSize={{ base: "18px", md: "28px" }}
+          fontWeight={"500"}
+          textAlign={"center"}
         >
-          Have a look at your profile or start earning
+          Hãy xem hồ sơ hoặc bắt đầu kiếm tiền
         </Text>
       </VStack>
       <HStack
-        align={'start'}
-        justifyContent={'center'}
-        flexDir={{ base: 'column', md: 'row' }}
+        align={"start"}
+        justifyContent={"center"}
+        flexDir={{ base: "column", md: "row" }}
         gap={10}
-        w={'fit-content'}
+        w={"fit-content"}
         mt={10}
-        mx={'auto'}
+        mx={"auto"}
       >
-        <Box w={'full'} p={{ base: 4, md: 0 }}>
+        <Box w={"full"} p={{ base: 4, md: 0 }}>
           <TalentBio
             user={form as unknown as User}
             successPage={true}
-            w={{ md: '90%' }}
+            w={{ md: "90%" }}
           />
         </Box>
         <VStack
-          maxW={'35rem'}
-          h={'full'}
+          maxW={"35rem"}
+          h={"full"}
           mb={12}
           mx={{ base: 4, md: 0 }}
           p={5}
           bg="white"
-          rounded={'lg'}
+          rounded={"lg"}
         >
           <Image alt="final" src="/assets/talent/fake-tasks.png" />
           <Button
             w="full"
-            color={'white'}
-            bg={'rgb(101, 98, 255)'}
+            color={"white"}
+            bg={"rgb(101, 98, 255)"}
             onClick={() => {
               window.location.href = window.location.origin;
             }}
           >
-            Start Earning
+            Bắt đầu
           </Button>
         </VStack>
       </HStack>
@@ -241,35 +241,35 @@ const SuccessScreen = () => {
 
 function Talent() {
   const [currentPage, setcurrentPage] = useState<
-    'welcome' | 'steps' | 'success'
-  >('steps');
+    "welcome" | "steps" | "success"
+  >("steps");
 
   return (
     <Default
       meta={
         <Meta
-          title="New Talent | FreLan"
-          description="Every Solana opportunity in one place!"
+          title="Ứng viên mới | FreLan"
+          description="Mọi cơ hội ở đây!"
           canonical="/assets/logo/og.svg"
         />
       }
     >
       <VStack>
-        {currentPage === 'welcome' && (
+        {currentPage === "welcome" && (
           <WelcomeMessage
             setStep={() => {
-              setcurrentPage('steps');
+              setcurrentPage("steps");
             }}
           />
         )}
-        {currentPage === 'steps' && (
+        {currentPage === "steps" && (
           <StepsCon
             setSuccess={() => {
-              setcurrentPage('success');
+              setcurrentPage("success");
             }}
           />
         )}
-        {currentPage === 'success' && <SuccessScreen />}
+        {currentPage === "success" && <SuccessScreen />}
       </VStack>
     </Default>
   );

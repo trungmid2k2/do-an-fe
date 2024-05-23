@@ -263,7 +263,7 @@ const Description = ({
               bg="#6562FF"
               borderRadius="0.5rem"
               hasArrow
-              label={`Write details about the Listing - About, Requirements, Evaluation Criteria, Resources, Rewards, etc.`}
+              label={`Write details about the Listing - About, Requirements, Tiêu chí đánh giá, Tài liệu,  Phần thưởng, etc.`}
               placement="right-end"
             >
               <Image

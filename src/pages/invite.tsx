@@ -51,7 +51,7 @@ function Invite({ invite }: Props) {
       meta={
         <Meta
           title="Accept Invite | Frelan"
-          description="Every Solana opportunity in one place!"
+          description="Cơ hội đều ở đây!"
           canonical="/assets/logo/og.svg"
         />
       }
@@ -59,7 +59,7 @@ function Invite({ invite }: Props) {
       {isLoading && <LoadingSection />}
       {!isLoading && isError && (
         <ErrorSection
-          title="Invalid Invite!"
+          title="!"
           message="You invite is either invalid or expired. Please try again."
         />
       )}

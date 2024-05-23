@@ -24,8 +24,8 @@ export const SkillSelect = ({
   errorSubSkill,
   setSkills,
   setSubSkills,
-  skillLabel = "Kĩ năng cần",
-  subSkillLabel = "Kĩ năng phụ",
+  skillLabel = "Mảng",
+  subSkillLabel = "Kỹ năng",
 }: Props) => {
   const animatedComponents = makeAnimated();
   const tempSubSkills: MultiSelectOptions[] = [];
@@ -86,6 +86,7 @@ export const SkillSelect = ({
               borderColor: state.isFocused ? "brand.purple" : "brand.slate.300",
             }),
           }}
+          placeholder={"Chọn"}
           closeMenuOnSelect={false}
           components={animatedComponents}
           isMulti
@@ -135,6 +136,7 @@ export const SkillSelect = ({
               borderColor: state.isFocused ? "brand.purple" : "brand.slate.300",
             }),
           }}
+          placeholder={"Chọn"}
           closeMenuOnSelect={false}
           components={animatedComponents}
           isMulti

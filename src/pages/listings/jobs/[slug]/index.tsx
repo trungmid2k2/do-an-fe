@@ -90,7 +90,7 @@ function JobDetails() {
         <>
           {job === null && <ErrorSection />}
           {job !== null && !job?.id && (
-            <ErrorSection message="Sorry! The job you are looking for is not available." />
+            <ErrorSection message="Có lỗi xảy ra với công việc mà bạn đang tìm kiếm!" />
           )}
           {job !== null && !!job?.id && (
             <>
@@ -119,7 +119,7 @@ function JobDetails() {
               >
                 <VStack gap={8} w={["22rem", "22rem", "full", "full"]} mt={10}>
                   <DetailDescription
-                    skills={job?.skills?.map((e:any) => e.skills) ?? []}
+                    skills={job?.skills?.map((e: any) => e.skills) ?? []}
                     description={job?.description}
                   />
                   <Comments refId={job?.id ?? 0} refType="JOB" />
@@ -152,4 +152,3 @@ function JobDetails() {
 }
 
 export default JobDetails;
-

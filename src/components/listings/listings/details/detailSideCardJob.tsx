@@ -179,9 +179,9 @@ function DetailSideCard({
     seconds: number;
   }) => {
     if (days > 0) {
-      return <span>{`${days}d:${hours}h:${minutes}m`}</span>;
+      return <span>{`${days}n:${hours}g:${minutes}p`}</span>;
     }
-    return <span>{`${hours}h:${minutes}m:${seconds}s`}</span>;
+    return <span>{`${hours}giờ:${minutes}p:${seconds}s`}</span>;
   };
 
   type PrizeKey = keyof Rewards;
@@ -377,7 +377,7 @@ function DetailSideCard({
                         zeroPadDays={1}
                       />
                     ) : (
-                      "Rolling"
+                      "Linh hoạt"
                     )}
                   </Text>
                   <Text color={"#94A3B8"}>
@@ -418,7 +418,7 @@ function DetailSideCard({
                 }}
                 isDisabled={Date.now() > Number(moment(endingTime).format("x"))}
                 isLoading={isUserSubscribeLoading}
-                loadingText={"Checking Subscribe..."}
+                loadingText={"Đang kiểm tra..."}
                 onClick={() => handleSubmit()}
                 size="lg"
                 variant="solid"
@@ -448,10 +448,10 @@ function DetailSideCard({
             rounded={"xl"}
           >
             <Text h="100%" color={"#94A3B8"} fontSize="1rem" textAlign="center">
-              TYPE
+              Loại
             </Text>
             <Text color={"#64768b"} fontSize="1.1rem" fontWeight={500}>
-              {type === "permissioned" ? "Project" : "Job"}
+              {type === "permissioned" ? "Dự án" : "Công việc"}
             </Text>
             <Text color={"#94A3B8"} fontSize="1rem" fontWeight={400}>
               {type === "permissioned"
@@ -526,7 +526,7 @@ function DetailSideCard({
               sublabel={"Cố gắng hết mình!"}
               currentStep={subscribeStatus + 1}
               thisStep={1}
-              label={"Subscribes Open"}
+              label={"Đăng kí mở"}
             />
 
             <Divider
@@ -555,11 +555,11 @@ function DetailSideCard({
               sublabel={
                 isWinnersAnnounced
                   ? "Chúc mừng bạn!"
-                  : `Around ${moment(endingTime)
+                  : `Trong khoảng ${moment(endingTime)
                       .add(8, "d")
                       .format("Do MMM, YY")}`
               }
-              label={"Announced"}
+              label={"Đã công bố"}
             />
           </VStack>
         )}

@@ -72,7 +72,7 @@ export const SuccessListings = ({ isOpen, onClose, slug }: Props) => {
                 }}
                 variant="solid"
               >
-                View Published Listing
+                Xem công việc đã xuất bản
               </Button>
               <Button
                 w="100%"
@@ -81,7 +81,7 @@ export const SuccessListings = ({ isOpen, onClose, slug }: Props) => {
                 }}
                 variant="outline"
               >
-                Back to Dashboard
+                Quay trở lại Dashboard
               </Button>
             </VStack>
           </VStack>

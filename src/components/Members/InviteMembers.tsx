@@ -208,7 +208,7 @@ function InviteMembers({ isOpen, onClose }: Props) {
             </ModalBody>
             <ModalFooter>
               <Button mr={4} onClick={onClose} variant="ghost">
-                Close
+                Đóng
               </Button>
               <Button
                 colorScheme="blue"

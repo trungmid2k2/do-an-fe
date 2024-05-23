@@ -75,8 +75,8 @@ const HomePage: NextPage = () => {
           id={"inputSearch"}
           type={"text"}
           required
-          placeholder={"Search something"}
-          aria-label={"Search here"}
+          placeholder={"Tìm kiếm..."}
+          aria-label={"Tìm ở đây"}
           // value={searchText}
           onChange={(e) => debouncedSetSearchText(e.target.value)}
         />
@@ -106,7 +106,7 @@ const HomePage: NextPage = () => {
                 fontSize={["13", "14", "16", "16"]}
                 fontWeight={"600"}
               >
-                Freelance Gigs
+                Bài đăng Freelance
               </Text>
               <Text
                 display={["none", "none", "block", "block"]}

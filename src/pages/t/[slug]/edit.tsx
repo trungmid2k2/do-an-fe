@@ -13,7 +13,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-const { MediaPicker } = require('degen');
+const { MediaPicker } = require("degen");
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -219,8 +219,8 @@ export default function EditProfilePage() {
       if (!data.discord) {
         setDiscordError(true);
         toast({
-          title: "Discord Error.",
-          description: "Discord field is required.",
+          title: "Lỗi Discord",
+          description: "Yêu cầu có Discord",
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -237,8 +237,8 @@ export default function EditProfilePage() {
 
       if (filledSocialLinksCount < 1) {
         toast({
-          title: "Social Links Error.",
-          description: "At least one social link is required.",
+          title: "Đường dẫn bị lỗi",
+          description: "Ít nhất phải có một mạng xã hội",
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -248,8 +248,8 @@ export default function EditProfilePage() {
 
       if (isAnySocialUrlInvalid) {
         toast({
-          title: "Social URLs Error.",
-          description: "One or more social URLs are invalid.",
+          title: "URL xã hội không hợp lệ",
+          description: "URL xã hội không hợp lệ",
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -299,7 +299,6 @@ export default function EditProfilePage() {
         }
         return acc;
       }, {} as Partial<FormData>);
-      ;
       const response = await fetchClient({
         method: "POST",
         endpoint: "/api/user/edit",
@@ -316,11 +315,10 @@ export default function EditProfilePage() {
         }),
       });
 
-
       toast({
-        title: 'Profile updated.',
-        description: 'Your profile has been updated successfully!',
-        status: 'success',
+        title: "Hồ sơ đã được cập nhật.",
+        description: "Hồ sơ của bạn đã được cập nhật thành công!",
+        status: "success",
         duration: 3000,
         isClosable: true,
       });
@@ -329,9 +327,9 @@ export default function EditProfilePage() {
       }, 500);
     } catch (error: any) {
       toast({
-        title: "Failed to update profile.",
+        title: "Cập nhật thất bại",
         description:
-          'There might be a field with invalid input. Please rectify and then click on "Update"',
+          "Có thể một vài trường bị lỗi. Vui lòng kiểm tra lại thông tin của bạn và thử lại.",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -345,7 +343,7 @@ export default function EditProfilePage() {
         meta={
           <Meta
             title="FreLan"
-            description="Every Solana opportunity in one place!"
+            description="Mọi cơ hội ở đây!"
             canonical="/assets/logo/og.svg"
           />
         }
@@ -353,12 +351,12 @@ export default function EditProfilePage() {
         <Box bg="#fff">
           <Box w="90%" maxW="600px" mx="auto" p={5}>
             <Heading mt={3} mb={5}>
-              Edit Profile
+              Sửa hồ sơ
             </Heading>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormControl>
                 <Text mt={12} mb={5} fontSize="xl">
-                  Personal Info
+                  Thông tin cá nhân
                 </Text>
 
                 {/* eslint-disable no-nested-ternary */}
@@ -373,7 +371,7 @@ export default function EditProfilePage() {
                       color={"brand.slate.500"}
                       requiredIndicator={<></>}
                     >
-                      Profile Picture
+                      Ảnh đại diện
                     </FormLabel>
                     <MediaPicker
                       defaultValue={{ url: photoUrl, type: "image" }}
@@ -388,7 +386,7 @@ export default function EditProfilePage() {
                         setUploading(false);
                       }}
                       compact
-                      label="Choose or drag and drop media"
+                      label="Chọn hoặc kéo thả ảnh vào đây"
                     />
                   </>
                 ) : (
@@ -413,31 +411,29 @@ export default function EditProfilePage() {
                         setUploading(false);
                       }}
                       compact
-                      label="Choose or drag and drop media"
+                      label="Chọn hoặc kéo thả ảnh vào đây"
                     />
                   </>
                 )}
 
                 <InputField
-                  label="First Name"
-                  placeholder="First Name"
+                  label="Tên"
+                  placeholder="Tên"
                   name="firstname"
                   register={register}
                   isRequired
                 />
 
                 <InputField
-                  label="Last Name"
-                  placeholder="Last Name"
+                  label="Họ"
+                  placeholder="Họ"
                   name="lastname"
                   register={register}
                   isRequired
                 />
 
                 <Box w={"full"} mb={"1.25rem"}>
-                  <FormLabel color={"brand.slate.500"}>
-                    Your One-Line Bio
-                  </FormLabel>
+                  <FormLabel color={"brand.slate.500"}>Tiểu sử</FormLabel>
                   <Textarea
                     borderColor="brand.slate.300"
                     _placeholder={{
@@ -446,7 +442,7 @@ export default function EditProfilePage() {
                     focusBorderColor="brand.purple"
                     id={"bio"}
                     maxLength={180}
-                    placeholder="Here is a sample placeholder"
+                    placeholder="Đây là nơi nhập tiểu sử của bạn."
                     {...register("bio", { required: true })}
                   />
                   <Text
@@ -458,12 +454,12 @@ export default function EditProfilePage() {
                     fontSize={"xs"}
                     textAlign="right"
                   >
-                    {180 - (watch("bio")?.length || 0)} characters left
+                    còn {180 - (watch("bio")?.length || 0)} kí tự
                   </Text>
                 </Box>
 
                 <Text mt={8} mb={5} fontSize="xl">
-                  Socials
+                  Xã hội
                 </Text>
 
                 {socials.map((sc, idx: number) => {
@@ -489,16 +485,16 @@ export default function EditProfilePage() {
                   );
                 })}
                 {socialError && (
-                  <Text color="red">At least one social link is required!</Text>
+                  <Text color="red">Có ít nhất một mạng xã hội!</Text>
                 )}
 
                 <Text mt={8} mb={5} fontSize="xl">
-                  Work
+                  Việc làm
                 </Text>
 
                 <Box w={"full"} mb={"1.25rem"}>
                   <FormLabel color={"brand.slate.500"}>
-                    What areas of Web3 are you most interested in?
+                    Bạn quan tâm đến lĩnh vực nào nhất của Web3?
                   </FormLabel>
                   <ReactSelect
                     closeMenuOnSelect={false}
@@ -530,41 +526,43 @@ export default function EditProfilePage() {
                 </Box>
 
                 <SelectBox
-                  label="Work Experience"
+                  label="Kinh nghiệm việc làm"
                   watchValue={watch("experience")}
                   options={workExp}
                   id="experience"
-                  placeholder="Pick Your Experience"
+                  placeholder="Chọn"
                   register={register}
                 />
 
                 <SelectBox
-                  label="Location"
+                  label="Vị trí"
                   watchValue={watch("location")}
                   options={CityList}
                   id="location"
-                  placeholder="Select Your City"
+                  placeholder="Chọn thành phố"
                   register={register}
                 />
 
                 <SelectBox
-                  label="Work Preference"
+                  label="Sở thích về công việc"
                   watchValue={watch("workPrefernce")}
                   options={workType}
                   id="workPrefernce"
-                  placeholder="Type of Work"
+                  placeholder="Loại"
                   register={register}
                 />
 
                 <InputField
-                  label="Current Employer"
+                  label="Công việc hiện tại"
                   placeholder="Employer"
                   name="currentEmployer"
                   register={register}
                   isRequired
                 />
 
-                <FormLabel color={"brand.slate.500"}>Proof of Work</FormLabel>
+                <FormLabel color={"brand.slate.500"}>
+                  Chứng chỉ việc làm
+                </FormLabel>
                 <Box>
                   {pow.map((data, idx) => {
                     return (
@@ -615,7 +613,7 @@ export default function EditProfilePage() {
                   }}
                   variant="outline"
                 >
-                  Add Project
+                  Thêm dự án
                 </Button>
 
                 <SkillSelect
@@ -623,8 +621,8 @@ export default function EditProfilePage() {
                   subSkills={subSkills}
                   setSkills={setSkills}
                   setSubSkills={setSubSkills}
-                  skillLabel="Your Skills"
-                  subSkillLabel="Sub Skills"
+                  skillLabel="Mảng"
+                  subSkillLabel="Kỹ năng"
                 />
 
                 <Checkbox
@@ -639,12 +637,12 @@ export default function EditProfilePage() {
                   }}
                   size="md"
                 >
-                  Keep my info private
+                  Giữ thông tin riêng tư
                 </Checkbox>
                 <br />
 
                 <Button mb={12} isLoading={uploading} type="submit">
-                  Update Profile
+                  Cập nhật
                 </Button>
               </FormControl>
             </form>

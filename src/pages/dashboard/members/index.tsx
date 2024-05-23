@@ -35,7 +35,6 @@ import LoadingSection from "@/components/shared/LoadingSection";
 import type { UserCompany } from "@/interface/userCompany";
 import Sidebar from "@/layouts/Sidebar";
 import { userStore } from "@/store/user";
-import { truncatePublicKey } from "@/utils/truncatePublicKey";
 import fetchClient from "@/lib/fetch-client";
 
 const debounce = require("lodash.debounce");
@@ -86,7 +85,7 @@ const Index = () => {
             }}
             focusBorderColor="brand.purple"
             onChange={(e) => debouncedSetSearchText(e.target.value)}
-            placeholder="Search members..."
+            placeholder="Tìm thành viên"
             type="text"
           />
           <InputRightElement pointerEvents="none">
@@ -97,15 +96,15 @@ const Index = () => {
           (userInfo?.userCompanies?.length &&
             userInfo?.userCompanies[0]?.role === "ADMIN")) && (
           <Button leftIcon={<AddIcon />} onClick={onOpen} variant="solid">
-            Invite Members
+            Mời
           </Button>
         )}
       </Flex>
       {isMembersLoading && <LoadingSection />}
       {!isMembersLoading && !members?.length && (
         <ErrorSection
-          title="No members found!"
-          message="Invite members to join your organization!"
+          title="Không tìm thấy thành viên nào!"
+          message="Hãy mời thêm thành viên vào tổ chức"
         />
       )}
       {!isMembersLoading && members?.length && (
@@ -124,7 +123,7 @@ const Index = () => {
                   fontWeight={500}
                   textTransform={"capitalize"}
                 >
-                  Member
+                  Thành viên
                 </Th>
                 <Th
                   color="brand.slate.400"
@@ -133,7 +132,7 @@ const Index = () => {
                   textAlign="center"
                   textTransform={"capitalize"}
                 >
-                  Role
+                  Vai trò
                 </Th>
                 <Th
                   color="brand.slate.400"
@@ -149,7 +148,7 @@ const Index = () => {
                   fontWeight={500}
                   textTransform={"capitalize"}
                 >
-                  Name
+                  Tên
                 </Th>
                 <Th
                   color="brand.slate.400"
@@ -207,7 +206,6 @@ const Index = () => {
                   </Td>
                   <Td color={"brand.slate.800"}>
                     {`${member?.user?.firstname} ${member?.user?.lastname}`}
-                    
                   </Td>
                   <Td></Td>
                 </Tr>
@@ -225,11 +223,11 @@ const Index = () => {
           <Text as="span" fontWeight={700}>
             {Math.min(skip + length, totalMembers)}
           </Text>{" "}
-          of{" "}
+          của{" "}
           <Text as="span" fontWeight={700}>
             {totalMembers}
           </Text>{" "}
-          Members
+          Thành viên
         </Text>
         <Button
           mr={4}
@@ -239,7 +237,7 @@ const Index = () => {
           size="sm"
           variant="outline"
         >
-          Previous
+          Trước
         </Button>
         <Button
           isDisabled={
@@ -250,7 +248,7 @@ const Index = () => {
           size="sm"
           variant="outline"
         >
-          Next
+          Tiếp
         </Button>
       </Flex>
     </Sidebar>

@@ -170,7 +170,7 @@ export const SubscribeModal = ({
                       _placeholder={{ color: "brand.slate.300" }}
                       focusBorderColor="brand.purple"
                       id="phoneNumber"
-                      placeholder="Add a tweet's link"
+                      placeholder="Thêm đường dẫn twitter"
                       {...register("phoneNumber")}
                     />
                     <FormErrorMessage>

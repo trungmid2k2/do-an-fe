@@ -68,7 +68,7 @@ function PublishResults({
         <ModalFooter>
           <>
             <Button onClick={onClose} variant="ghost">
-              Close
+              Đóng
             </Button>
             <Button
               ml={4}

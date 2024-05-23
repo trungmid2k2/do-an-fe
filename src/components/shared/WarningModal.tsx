@@ -8,7 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 interface Props {
   isOpen: boolean;
@@ -28,7 +28,7 @@ function WarningModal({
   primaryCtaLink,
 }: Props) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={'sm'}>
+    <Modal isOpen={isOpen} onClose={onClose} size={"sm"}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
@@ -36,11 +36,11 @@ function WarningModal({
         <ModalBody>{bodyText}</ModalBody>
         <ModalFooter>
           <Button mr={4} onClick={onClose} variant="ghost">
-            Close
+            Đóng
           </Button>
           <Button
             as={Link}
-            _hover={{ textDecoration: 'none' }}
+            _hover={{ textDecoration: "none" }}
             colorScheme="blue"
             href={primaryCtaLink}
           >

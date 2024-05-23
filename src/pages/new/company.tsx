@@ -9,25 +9,25 @@ import {
   Input,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import axios from 'axios';
+} from "@chakra-ui/react";
+import axios from "axios";
 
-const { MediaPicker } = require('degen');
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
+const { MediaPicker } = require("degen");
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
-import { Default } from '@/layouts/Default';
-import { Meta } from '@/layouts/Meta';
-import { userStore } from '@/store/user';
+import { Default } from "@/layouts/Default";
+import { Meta } from "@/layouts/Meta";
+import { userStore } from "@/store/user";
 
-import { IndustryList } from '@/constants';
-import type { CompanyType } from '@/interface/company';
-import { uploadToCloudinary } from '@/utils/upload';
-import fetchClient from '@/lib/fetch-client';
+import { IndustryList } from "@/constants";
+import type { CompanyType } from "@/interface/company";
+import { uploadToCloudinary } from "@/utils/upload";
+import fetchClient from "@/lib/fetch-client";
 
 const CreateCompany = () => {
   const router = useRouter();
@@ -40,36 +40,36 @@ const CreateCompany = () => {
     watch,
     getValues,
   } = useForm();
-  const [imageUrl, setImageUrl] = useState<string>('');
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [industries, setIndustries] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const createNewCompany = async (company: CompanyType) => {
-    if (getValues('bio').length > 180) {
-      setErrorMessage('Company short bio length exceeded the limit');
+    if (getValues("bio").length > 180) {
+      setErrorMessage("Company short bio length exceeded the limit");
       return;
     }
     setIsLoading(true);
     setHasError(false);
     try {
       const response = await fetchClient({
-        method:"POST",
+        method: "POST",
         endpoint: "/api/company/create",
         body: JSON.stringify({
           ...company,
           userId: userInfo?.id,
-        })
-      })
-      if (response.status != 200){
+        }),
+      });
+      if (response.status != 200) {
         throw new Error(response?.data?.message);
       }
       setIsLoading(false);
-      toast.success('Company created!');
-      router.push('/dashboard/jobs');
+      toast.success("Company created!");
+      router.push("/dashboard/jobs");
     } catch (e: any) {
-      setErrorMessage(e?.data?.message || e.message); 
+      setErrorMessage(e?.data?.message || e.message);
       setIsLoading(false);
       setHasError(true);
     }
@@ -79,7 +79,7 @@ const CreateCompany = () => {
       meta={
         <Meta
           title="Create Company | FreLan"
-          description="Every Solana opportunity in one place!"
+          description="Cơ hội đều ở đây!"
           canonical="/assets/logo/og.svg"
         />
       }
@@ -87,14 +87,14 @@ const CreateCompany = () => {
       {!userInfo ? (
         <>
           <Box
-            alignItems={'center'}
-            justifyContent={'center'}
-            display={'flex'}
-            w={'full'}
-            minH={'100vh'}
+            alignItems={"center"}
+            justifyContent={"center"}
+            display={"flex"}
+            w={"full"}
+            minH={"100vh"}
           >
-            <Text color={'gray.600'} fontSize={'xl'} fontWeight={500}>
-              Please sign In first!
+            <Text color={"gray.600"} fontSize={"xl"} fontWeight={500}>
+              Hãy đăng nhập trước!
             </Text>
           </Box>
         </>
@@ -102,55 +102,55 @@ const CreateCompany = () => {
         <VStack w="full" pt={8} pb={24}>
           <VStack>
             <Heading
-              color={'gray.700'}
-              fontFamily={'Inter'}
-              fontSize={'24px'}
+              color={"gray.700"}
+              fontFamily={"Inter"}
+              fontSize={"24px"}
               fontWeight={700}
             >
-              Welcome to FreLan
+              Chào mừng tới FreLan!
             </Heading>
             <Text
-              color={'gray.400'}
-              fontFamily={'Inter'}
-              fontSize={'20px'}
+              color={"gray.400"}
+              fontFamily={"Inter"}
+              fontSize={"20px"}
               fontWeight={500}
             >
-              {"Let's start with some basic information about your company"}
+              {"Hãy bắt đầu với một số thông tin cơ bản về công ty của bạn"}
             </Text>
           </VStack>
-          <VStack w={'2xl'} pt={10}>
+          <VStack w={"2xl"} pt={10}>
             <form
               onSubmit={handleSubmit(async (e) => {
                 createNewCompany({
                   bio: e.bio,
-                  industry: industries ?? '',
+                  industry: industries ?? "",
                   name: e.companyname,
                   slug: e.slug,
-                  logo: imageUrl ?? '',
-                  twitter: e.twitterHandle ?? '',
-                  url: e.companyurl ?? '',
+                  logo: imageUrl ?? "",
+                  twitter: e.twitterHandle ?? "",
+                  url: e.companyurl ?? "",
                 });
               })}
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             >
-              <HStack justify={'space-between'} w={'full'}>
+              <HStack justify={"space-between"} w={"full"}>
                 <FormControl isRequired>
                   <FormLabel
-                    color={'brand.slate.500'}
-                    fontSize={'15px'}
+                    color={"brand.slate.500"}
+                    fontSize={"15px"}
                     fontWeight={600}
-                    htmlFor={'companyname'}
+                    htmlFor={"companyname"}
                   >
-                    Company Name
+                    Tên công ty
                   </FormLabel>
                   <Input
-                    w={'18rem'}
-                    borderColor={'brand.slate.300'}
-                    _placeholder={{ color: 'brand.slate.300' }}
+                    w={"18rem"}
+                    borderColor={"brand.slate.300"}
+                    _placeholder={{ color: "brand.slate.300" }}
                     focusBorderColor="brand.purple"
                     id="companyname"
                     placeholder="Stark Industries"
-                    {...register('companyname')}
+                    {...register("companyname")}
                   />
                   <FormErrorMessage>
                     {errors.companyname ? (
@@ -160,46 +160,46 @@ const CreateCompany = () => {
                     )}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl w={'18rem'} isRequired>
+                <FormControl w={"18rem"} isRequired>
                   <FormLabel
-                    color={'brand.slate.500'}
-                    fontSize={'15px'}
+                    color={"brand.slate.500"}
+                    fontSize={"15px"}
                     fontWeight={600}
-                    htmlFor={'slug'}
+                    htmlFor={"slug"}
                   >
-                    Company Slug
+                    Slug của công ty
                   </FormLabel>
                   <Input
-                    w={'18rem'}
-                    borderColor={'brand.slate.300'}
-                    _placeholder={{ color: 'brand.slate.300' }}
+                    w={"18rem"}
+                    borderColor={"brand.slate.300"}
+                    _placeholder={{ color: "brand.slate.300" }}
                     focusBorderColor="brand.purple"
                     id="slug"
                     placeholder="starkindustries"
-                    {...register('slug')}
+                    {...register("slug")}
                   />
                   <FormErrorMessage>
                     {errors.slug ? <>{errors.slug.message}</> : <></>}
                   </FormErrorMessage>
                 </FormControl>
               </HStack>
-              <HStack justify={'space-between'} w={'full'} my={6}>
-                <FormControl w={'18rem'}>
+              <HStack justify={"space-between"} w={"full"} my={6}>
+                <FormControl w={"18rem"}>
                   <FormLabel
-                    color={'brand.slate.500'}
-                    fontSize={'15px'}
+                    color={"brand.slate.500"}
+                    fontSize={"15px"}
                     fontWeight={600}
-                    htmlFor={'companyname'}
+                    htmlFor={"companyname"}
                   >
                     Website
                   </FormLabel>
                   <Input
-                    borderColor={'brand.slate.300'}
-                    _placeholder={{ color: 'brand.slate.300' }}
+                    borderColor={"brand.slate.300"}
+                    _placeholder={{ color: "brand.slate.300" }}
                     focusBorderColor="brand.purple"
                     id="companyurl"
                     placeholder="https://starkindustries.com"
-                    {...register('companyurl')}
+                    {...register("companyurl")}
                   />
                   <FormErrorMessage>
                     {errors.companyurl ? (
@@ -209,22 +209,22 @@ const CreateCompany = () => {
                     )}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl w={'18rem'}>
+                <FormControl w={"18rem"}>
                   <FormLabel
-                    color={'brand.slate.500'}
-                    fontSize={'15px'}
+                    color={"brand.slate.500"}
+                    fontSize={"15px"}
                     fontWeight={600}
-                    htmlFor={'twitterHandle'}
+                    htmlFor={"twitterHandle"}
                   >
-                    Company Twitter
+                    Twitter công ty
                   </FormLabel>
                   <Input
-                    w={'18rem'}
-                    borderColor={'brand.slate.300'}
-                    _placeholder={{ color: 'brand.slate.300' }}
+                    w={"18rem"}
+                    borderColor={"brand.slate.300"}
+                    _placeholder={{ color: "brand.slate.300" }}
                     id="twitterHandle"
                     placeholder="@StarkIndustries"
-                    {...register('twitterHandle')}
+                    {...register("twitterHandle")}
                   />
                   <FormErrorMessage>
                     {errors.twitterHandle ? (
@@ -235,16 +235,16 @@ const CreateCompany = () => {
                   </FormErrorMessage>
                 </FormControl>
               </HStack>
-              <VStack align={'start'} gap={2} my={3}>
+              <VStack align={"start"} gap={2} my={3}>
                 <Heading
-                  color={'brand.slate.500'}
-                  fontSize={'15px'}
+                  color={"brand.slate.500"}
+                  fontSize={"15px"}
                   fontWeight={600}
                 >
-                  Company Logo{' '}
+                  Logo công ty{" "}
                   <span
                     style={{
-                      color: 'red',
+                      color: "red",
                     }}
                   >
                     *
@@ -252,28 +252,29 @@ const CreateCompany = () => {
                 </Heading>
                 <HStack gap={5}>
                   <MediaPicker
-                    onChange={async (e:any) => {
+                    onChange={async (e: any) => {
                       const a = await uploadToCloudinary(e);
                       setImageUrl(a);
                     }}
                     compact
-                    label="Choose or Drag & Drop Media"
+                    label="Chọn hoặc kéo thả ảnh vào đây"
                   />
                 </HStack>
               </VStack>
 
-              <HStack justify={'space-between'} w={'full'} mt={6}>
-                <FormControl w={'full'} isRequired>
+              <HStack justify={"space-between"} w={"full"} mt={6}>
+                <FormControl w={"full"} isRequired>
                   <FormLabel
-                    color={'brand.slate.500'}
-                    fontSize={'15px'}
+                    color={"brand.slate.500"}
+                    fontSize={"15px"}
                     fontWeight={600}
-                    htmlFor={'industry'}
+                    htmlFor={"industry"}
                   >
-                    Industry
+                    Lĩnh vực
                   </FormLabel>
 
                   <Select
+                    placeholder="Chọn"
                     closeMenuOnSelect={false}
                     components={animatedComponents}
                     isMulti
@@ -281,12 +282,12 @@ const CreateCompany = () => {
                     styles={{
                       control: (baseStyles) => ({
                         ...baseStyles,
-                        backgroundColor: 'brand.slate.500',
-                        borderColor: 'brand.slate.300',
+                        backgroundColor: "brand.slate.500",
+                        borderColor: "brand.slate.300",
                       }),
                     }}
                     onChange={(e) =>
-                      setIndustries(e.map((i: any) => i.value).join(', '))
+                      setIndustries(e.map((i: any) => i.value).join(", "))
                     }
                   />
                   <FormErrorMessage>
@@ -297,33 +298,33 @@ const CreateCompany = () => {
               <Box my={6}>
                 <FormControl isRequired>
                   <FormLabel
-                    color={'brand.slate.500'}
-                    fontSize={'15px'}
+                    color={"brand.slate.500"}
+                    fontSize={"15px"}
                     fontWeight={600}
-                    htmlFor={'bio'}
+                    htmlFor={"bio"}
                   >
-                    Company Short Bio
+                    Tiểu sử ngắn
                   </FormLabel>
                   <Input
-                    w={'full'}
-                    borderColor={'brand.slate.300'}
-                    _placeholder={{ color: 'brand.slate.300' }}
+                    w={"full"}
+                    borderColor={"brand.slate.300"}
+                    _placeholder={{ color: "brand.slate.300" }}
                     focusBorderColor="brand.purple"
                     id="bio"
                     maxLength={180}
-                    {...register('bio')}
-                    placeholder="What does your company do?"
+                    {...register("bio")}
+                    placeholder="Công ty làm gì?"
                   />
                   <Text
                     color={
-                      (watch('bio')?.length || 0) > 160
-                        ? 'red'
-                        : 'brand.slate.400'
+                      (watch("bio")?.length || 0) > 160
+                        ? "red"
+                        : "brand.slate.400"
                     }
-                    fontSize={'xs'}
+                    fontSize={"xs"}
                     textAlign="right"
                   >
-                    {180 - (watch('bio')?.length || 0)} characters left
+                    còn {180 - (watch("bio")?.length || 0)} kí tự
                   </Text>
                   <FormErrorMessage>
                     {errors.bio ? <>{errors.bio.message}</> : <></>}
@@ -335,19 +336,20 @@ const CreateCompany = () => {
                 {hasError && (
                   <Text align="center" mb={4} color="red">
                     {errorMessage ||
-                      'Sorry! An error occurred while creating your company!'}
-                    <br />                  </Text>
+                      "Sorry! An error occurred while creating your company!"}
+                    <br />{" "}
+                  </Text>
                 )}
                 <Button
                   w="full"
-                  isDisabled={imageUrl === ''}
+                  isDisabled={imageUrl === ""}
                   isLoading={!!isLoading}
                   loadingText="Creating..."
                   size="lg"
                   type="submit"
                   variant="solid"
                 >
-                  Create Company
+                  Tạo công ty
                 </Button>
               </Box>
             </form>

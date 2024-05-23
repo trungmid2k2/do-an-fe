@@ -48,8 +48,8 @@ function ListingCategoryPage({ slug }: { slug: string }) {
       <Box w={"100%"}>
         <ListingSection
           type="jobs"
-          title={`${slug} Gigs`}
-          sub="Bite sized tasks for freelancers"
+          title={`Bài đăng về ${slug}`}
+          sub=" "
           emoji="/assets/home/emojis/moneyman.png"
           all
         >
