@@ -123,7 +123,7 @@ const SidebarContent = ({ ...rest }: BoxProps) => {
                   src={"/assets/icons/bolt.svg"}
                 />{" "}
                 <Text color="brand.slate.500" fontWeight={500}>
-                  Công việc mới
+                  Tạo công việc mới
                 </Text>
               </MenuItem>
             </NextLink>

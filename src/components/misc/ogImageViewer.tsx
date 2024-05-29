@@ -1,23 +1,23 @@
-import type { ImageProps, ResponsiveValue } from '@chakra-ui/react';
-import { Image, Skeleton } from '@chakra-ui/react';
-import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
-import type { Metadata } from 'unfurl.js/dist/types';
+import type { ImageProps, ResponsiveValue } from "@chakra-ui/react";
+import { Image, Skeleton } from "@chakra-ui/react";
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
+import type { Metadata } from "unfurl.js/dist/types";
 
 interface Props {
   externalUrl: string;
   w?: ResponsiveValue<string | number>;
   h?: ResponsiveValue<string | number>;
-  objectFit?: ImageProps['objectFit'];
+  objectFit?: ImageProps["objectFit"];
   borderTopRadius?: string | number;
   borderRadius?: string | number;
 }
 
 const getRandomFallbackImage = (): string => {
   const fallbackImages = [
-    '/assets/fallback/og1.jpeg',
-    '/assets/fallback/og2.jpeg',
-    '/assets/fallback/og3.jpeg',
+    "/assets/fallback/og1.jpeg",
+    "/assets/fallback/og2.jpeg",
+    "/assets/fallback/og3.jpeg",
   ];
 
   const randomIndex = Math.floor(Math.random() * fallbackImages.length);
@@ -32,7 +32,7 @@ const OgImageViewer: React.FC<Props> = ({ externalUrl, ...props }) => {
     const fetchImage = async () => {
       if (externalUrl) {
         try {
-          const { data } = (await axios.post('/api/og', {
+          const { data } = (await axios.post("/api/og", {
             url: externalUrl,
           })) as { data: Metadata };
 
@@ -57,7 +57,7 @@ const OgImageViewer: React.FC<Props> = ({ externalUrl, ...props }) => {
     <div>
       {ogImageUrl ? (
         <Image
-          bgPosition={'center'}
+          bgPosition={"center"}
           alt="OG Image"
           onError={handleImageError}
           src={ogImageUrl}

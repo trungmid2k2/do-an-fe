@@ -554,7 +554,7 @@ function DetailSideCard({
               thisStep={3}
               sublabel={
                 isWinnersAnnounced
-                  ? "Chúc mừng bạn!"
+                  ? "Đã chọn được ứng viên!"
                   : `Trong khoảng ${moment(endingTime)
                       .add(8, "d")
                       .format("Do MMM, YY")}`

@@ -197,7 +197,9 @@ const Index = () => {
                         size="md"
                         variant="solid"
                       >
-                        {member?.role}
+                        {member?.role === "ADMIN"
+                          ? "Quản trị viên"
+                          : "Thành viên"}
                       </Tag>
                     </Flex>
                   </Td>

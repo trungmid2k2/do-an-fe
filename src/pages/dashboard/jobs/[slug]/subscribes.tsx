@@ -157,7 +157,7 @@ function JobSubscribes({ slug }: Props) {
               </BreadcrumbItem>
 
               <BreadcrumbItem>
-                <Text color="brand.slate.400">Subscribes</Text>
+                <Text color="brand.slate.400">Người đăng kí</Text>
               </BreadcrumbItem>
             </Breadcrumb>
           </Box>
@@ -173,20 +173,20 @@ function JobSubscribes({ slug }: Props) {
             >
               {jobStatus}
             </Tag>
-            <Tag
+            {/* <Tag
               color={"white"}
               bg={getBgColor(jobProgress)}
               size="sm"
               variant="solid"
             >
               {jobProgress}
-            </Tag>
+            </Tag> */}
           </Flex>
           <Flex align="center" justify="space-between" mb={4}>
             <Text color="brand.slate.500">
               {totalSubscribes}{" "}
               <Text as="span" color="brand.slate.400">
-                Đăng ký
+                Người đăng kí
               </Text>
             </Text>
           </Flex>
@@ -251,7 +251,7 @@ function JobSubscribes({ slug }: Props) {
                               textAlign="right"
                               textTransform={"capitalize"}
                             >
-                              Thêm thông tin
+                              Thông tin thêm
                             </Th>
                             <Th
                               align="center"
@@ -261,7 +261,7 @@ function JobSubscribes({ slug }: Props) {
                               textAlign="center"
                               textTransform={"capitalize"}
                             >
-                              Áp dụng khi ↓
+                              Nộp vào↓
                             </Th>
                             <Th pl={0} />
                             <Th pl={0} />
@@ -315,7 +315,7 @@ function JobSubscribes({ slug }: Props) {
                                     <Tooltip
                                       color="white"
                                       bg="brand.purple"
-                                      label={`deadline`}
+                                      label={`Nộp vào ngày`}
                                       placement="bottom"
                                     >
                                       <Flex align="center">
@@ -337,7 +337,7 @@ function JobSubscribes({ slug }: Props) {
                                 <Td pl={0}>
                                   {talentChosen > 0 ? (
                                     talentChosen === sub.userId ? (
-                                      <>🏆</>
+                                      <>Đã chọn</>
                                     ) : (
                                       <></>
                                     )
@@ -384,7 +384,7 @@ function JobSubscribes({ slug }: Props) {
               <Text as="span" fontWeight={700}>
                 {Math.min(skip + length, totalSubscribes)}
               </Text>{" "}
-              of{" "}
+              của{" "}
               <Text as="span" fontWeight={700}>
                 {totalSubscribes}
               </Text>{" "}

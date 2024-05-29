@@ -53,8 +53,6 @@ const HomePage: NextPage = () => {
   };
 
   useEffect(() => {
-    console.log("ok");
-    // if (!isListingsLoading) return;
     getListings(searchText);
   }, [searchText]);
 
