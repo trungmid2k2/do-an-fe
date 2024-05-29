@@ -4,9 +4,9 @@ import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
-  
   pages: {
     signIn: "/",
+    error: "/",
   },
   session: {
     strategy: "jwt",
@@ -32,7 +32,9 @@ export const authOptions: NextAuthOptions = {
             endpoint: "/api/login",
             body: JSON.stringify(credentials),
           });
-         
+
+          console.log("response", response);
+
           if (response.status != 200) {
             throw new Error("Cant not get data");
           }
@@ -40,7 +42,7 @@ export const authOptions: NextAuthOptions = {
           const data: {
             user: User;
             access_token: string;
-          } =  response.data;
+          } = response.data;
           if (!data?.access_token) {
             throw response;
           }
@@ -49,25 +51,30 @@ export const authOptions: NextAuthOptions = {
             ...data.user,
             accessToken: data?.access_token,
           };
-        } catch (error) {
-          console.log(error)
-          if (error instanceof Response) {
-            return null;
-          }
-          throw new Error("An error has occurred during login request");
+        } catch (error: any) {
+          // const toast = useToast();
+          // toast({
+          //   title: "Có lỗi xảy ra",
+          //   description: "",
+          //   status: "error",
+          //   position: "top-right",
+          //   duration: 3000,
+          //   isClosable: true,
+          // });
+          throw new Error("Có lỗi xảy ra");
         }
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user, trigger, session }: any) {
-      if (trigger === "update") {       
+      if (trigger === "update") {
         if (session.type === "MANUAL") {
           const response = await fetchClient({
             endpoint: "/api/user",
             token: token.accessToken,
           });
-          const user =  response.data;
+          const user = response.data;
 
           return { ...token, ...user };
         }
@@ -126,8 +133,7 @@ async function refreshAccessToken(token: any) {
       throw new Error("Cant not get data");
     }
 
-    const refreshedAccessToken: { access_token: string } =
-      await response.data;
+    const refreshedAccessToken: { access_token: string } = await response.data;
     const { exp } = jwt.decode(refreshedAccessToken.access_token);
 
     return {

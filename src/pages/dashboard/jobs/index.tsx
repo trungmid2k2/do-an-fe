@@ -365,9 +365,9 @@ function Jobs() {
                   textAlign="center"
                   textTransform={"capitalize"}
                 >
-                  Nháp
+                  Trạng thái
                 </Th>
-                <Th
+                {/* <Th
                   color="brand.slate.400"
                   fontSize="sm"
                   fontWeight={500}
@@ -375,7 +375,7 @@ function Jobs() {
                   textTransform={"capitalize"}
                 >
                   Trạng thái
-                </Th>
+                </Th> */}
                 <Th pl={0} />
                 <Th pl={0} />
               </Tr>
@@ -470,7 +470,7 @@ function Jobs() {
                         </Tag>
                       </Flex>
                     </Td>
-                    <Td align="center">
+                    {/* <Td align="center">
                       <Flex align="center" justify={"center"}>
                         {jobProgress ? (
                           <Tag
@@ -492,7 +492,7 @@ function Jobs() {
                           </Tag>
                         )}
                       </Flex>
-                    </Td>
+                    </Td> */}
                     <Td pl={0}>
                       <Button
                         w="full"

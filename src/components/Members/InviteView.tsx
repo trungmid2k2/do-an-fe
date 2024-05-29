@@ -23,6 +23,7 @@ function InviteView({ invite }: Props) {
   const acceptUser = async (user: User) => {
     setIsAccepting(true);
     if (user?.id && user?.isVerified && user?.email !== invite?.email) {
+      console.log("acceptError");
       setAcceptError("Bạn phải đăng nhập!");
       setIsAccepting(false);
     } else if (user?.id && user?.isVerified && user?.email === invite?.email) {
@@ -32,6 +33,8 @@ function InviteView({ invite }: Props) {
           endpoint: "/api/members/accept",
           body: JSON.stringify({ inviteId: invite?.id }),
         });
+        console.log("acceptError");
+
         router.push("/dashboard/jobs");
       } catch (e: any) {
         setAcceptError(e.message);
@@ -49,7 +52,6 @@ function InviteView({ invite }: Props) {
       setAcceptError("");
     }
   };
-
   return (
     <Container maxW={"3xl"}>
       <Stack as={Box} py={{ base: 20, md: 36 }} textAlign={"center"}>

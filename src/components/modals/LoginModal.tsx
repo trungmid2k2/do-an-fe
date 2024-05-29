@@ -1,13 +1,16 @@
 import {
-  Box,
+  // Alert,
+  // AlertIcon,
+  // Box,
   Button,
   FormControl,
   FormLabel,
-  HStack,
-  Image,
+  // HStack,
+  // Image,
   Input,
   InputGroup,
   InputRightElement,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -15,8 +18,9 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
-  VStack,
+  // Text,
+  // VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
@@ -26,11 +30,10 @@ interface Props {
   onClose: () => void;
   isOpen: boolean;
 }
-import { useAlert } from "@/context/AlertContext";
 import { signIn } from "next-auth/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 export const LoginModal = ({ isOpen, onClose }: Props) => {
-  const router = useRouter();
+  const toast = useToast();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const [show, setShow] = useState(false);
@@ -43,9 +46,31 @@ export const LoginModal = ({ isOpen, onClose }: Props) => {
       password: "",
     },
     onSubmit: async (values) => {
-      const res = await signIn("credentials", { ...values, callbackUrl: "/" });
-      console.log(res);
-      onClose();
+      const res = await signIn("credentials", {
+        ...values,
+        callbackUrl: "/",
+        redirect: false,
+      });
+      if (res?.error) {
+        toast({
+          title: "Có lỗi xảy ra.",
+          description: "Hãy kiểm tra lại thông tin đăng nhập.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
+      } else {
+        toast({
+          title: "Đăng nhập thành công.",
+          description: "",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right",
+        });
+        onClose();
+      }
     },
   });
 
@@ -72,6 +97,7 @@ export const LoginModal = ({ isOpen, onClose }: Props) => {
                   type="text"
                   onChange={formik.handleChange}
                   value={formik.values.username}
+                  required
                   placeholder="Tên đăng nhập"
                 />
               </FormControl>
@@ -86,6 +112,7 @@ export const LoginModal = ({ isOpen, onClose }: Props) => {
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     placeholder="Mật khẩu"
+                    required
                   />
                   <InputRightElement width="4.5rem">
                     <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -97,6 +124,7 @@ export const LoginModal = ({ isOpen, onClose }: Props) => {
             </ModalBody>
 
             <ModalFooter>
+              <Link mr={4}>Quên mật khẩu?</Link>
               <Button type="submit" colorScheme="blue" mr={3}>
                 Đăng nhập
               </Button>

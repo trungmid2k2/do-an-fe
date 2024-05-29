@@ -368,9 +368,15 @@ function TalentProfile({ slug }: TalentProps) {
                     </Text>
                   </Text>
                   <Text mt={3} color={"brand.slate.400"}>
-                    Trụ sở tại{" "}
+                    Sống tại{" "}
                     <Text as={"span"} color={"brand.slate.500"}>
                       {talent?.location}
+                    </Text>
+                  </Text>
+                  <Text mt={3} color={"brand.slate.400"}>
+                    Email{" "}
+                    <Text as={"span"} color={"brand.slate.500"}>
+                      {talent?.email}
                     </Text>
                   </Text>
                 </Box>

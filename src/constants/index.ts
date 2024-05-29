@@ -869,8 +869,8 @@ export const web3Exp = [
 export const workExp = [
   "0 năm",
   "<2 năm",
-  "2 to 5 năm",
-  "5 to 9 năm",
+  "2 đến 5 năm",
+  "5 đến 9 năm",
   ">9 năm",
 ];
 export const workType = ["Không tìm việc", "Freelance", "Fulltime", "Thực tập"];

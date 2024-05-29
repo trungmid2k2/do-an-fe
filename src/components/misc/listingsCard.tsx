@@ -25,6 +25,8 @@ import { TalentStore } from "@/store/talent";
 import { userStore } from "@/store/user";
 // import { updateNotification } from '@/utils/functions';
 import { EarningModal } from "../modals/earningModal";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/vi";
 
 type ListingSectionProps = {
   children?: React.ReactNode;
@@ -46,6 +48,8 @@ export const ListingSection = ({
   all,
 }: ListingSectionProps) => {
   const router = useRouter();
+  // dayjs.extend(relativeTime);
+  dayjs.locale("vi");
 
   return (
     <Box
@@ -255,8 +259,8 @@ export const JobsCard = ({
                   {applicationType === "rolling"
                     ? "Linh hoạt"
                     : dayjs().isBefore(dayjs(deadline))
-                    ? `Sẽ đóng ${dayjs(deadline).fromNow()}`
-                    : `Đã đóng ${dayjs(deadline).fromNow()}`}
+                    ? `Sẽ đóng ${dayjs(deadline).locale("vi").fromNow()}`
+                    : `Đã đóng`}
                 </Text>
               </Flex>
             </Flex>

@@ -175,7 +175,7 @@ const Builder = ({
             }}
             variant="outline"
           >
-            {isNewOrDraft ? "Lưu bản nháp" : "Cập nhật công việc"}
+            {isNewOrDraft ? "Lưu bản nháp" : "Cập nhật"}
           </Button>
         </VStack>
       </VStack>

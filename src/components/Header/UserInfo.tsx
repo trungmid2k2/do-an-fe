@@ -20,6 +20,7 @@ import { useState } from "react";
 import { LoginModal } from "../modals/LoginModal";
 import { signOut } from "next-auth/react";
 import { userStore } from "@/store/user";
+import { ChangePasswordModal } from "../modals/ChangePasswordModal";
 
 interface UserInfoProps {
   isMobile?: boolean;
@@ -34,6 +35,15 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
   const displayValue = isMobile
     ? { base: "block", md: "none" }
     : { base: "none", md: "block" };
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <>
@@ -109,6 +119,14 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
                 }}
               >
                 Chỉnh sửa hồ sơ
+              </MenuItem>
+              <MenuItem
+                color="brand.slate.500"
+                fontSize="sm"
+                fontWeight={600}
+                onClick={handleOpenModal}
+              >
+                Đổi mật khẩu
               </MenuItem>
               {userInfo?.currentCompany && (
                 <>
@@ -192,6 +210,7 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
           </HStack>
         </>
       )}
+      <ChangePasswordModal isOpen={openModal} onClose={onCloseModal} />
     </>
   );
 }

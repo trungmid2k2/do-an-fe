@@ -2,7 +2,7 @@ import type { Job, JobWithSubscribes } from "@/interface/job";
 import { dayjs } from "@/utils/dayjs";
 
 export const getDeadlineFromNow = (deadline: string | undefined) =>
-  deadline ? dayjs(deadline).fromNow() : "-";
+  deadline ? dayjs(deadline).locale("vi").fromNow() : "-";
 
 export const formatDeadline = (deadline: string | undefined) =>
   deadline ? dayjs(deadline).format("MMM D, YYYY HH:mm") : "-";
