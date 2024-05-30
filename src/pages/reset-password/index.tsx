@@ -1,22 +1,35 @@
-import { SendEmailForgot } from "@/components/resetPassword/SendEmailForgot";
-import { Button, Flex } from "@chakra-ui/react";
+import { ResetPassword } from "@/components/resetPassword/ResetPassword";
+import usePasswordResetStore from "@/store/passwordReset";
 
 import React, { useState } from "react";
 
 type Props = {};
 
 export default function Index({}: Props) {
-  const [isOpen, setIsOpen] = useState(true);
-  const onClose = () => setIsOpen(false);
+  const passwordResetData = usePasswordResetStore(
+    (state: any) => state.passwordResetData
+  );
 
   return (
     <>
-      <SendEmailForgot isOpen={isOpen} onClose={onClose} />
-      <Flex align={"center"} justify={"center"} mt={200}>
-        <Button onClick={() => setIsOpen(true)}>
-          Gửi yêu cầu đặt lại mật khẩu
-        </Button>
-      </Flex>
+      {passwordResetData ? (
+        <ResetPassword />
+      ) : (
+        <>
+          <div
+            style={{
+              textAlign: "center",
+              fontSize: "4rem",
+              color: "red",
+              marginTop: "10% ",
+            }}
+          >
+            <div> Có lỗi xảy ra</div>
+            <br />
+            <div>Không tìm thấy trang bạn tìm</div>
+          </div>
+        </>
+      )}
     </>
   );
 }

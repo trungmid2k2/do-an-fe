@@ -20,15 +20,15 @@ import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import { BACKEND_URL } from "@/env";
 import { useRouter } from "next/router";
+import usePasswordResetStore from "@/store/passwordReset";
 
-interface Props {
-  token: string | undefined;
-  show: boolean;
-}
-export const ResetPassword = ({ token, show }: Props) => {
+export const ResetPassword = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
+  const passwordResetData = usePasswordResetStore(
+    (state: any) => state.passwordResetData
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -37,14 +37,17 @@ export const ResetPassword = ({ token, show }: Props) => {
     onSubmit: async (values) => {
       setIsLoading(true);
       try {
-        const res = await fetch(`${BACKEND_URL}/api/reset_password/${token}`, {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
+        const res = await fetch(
+          `${BACKEND_URL}/api/reset_password/${passwordResetData.token}`,
+          {
+            method: "PUT",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          }
+        );
         if (res.ok) {
           toast({
             title: "Thành công!",
@@ -76,7 +79,7 @@ export const ResetPassword = ({ token, show }: Props) => {
   });
 
   return (
-    <div style={{ display: show ? "block" : "none" }}>
+    <div>
       <Container mt={300}>
         <form onSubmit={formik.handleSubmit}>
           <FormControl>
