@@ -124,7 +124,6 @@ export const LoginModal = ({ isOpen, onClose }: Props) => {
             </ModalBody>
 
             <ModalFooter>
-              <Link mr={4}>Quên mật khẩu?</Link>
               <Button type="submit" colorScheme="blue" mr={3}>
                 Đăng nhập
               </Button>
@@ -132,6 +131,7 @@ export const LoginModal = ({ isOpen, onClose }: Props) => {
             </ModalFooter>
           </form>
         </ModalContent>
+        {/* <ResetPassword isOpen={showForgotPassword} onClose={() => {}} /> */}
       </Modal>
     </>
   );
