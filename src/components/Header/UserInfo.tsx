@@ -29,7 +29,6 @@ interface UserInfoProps {
 export default function UserInfo({ isMobile }: UserInfoProps) {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [initialStep, setInitialStep] = useState<number>(1);
   const [isLessthan768] = useMediaQuery("(max-width: 768px)");
   const { userInfo }: any = userStore();
   const displayValue = isMobile
@@ -44,7 +43,9 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
   const onCloseModal = () => {
     setOpenModal(false);
   };
-
+  const handleForgetPassword = () => {
+    router.push("/reset-password");
+  };
   return (
     <>
       {userInfo ? (
@@ -207,6 +208,18 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
             >
               Đăng ký
             </Button>
+            <HStack gap={0} w={{ base: "100%", md: "auto" }}>
+              <Button
+                display={displayValue}
+                w={{ base: "100%", md: "auto" }}
+                fontSize="xs"
+                size="sm"
+                variant={{ base: "solid", md: "ghost" }}
+                onClick={handleForgetPassword}
+              >
+                Quên mật khẩu
+              </Button>
+            </HStack>
           </HStack>
         </>
       )}

@@ -179,41 +179,6 @@ const HomePage: NextPage = () => {
             </Button>
           </Link>
         </Box>
-
-        {/* <ListingSection
-          type="grants"
-          title="Grants"
-          sub="Equity-free funding opportunities for builders"
-          emoji="/assets/home/emojis/grants.png"
-        >
-          {isListingsLoading && (
-            <Flex align="center" justify="center" direction="column" minH={52}>
-              <Loading />
-            </Flex>
-          )}
-          {!isListingsLoading && true && (
-            <Flex align="center" justify="center" mt={8}>
-              <EmptySection
-                title="No grants available!"
-                message="Subscribe to notifications to get notified about new grants."
-              />
-            </Flex>
-          )}
-          {!isListingsLoading &&
-            listings?.grants?.map((grant) => {
-              return (
-                <GrantsCard
-                  companyName={grant?.company?.name}
-                  logo={grant?.company?.logo}
-                  key={grant?.id}
-                  slug={grant.slug}
-                  rewardAmount={grant?.rewardAmount}
-                  title={grant?.title}
-                  short_description={grant?.shortDescription}
-                />
-              );
-            })} 
-        </ListingSection> */}
       </Box>
     </Home>
   );

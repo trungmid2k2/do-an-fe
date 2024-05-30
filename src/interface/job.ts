@@ -1,9 +1,8 @@
+import type { QuestionType } from "@/components/listings/job/questions/builder";
+import type { CompanyType } from "@/interface/company";
+import type { User } from "@/interface/user";
 
-import type { QuestionType } from '@/components/listings/job/questions/builder';
-import type { CompanyType } from '@/interface/company';
-import type { User } from '@/interface/user';
-
-import type { Skills } from './skills';
+import type { Skills } from "./skills";
 
 interface Eligibility {
   order: number;
@@ -24,7 +23,7 @@ interface Rewards {
   fifth?: number;
 }
 
-type JobStatus = 'OPEN' | 'REVIEW' | 'CLOSED';
+type JobStatus = "OPEN" | "REVIEW" | "CLOSED";
 
 interface Job {
   id?: number;
@@ -52,8 +51,8 @@ interface Job {
   poc?: User;
   source?: string;
   sourceDetails?: string;
-  type?:  string;
-  applicationType?: 'fixed' | 'rolling';
+  type?: string;
+  applicationType?: "fixed" | "rolling";
   totalWinnersSelected?: number;
   region?: any;
   totalPaymentsMade?: number;
@@ -61,8 +60,6 @@ interface Job {
   templateId?: string;
   timeToComplete?: string;
   hackathonprize?: boolean;
-  
-
 }
 
 interface JobWithSubscribes extends Job {
