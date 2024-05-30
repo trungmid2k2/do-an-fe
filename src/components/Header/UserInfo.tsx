@@ -21,6 +21,7 @@ import { LoginModal } from "../modals/LoginModal";
 import { signOut } from "next-auth/react";
 import { userStore } from "@/store/user";
 import { ChangePasswordModal } from "../modals/ChangePasswordModal";
+import { SendEmailForgot } from "../resetPassword/SendEmailForgot";
 
 interface UserInfoProps {
   isMobile?: boolean;
@@ -36,15 +37,18 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
     : { base: "none", md: "block" };
 
   const [openModal, setOpenModal] = useState(false);
-
+  const [openModalForgot, setOpenModalForgot] = useState(false);
   const handleOpenModal = () => {
     setOpenModal(true);
   };
   const onCloseModal = () => {
     setOpenModal(false);
   };
-  const handleForgetPassword = () => {
-    router.push("/reset-password");
+  const handleOpenModalForgot = () => {
+    setOpenModalForgot(true);
+  };
+  const onCloseModalForgot = () => {
+    setOpenModalForgot(false);
   };
   return (
     <>
@@ -215,10 +219,14 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
                 fontSize="xs"
                 size="sm"
                 variant={{ base: "solid", md: "ghost" }}
-                onClick={handleForgetPassword}
+                onClick={handleOpenModalForgot}
               >
                 Quên mật khẩu
               </Button>
+              <SendEmailForgot
+                isOpen={openModalForgot}
+                onClose={onCloseModalForgot}
+              />
             </HStack>
           </HStack>
         </>

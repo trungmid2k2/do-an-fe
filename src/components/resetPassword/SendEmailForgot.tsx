@@ -1,12 +1,8 @@
 import {
   Button,
-  Container,
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
-  InputRightElement,
-  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -19,7 +15,8 @@ import {
 import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import { BACKEND_URL } from "@/env";
-import { ResetPassword } from "./ResetPassword";
+import usePasswordResetStore from "@/store/passwordReset";
+import { useRouter } from "next/router";
 
 interface Props {
   onClose: () => void;
@@ -28,14 +25,13 @@ interface Props {
 
 export const SendEmailForgot = ({ isOpen, onClose }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [dataForgotPassword, setDataForgotPassword] = useState<
-    ForgotPassword | undefined
-  >(undefined);
+  const router = useRouter();
   const toast = useToast();
-  const [showTypePassword, setShowTypePassword] = useState(false);
   const initialRef = useRef(null);
   const finalRef = useRef(null);
-
+  const setPasswordResetData = usePasswordResetStore(
+    (state: any) => state.setPasswordResetData
+  );
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -53,7 +49,7 @@ export const SendEmailForgot = ({ isOpen, onClose }: Props) => {
         });
         const data = await res.json();
         const takeData = data.data;
-        setDataForgotPassword(takeData);
+        setPasswordResetData(takeData);
         if (res.ok) {
           toast({
             title: "Thành công!",
@@ -65,8 +61,7 @@ export const SendEmailForgot = ({ isOpen, onClose }: Props) => {
           });
           setIsLoading(false);
           onClose();
-          setShowTypePassword(true);
-          // console.log("res", res.data);
+          router.push("/reset-password");
         } else {
           toast({
             title: "Có lỗi xảy ra.",
@@ -76,13 +71,11 @@ export const SendEmailForgot = ({ isOpen, onClose }: Props) => {
             isClosable: true,
             position: "top-right",
           });
-          setShowTypePassword(false);
           setIsLoading(false);
         }
       } catch (error) {
         console.error("Error");
         setIsLoading(false);
-        setShowTypePassword(false);
       }
     },
   });
@@ -130,10 +123,6 @@ export const SendEmailForgot = ({ isOpen, onClose }: Props) => {
           </form>
         </ModalContent>
       </Modal>
-      <ResetPassword
-        show={showTypePassword}
-        token={dataForgotPassword?.token}
-      />
     </>
   );
 };
