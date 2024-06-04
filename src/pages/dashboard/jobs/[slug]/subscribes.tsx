@@ -99,12 +99,10 @@ function JobSubscribes({ slug }: Props) {
     setIsJobLoading(true);
     try {
       const jobDetails = await fetchClient({
-        method: "GET",
+        method: "GET",    
         endpoint: `/api/jobs?slug=${slug}`,
       });
-
       setJob(jobDetails.data.data[0]);
-
       getSubscribes(jobDetails.data.data[0]);
     } catch (e) {
       setIsJobLoading(false);
@@ -173,14 +171,6 @@ function JobSubscribes({ slug }: Props) {
             >
               {jobStatus}
             </Tag>
-            {/* <Tag
-              color={"white"}
-              bg={getBgColor(jobProgress)}
-              size="sm"
-              variant="solid"
-            >
-              {jobProgress}
-            </Tag> */}
           </Flex>
           <Flex align="center" justify="space-between" mb={4}>
             <Text color="brand.slate.500">
@@ -322,7 +312,6 @@ function JobSubscribes({ slug }: Props) {
                                         {new Intl.DateTimeFormat(
                                           "en-US"
                                         ).format(new Date(sub?.created_at))}
-                                        {/* {dayjs().toDate()} */}
                                         <InfoOutlineIcon
                                           ml={1}
                                           w={3}

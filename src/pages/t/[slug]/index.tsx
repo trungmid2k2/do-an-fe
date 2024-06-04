@@ -34,15 +34,17 @@ import type { SubscribeWithUser } from "@/interface/subscribes";
 import type { User } from "@/interface/user";
 import { Default } from "@/layouts/Default";
 import { Meta } from "@/layouts/Meta";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import axios from "@/lib/axios";
 import { userStore } from "@/store/user";
+import { BACKEND_URL } from "@/env";
 interface TalentProps {
   slug: string;
 }
 
 function TalentProfile({ slug }: TalentProps) {
   const [talent, setTalent] = useState<User>();
+  const [jobSubscribed, setJobSubscribed] = useState<any>();
   const [isloading, setIsloading] = useState<boolean>(false);
   const [error, setError] = useState(false);
   const [activeTab, setActiveTab] = useState<"activity" | "projects">(
@@ -69,6 +71,28 @@ function TalentProfile({ slug }: TalentProps) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const dataSubscribed = async () => {
+    try {
+      setIsloading(true);
+      const session: any = await getSession();
+      const accessToken = session?.accessToken;
+      const res = await axios.get(`${BACKEND_URL}/api/jobs/user_subcribed`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (res) {
+        console.log("res.data", res.data);
+        setJobSubscribed(res.data);
+        setError(false);
+        setIsloading(false);
+      }
+    } catch (err) {
+      setError(true);
+      setIsloading(false);
+    }
+  };
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -79,6 +103,7 @@ function TalentProfile({ slug }: TalentProps) {
 
         if (res) {
           setTalent(res?.data);
+          console.log("talent", talent);
           setError(false);
           setIsloading(false);
         }
@@ -88,6 +113,7 @@ function TalentProfile({ slug }: TalentProps) {
       }
     };
     fetch();
+    dataSubscribed();
   }, []);
 
   const bgImages = ["1.png", "2.png", "3.png", "4.png", "5.png"];
@@ -455,7 +481,7 @@ function TalentProfile({ slug }: TalentProps) {
                       ) : null;
                     })
                   ) : (
-                    <Text>Không có mảng nào nào!</Text>
+                    <Text>Không có mảng nào!</Text>
                   )}
                 </Box>
               </Flex>
@@ -493,26 +519,24 @@ function TalentProfile({ slug }: TalentProps) {
                   gap={{ base: "8", md: "6" }}
                   w={{ base: "100%", md: "50%" }}
                 >
-                  <Flex direction={"column"}>
+                  {/* <Flex direction={"column"}>
                     <Text fontWeight={600}>${talent?.totalEarned}</Text>
                     <Text color={"brand.slate.500"} fontWeight={500}>
                       Kiếm được
                     </Text>
-                  </Flex>
+                  </Flex> */}
                   <Flex direction={"column"}>
                     <Text fontWeight={600}>
-                      {talent?.Subscribe?.length || 0}
+                      {jobSubscribed?.job_subscribed}
                     </Text>
                     <Text color={"brand.slate.500"} fontWeight={500}>
-                      {talent?.Subscribe?.length === 1
-                        ? "Người đăng kí"
-                        : "Người đăng kí"}
+                      Công việc đã gửi
                     </Text>
                   </Flex>
                   <Flex direction={"column"}>
-                    <Text fontWeight={600}>{winnerCount}</Text>
+                    <Text fontWeight={600}>{jobSubscribed?.job_isChosen}</Text>
                     <Text color={"brand.slate.500"} fontWeight={500}>
-                      Nhận được
+                      Công việc được chọn
                     </Text>
                   </Flex>
                 </Flex>

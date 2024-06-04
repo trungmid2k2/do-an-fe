@@ -31,6 +31,7 @@ function ListingCategoryPage({ slug }: { slug: string }) {
         : { category: "all", take: 100, filter: slug };
     try {
       const listingsData = await axios.get("/api/listings", { params });
+      console.log(listingsData.data);
       setListings(listingsData.data);
       setIsListingsLoading(false);
     } catch (e) {

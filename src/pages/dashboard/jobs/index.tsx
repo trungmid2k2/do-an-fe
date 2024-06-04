@@ -226,7 +226,7 @@ function Jobs() {
             <Button
               isLoading={isChangingStatus}
               leftIcon={<ViewIcon />}
-              loadingText="Publishing..."
+              loadingText="Đang xuất bản..."
               onClick={() => changeJobStatus(true)}
               variant="solid"
             >
@@ -254,7 +254,7 @@ function Jobs() {
             <Button
               isLoading={isChangingStatus}
               leftIcon={<ViewOffIcon />}
-              loadingText="Unpublishing..."
+              loadingText="Đang ẩn..."
               onClick={() => changeJobStatus(false)}
               variant="solid"
             >

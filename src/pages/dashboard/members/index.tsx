@@ -21,9 +21,9 @@ import {
   Text,
   Th,
   Thead,
-  Tooltip,
   Tr,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Avatar from "boring-avatars";
@@ -36,6 +36,8 @@ import type { UserCompany } from "@/interface/userCompany";
 import Sidebar from "@/layouts/Sidebar";
 import { userStore } from "@/store/user";
 import fetchClient from "@/lib/fetch-client";
+import { BACKEND_URL } from "@/env";
+import { getSession } from "next-auth/react";
 
 const debounce = require("lodash.debounce");
 
@@ -47,6 +49,7 @@ const Index = () => {
   const [members, setMembers] = useState<UserCompany[]>([]);
   const [searchText, setSearchText] = useState("");
   const [skip, setSkip] = useState(0);
+  const toast = useToast();
   const length = 15;
 
   const debouncedSetSearchText = useRef(debounce(setSearchText, 300)).current;
@@ -64,6 +67,41 @@ const Index = () => {
       setIsMembersLoading(false);
     } catch (error) {
       setIsMembersLoading(false);
+    }
+  };
+
+  const deleteMember = async (userId: any, companyId: any) => {
+    try {
+      const session: any = await getSession();
+      const accessToken = session?.accessToken;
+      await axios.delete(`${BACKEND_URL}/api/members/delete`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        data: {
+          userId,
+          companyId,
+        },
+      });
+      toast({
+        title: "Thành công!",
+        description: "Xóa thành công thành viên khỏi tổ chức.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      getMembers();
+    } catch (error) {
+      toast({
+        title: "Lỗi!",
+        description: "Xóa thành viên thất bại.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      console.error("Error deleting member:", error);
     }
   };
 
@@ -155,12 +193,14 @@ const Index = () => {
                   fontSize="sm"
                   fontWeight={500}
                   textTransform={"capitalize"}
-                ></Th>
+                >
+                  Hành động
+                </Th>
               </Tr>
             </Thead>
             <Tbody>
-              {members.map((member) => (
-                <Tr key={member?.userId}>
+              {members.map((member: any) => (
+                <Tr key={member?.userId + member?.user?.firstname}>
                   <Td>
                     <Flex align="center">
                       {member?.user?.photo ? (
@@ -209,7 +249,20 @@ const Index = () => {
                   <Td color={"brand.slate.800"}>
                     {`${member?.user?.firstname} ${member?.user?.lastname}`}
                   </Td>
-                  <Td></Td>
+                  <Td>
+                    {member?.role === "ADMIN" ? (
+                      <></>
+                    ) : (
+                      <Button
+                        onClick={() =>
+                          deleteMember(member?.userId, member?.companyId)
+                        }
+                        colorScheme="red"
+                      >
+                        Xóa
+                      </Button>
+                    )}
+                  </Td>
                 </Tr>
               ))}
             </Tbody>

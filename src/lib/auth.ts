@@ -2,6 +2,7 @@ import fetchClient from "@/lib/fetch-client";
 import { jwt } from "@/lib/utils";
 import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { useRouter } from "next/router";
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -33,34 +34,24 @@ export const authOptions: NextAuthOptions = {
             body: JSON.stringify(credentials),
           });
 
-          console.log("response", response);
-
           if (response.status != 200) {
             throw new Error("Cant not get data");
           }
-
           const data: {
             user: User;
             access_token: string;
-          } = response.data;
+            role: any;
+          } = await response.data;
           if (!data?.access_token) {
             throw response;
           }
+          console.log("day la data", data);
 
           return {
             ...data.user,
             accessToken: data?.access_token,
           };
         } catch (error: any) {
-          // const toast = useToast();
-          // toast({
-          //   title: "Có lỗi xảy ra",
-          //   description: "",
-          //   status: "error",
-          //   position: "top-right",
-          //   duration: 3000,
-          //   isClosable: true,
-          // });
           throw new Error("Có lỗi xảy ra");
         }
       },
