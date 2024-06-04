@@ -344,7 +344,7 @@ const CreateCompany = () => {
                   w="full"
                   isDisabled={imageUrl === ""}
                   isLoading={!!isLoading}
-                  loadingText="Creating..."
+                  loadingText="Đang tải..."
                   size="lg"
                   type="submit"
                   variant="solid"

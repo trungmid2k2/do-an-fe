@@ -1,6 +1,5 @@
-
-import type { CompanyType } from '@/interface/company';
-import type { User } from '@/interface/user';
+import type { CompanyType } from "@/interface/company";
+import type { User } from "@/interface/user";
 
 interface UserCompany {
   userId?: string;

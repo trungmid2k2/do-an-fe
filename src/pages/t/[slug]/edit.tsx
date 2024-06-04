@@ -397,7 +397,7 @@ export default function EditProfilePage() {
                       color={"brand.slate.500"}
                       requiredIndicator={<></>}
                     >
-                      Profile Picture
+                      Ảnh đại diện
                     </FormLabel>
                     <MediaPicker
                       onChange={async (e: any) => {

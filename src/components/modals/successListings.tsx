@@ -72,7 +72,7 @@ export const SuccessListings = ({ isOpen, onClose, slug }: Props) => {
                 }}
                 variant="solid"
               >
-                Xem công việc đã xuất bản
+                Xem bài đăng
               </Button>
               <Button
                 w="100%"

@@ -60,7 +60,7 @@ function CompanyButton() {
         _hover={{ bg: "#6562FF" }}
         isLoading={!!isLoading}
         leftIcon={<BsBriefcaseFill />}
-        loadingText="Redirecting..."
+        loadingText="Đang chuyển hướng..."
         onClick={() => checkCompany()}
       >
         Tạo hồ sơ công ty/nhà tuyển dụng

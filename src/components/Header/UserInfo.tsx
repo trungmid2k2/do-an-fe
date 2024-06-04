@@ -54,7 +54,9 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
     <>
       {userInfo ? (
         <>
-          {userInfo && !userInfo?.isTalentFilled && userInfo?.isVerified && (
+          {userInfo.role === "ADMIN" ? (
+            <></>
+          ) : (
             <Button
               display={displayValue}
               fontSize="xs"
@@ -67,6 +69,7 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
               Hoàn thành hồ sơ
             </Button>
           )}
+
           <Menu>
             <MenuButton
               display={isMobile ? "none" : "flex"}
@@ -104,27 +107,58 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
               </Flex>
             </MenuButton>
             <MenuList>
-              <MenuItem
-                color="brand.slate.500"
-                fontSize="sm"
-                fontWeight={600}
-                onClick={() => {
-                  router.push(`/t/${userInfo.username}`);
-                }}
-              >
-                Hồ sơ
-              </MenuItem>
+              {userInfo.role === "ADMIN" ? (
+                <>
+                  <MenuItem
+                    color="brand.slate.500"
+                    fontSize="sm"
+                    fontWeight={600}
+                    onClick={() => {
+                      router.push(`/admin`);
+                    }}
+                  >
+                    Admin
+                  </MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem
+                    color="brand.slate.500"
+                    fontSize="sm"
+                    fontWeight={600}
+                    onClick={() => {
+                      router.push(`/t/${userInfo.username}`);
+                    }}
+                  >
+                    Hồ sơ
+                  </MenuItem>
 
-              <MenuItem
-                color="brand.slate.500"
-                fontSize="sm"
-                fontWeight={600}
-                onClick={() => {
-                  router.push(`/t/${userInfo.username}/edit`);
-                }}
-              >
-                Chỉnh sửa hồ sơ
-              </MenuItem>
+                  <MenuItem
+                    color="brand.slate.500"
+                    fontSize="sm"
+                    fontWeight={600}
+                    onClick={() => {
+                      router.push(`/t/${userInfo.username}/edit`);
+                    }}
+                  >
+                    Chỉnh sửa hồ sơ
+                  </MenuItem>
+                  {userInfo?.currentCompany && (
+                    <>
+                      <MenuItem
+                        color="brand.slate.500"
+                        fontSize="sm"
+                        fontWeight={600}
+                        onClick={() => {
+                          router.push("/dashboard/jobs");
+                        }}
+                      >
+                        Dashboard công ty
+                      </MenuItem>
+                    </>
+                  )}
+                </>
+              )}
               <MenuItem
                 color="brand.slate.500"
                 fontSize="sm"
@@ -133,21 +167,6 @@ export default function UserInfo({ isMobile }: UserInfoProps) {
               >
                 Đổi mật khẩu
               </MenuItem>
-              {userInfo?.currentCompany && (
-                <>
-                  <MenuItem
-                    color="brand.slate.500"
-                    fontSize="sm"
-                    fontWeight={600}
-                    onClick={() => {
-                      router.push("/dashboard/jobs");
-                    }}
-                  >
-                    Dashboard công ty
-                  </MenuItem>
-                </>
-              )}
-
               {userInfo?.role === "GOD" && (
                 <>
                   <MenuDivider />

@@ -1,31 +1,21 @@
-import { AddIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import type { BoxProps, FlexProps } from "@chakra-ui/react";
-import {
-  Box,
-  Button,
-  Flex,
-  Icon,
-  Image,
-  Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Icon, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import type { ReactNode, ReactText } from "react";
 import React from "react";
 import type { IconType } from "react-icons";
-import { AiFillFire, AiOutlineUsergroupAdd } from "react-icons/ai";
+import {
+  AiFillDashboard,
+  AiFillFire,
+  AiOutlineUsergroupAdd,
+} from "react-icons/ai";
 
-import SelectCompany from "@/components/SelectCompany/SelectCompany";
-import LoadingSection from "@/components/shared/LoadingSection";
 import Banner from "@/components/sidebar/Banner";
-import { Default } from "@/layouts/Default";
-import { Meta } from "@/layouts/Meta";
 import { userStore } from "@/store/user";
+import { DeFaultAdmin } from "./DefaultAdmin";
+import LoadingSection from "@/components/shared/LoadingSection";
+import { Meta } from "./Meta";
 
 interface LinkItemProps {
   name: string;
@@ -34,8 +24,9 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
+  { name: "Thống kê", link: "/", icon: AiFillDashboard },
   { name: "Bài đăng", link: "/jobs", icon: AiFillFire },
-  { name: "Thành viên", link: "/members", icon: AiOutlineUsergroupAdd },
+  { name: "Người dùng", link: "/users", icon: AiOutlineUsergroupAdd },
 ];
 
 interface NavItemProps extends FlexProps {
@@ -50,7 +41,7 @@ const NavItem = ({ icon, link, isActive, children, ...rest }: NavItemProps) => {
     <Link
       as={NextLink}
       _focus={{ boxShadow: "none" }}
-      href={`/dashboard${link}`}
+      href={`/admin${link}`}
       style={{ textDecoration: "none" }}
     >
       <Flex
@@ -98,38 +89,6 @@ const SidebarContent = ({ ...rest }: BoxProps) => {
       borderRightColor={"blackAlpha.200"}
       {...rest}
     >
-      <Box pb={6} px={6}>
-        <SelectCompany />
-      </Box>
-      <Flex align="center" justify="space-between" pb={6} px={6}>
-        <Menu>
-          <MenuButton
-            as={Button}
-            w="full"
-            fontSize="sm"
-            leftIcon={<AddIcon w={3} h={3} />}
-            variant="solid"
-          >
-            Tạo danh sách <ChevronDownIcon w={3} h={3} />
-          </MenuButton>
-          <MenuList>
-            <NextLink href="/dashboard/create-job">
-              <MenuItem>
-                <Image
-                  h={5}
-                  mr={3}
-                  ml={1}
-                  alt="new job"
-                  src={"/assets/icons/bolt.svg"}
-                />{" "}
-                <Text color="brand.slate.500" fontWeight={500}>
-                  Tạo công việc mới
-                </Text>
-              </MenuItem>
-            </NextLink>
-          </MenuList>
-        </Menu>
-      </Flex>
       {LinkItems.map((link) => (
         <NavItem
           key={link.name}
@@ -148,31 +107,26 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
   const { userInfo } = userStore();
 
   return (
-    <Default
+    <DeFaultAdmin
       className="bg-white"
       meta={
         <Meta
-          title="Dashboard | Frelan"
+          title="CMS Frelan"
           description="Cơ hội đều ở đây"
           canonical="/assets/logo/og.svg"
         />
       }
     >
-      {!userInfo?.id ? (
-        <LoadingSection />
-      ) : (
-        <Flex justify="start">
-          <SidebarContent display={{ base: "none", md: "block" }} />
-          {!userInfo?.currentCompany?.id ? (
-            <LoadingSection />
-          ) : (
-            <Box w="full" px={6} py={8} bg="brand.grey.50">
-              <Banner />
-              {children}
-            </Box>
-          )}
-        </Flex>
-      )}
-    </Default>
+      <Flex justify="start">
+        <SidebarContent display={{ base: "none", md: "block" }} />
+        {userInfo?.role === "ADMIN" ? (
+          <Box w="full" h={700} px={6} py={8} bg="brand.grey.50">
+            {children}
+          </Box>
+        ) : (
+          <LoadingSection />
+        )}
+      </Flex>
+    </DeFaultAdmin>
   );
 }

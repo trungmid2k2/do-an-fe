@@ -33,6 +33,7 @@ interface Props {
 import { signIn } from "next-auth/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 export const LoginModal = ({ isOpen, onClose }: Props) => {
+  const router = useRouter();
   const toast = useToast();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -46,30 +47,41 @@ export const LoginModal = ({ isOpen, onClose }: Props) => {
       password: "",
     },
     onSubmit: async (values) => {
-      const res = await signIn("credentials", {
-        ...values,
-        callbackUrl: "/",
-        redirect: false,
-      });
-      if (res?.error) {
+      try {
+        const res = await signIn("credentials", {
+          ...values,
+          callbackUrl: "/",
+          redirect: true,
+        });
+        if (res?.error) {
+          toast({
+            title: "Có lỗi xảy ra.",
+            description: "Hãy kiểm tra lại thông tin đăng nhập.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+            position: "top-right",
+          });
+        } else {
+          toast({
+            title: "Đăng nhập thành công.",
+            description: "",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+            position: "top-right",
+          });
+          onClose();
+        }
+      } catch (error) {
         toast({
           title: "Có lỗi xảy ra.",
-          description: "Hãy kiểm tra lại thông tin đăng nhập.",
+          description: "Vui lòng thử lại sau",
           status: "error",
           duration: 3000,
           isClosable: true,
           position: "top-right",
         });
-      } else {
-        toast({
-          title: "Đăng nhập thành công.",
-          description: "",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-          position: "top-right",
-        });
-        onClose();
       }
     },
   });
