@@ -43,7 +43,8 @@ const HomePage: NextPage = () => {
       const jobData = await axios.get(
         `/api/listings?take=10&searchText=${searchText}`
       );
-      setJobs(jobData.data);
+      const data = await jobData.data;
+      setJobs(data.data);
       setIsListingsLoading(false);
     } catch (e) {
       console.log(e);
@@ -76,7 +77,9 @@ const HomePage: NextPage = () => {
           placeholder={"Tìm kiếm..."}
           aria-label={"Tìm ở đây"}
           // value={searchText}
-          onChange={(e) => debouncedSetSearchText(e.target.value)}
+          onChange={(e) => {
+            debouncedSetSearchText(e.target.value);
+          }}
         />
       </FormControl>
       <Box w={"100%"}>

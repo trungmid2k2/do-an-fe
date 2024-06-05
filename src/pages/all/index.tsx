@@ -27,7 +27,8 @@ function AllListingsPage() {
           take: 100,
         },
       });
-      setListings(listingsData.data);
+      const data = await listingsData.data;
+      setListings(data.data);
       setIsListingsLoading(false);
     } catch (e) {
       setIsListingsLoading(false);
@@ -69,6 +70,7 @@ function AllListingsPage() {
                   slug={job?.slug}
                   rewardAmount={job?.rewardAmount}
                   key={job?.id}
+                  status={job?.status}
                   companyName={job?.company?.name}
                   deadline={job?.deadline}
                   title={job?.title}

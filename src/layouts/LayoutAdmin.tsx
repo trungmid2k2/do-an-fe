@@ -7,11 +7,11 @@ import React from "react";
 import type { IconType } from "react-icons";
 import {
   AiFillDashboard,
-  AiFillFire,
+  AiFillSnippets,
+  AiOutlineLaptop,
   AiOutlineUsergroupAdd,
 } from "react-icons/ai";
 
-import Banner from "@/components/sidebar/Banner";
 import { userStore } from "@/store/user";
 import { DeFaultAdmin } from "./DefaultAdmin";
 import LoadingSection from "@/components/shared/LoadingSection";
@@ -25,8 +25,9 @@ interface LinkItemProps {
 
 const LinkItems: Array<LinkItemProps> = [
   { name: "Thống kê", link: "/", icon: AiFillDashboard },
-  { name: "Bài đăng", link: "/jobs", icon: AiFillFire },
+  { name: "Bài đăng", link: "/jobs", icon: AiFillSnippets },
   { name: "Người dùng", link: "/users", icon: AiOutlineUsergroupAdd },
+  { name: "Nhà tuyển dụng", link: "/companies", icon: AiOutlineLaptop },
 ];
 
 interface NavItemProps extends FlexProps {

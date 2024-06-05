@@ -174,6 +174,7 @@ export const JobsCard = ({
   title = "",
   token,
   slug = "",
+  status,
   companyName,
   applicationType,
 }: JobProps) => {
@@ -260,9 +261,22 @@ export const JobsCard = ({
                     ? "Linh hoạt"
                     : dayjs().isBefore(dayjs(deadline))
                     ? `Sẽ đóng ${dayjs(deadline).locale("vi").fromNow()}`
-                    : `Đã đóng`}
+                    : `Hết hạn`}
+                </Text>
+                <Text
+                  color={"brand.slate.300"}
+                  fontSize={["xx-small", "xs", "sm", "sm"]}
+                >
+                  |
+                </Text>
+                <Text
+                  color={"gray.500"}
+                  fontSize={["x-small", "xs", "xs", "xs"]}
+                >
+                  Trạng thái: {status === "CLOSED" ? "Đóng" : "Mở"}
                 </Text>
               </Flex>
+              {/* <Flex>Trạng thái: {status}</Flex> */}
             </Flex>
           </Flex>
           <Flex align={"center"} justify="start" mr={3}>
