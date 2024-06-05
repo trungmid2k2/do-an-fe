@@ -1,11 +1,15 @@
-import React, { use, useEffect, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import LayoutAdmin from "@/layouts/LayoutAdmin";
 import {
   Button,
+  Flex,
+  FormControl,
+  Input,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
@@ -14,6 +18,8 @@ import {
 import { getSession } from "next-auth/react";
 import axios from "axios";
 import { BACKEND_URL } from "@/env";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+const debounce = require("lodash.debounce");
 
 type Props = {};
 
@@ -21,22 +27,27 @@ export default function User({}: Props) {
   const [listUser, setListUser] = useState([]);
   const [jobs, setJob] = useState([]);
   const toast = useToast();
+  const [totalUser, setTotalUser] = useState(0);
+  const [searchText, setSearchText] = useState("");
+  const debouncedSetSearchText = useRef(debounce(setSearchText, 300)).current;
+  const [skip, setSkip] = useState(0);
+  const length = 10;
 
   const getListUser = async () => {
     try {
       const session: any = await getSession();
       const accessToken = session?.accessToken;
       const res = await axios.get(
-        `${BACKEND_URL}/api/user/get_all_users?skip=0&take=15&searchText=`,
+        `${BACKEND_URL}/api/user/get_all_users?skip=${skip}&take=${length}&searchText=${searchText}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
-      console.log("res.data", res.data);
       const data = await res.data;
-      console.log("data.data", data.data);
+      setTotalUser(data.total);
+      // console.log("data.total", data);
       setListUser(data.data);
     } catch (error) {
       console.error("Error ", error);
@@ -76,34 +87,26 @@ export default function User({}: Props) {
       });
     }
   };
-
-  const getJob = async () => {
-    try {
-      const session: any = await getSession();
-      const accessToken = session?.accessToken;
-      const res = await axios.get(`${BACKEND_URL}/api/jobs/get_job`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log("res.data get job", res.data);
-      setJob(res.data);
-    } catch (error) {
-      console.error("Error ", error);
-    }
-  };
-  // const abc = (id: number) => {
-  //   const jobData = jobs.find((job: any) => job.userId === id);
-  //   console.log("jobData", jobData);
-  // };
   useEffect(() => {
     getListUser();
-    getJob();
-  }, []);
+  }, [skip, searchText]);
 
   return (
     <LayoutAdmin>
-      <div>Danh sách người dùng</div>
+      <Flex align="center" justify="space-between">
+        <div>Danh sách người dùng</div>
+        <div>
+          <FormControl>
+            <Input
+              onChange={(e) => {
+                debouncedSetSearchText(e.target.value);
+                console.log(e.target.value);
+              }}
+              placeholder="Tìm kiếm..."
+            />
+          </FormControl>
+        </div>
+      </Flex>
       <br></br>
       <TableContainer>
         <Table size="sm">
@@ -120,7 +123,7 @@ export default function User({}: Props) {
           <Tbody>
             {listUser.map((user: any, index: number) => {
               return (
-                <Tr>
+                <Tr key={index + user?.username}>
                   <Td>{index + 1}</Td>
                   <Td>{user?.username || ""}</Td>
                   <Td> {user?.email || ""}</Td>
@@ -141,6 +144,43 @@ export default function User({}: Props) {
           </Tbody>
         </Table>
       </TableContainer>
+      <Flex align="center" justify="end" mt={6}>
+        <Text mr={4} color="brand.slate.400" fontSize="sm">
+          <Text as="span" fontWeight={700}>
+            {skip + 1}
+          </Text>{" "}
+          -{" "}
+          <Text as="span" fontWeight={700}>
+            {Math.min(skip + length, totalUser)}
+          </Text>{" "}
+          của{" "}
+          <Text as="span" fontWeight={700}>
+            {totalUser}
+          </Text>{" "}
+          Người dùng
+        </Text>
+        <Button
+          mr={4}
+          isDisabled={skip <= 0}
+          leftIcon={<ChevronLeftIcon w={5} h={5} />}
+          onClick={() => (skip >= length ? setSkip(skip - length) : setSkip(0))}
+          size="sm"
+          variant="outline"
+        >
+          Trước
+        </Button>
+        <Button
+          isDisabled={
+            totalUser < skip + length || (skip > 0 && skip % length !== 0)
+          }
+          onClick={() => skip % length === 0 && setSkip(skip + length)}
+          rightIcon={<ChevronRightIcon w={5} h={5} />}
+          size="sm"
+          variant="outline"
+        >
+          Tiếp
+        </Button>
+      </Flex>
     </LayoutAdmin>
   );
 }
