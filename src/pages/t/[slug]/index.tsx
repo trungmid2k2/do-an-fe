@@ -50,7 +50,7 @@ function TalentProfile({ slug }: TalentProps) {
   const [activeTab, setActiveTab] = useState<"activity" | "projects">(
     "activity"
   );
-  const [randomIndex, setRandomIndex] = useState<number>(0);
+  const [randomIndex, setRandomIndex] = useState<number>(0);setTalent
   const [showSubskills, setShowSubskills] = useState<Record<number, boolean>>(
     {}
   );

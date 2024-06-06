@@ -14,11 +14,7 @@ const DeFaultAdmin = (props: IDefaultProps) => {
   const { userInfo } = userStore();
 
   return (
-    <div
-      className={
-        !props.className ? "min-h-full" : `min-h-full ${props.className}`
-      }
-    >
+    <div className="min-h-full">
       {userInfo?.role === "ADMIN" ? (
         <>
           {props.meta}

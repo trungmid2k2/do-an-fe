@@ -132,7 +132,7 @@ export default function HeaderAdmin() {
         borderBottomColor="blackAlpha.200"
       >
         <Flex justify={"space-between"} w="100%" maxW="7xl" mx="auto">
-          <Flex
+          {/* <Flex
             flex={{ base: 1, lg: "auto" }}
             display={{ base: "flex", lg: "none" }}
             ml={{ base: -2 }}
@@ -149,7 +149,7 @@ export default function HeaderAdmin() {
               onClick={onToggle}
               variant={"ghost"}
             />
-          </Flex>
+          </Flex> */}
           <Flex
             align="center"
             justify={{ base: "center", lg: "start" }}
