@@ -1,5 +1,5 @@
 import type { BoxProps, FlexProps } from "@chakra-ui/react";
-import { Box, Flex, Icon, Link } from "@chakra-ui/react";
+import { Box, Flex, Icon, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import type { ReactNode, ReactText } from "react";
@@ -44,6 +44,7 @@ const NavItem = ({ icon, link, isActive, children, ...rest }: NavItemProps) => {
       _focus={{ boxShadow: "none" }}
       href={`/admin${link}`}
       style={{ textDecoration: "none" }}
+      className="hover-parent"
     >
       <Flex
         align="center"
@@ -70,7 +71,26 @@ const NavItem = ({ icon, link, isActive, children, ...rest }: NavItemProps) => {
             }}
           />
         )}
-        {children}
+        <Text display={{ base: "none", md: "none", xl: "block" }}>
+          {children}
+        </Text>
+        <Text
+          color="black"
+          bgColor={"blackAlpha.100"}
+          className="absolute left-10"
+          display={{ base: "none", xl: "none" }}
+          _groupHover={{
+            display: {
+              base: "block",
+              sm: "block",
+              md: "block",
+              lg: "none",
+              xl: "none",
+            },
+          }}
+        >
+          {children}
+        </Text>
       </Flex>
     </Link>
   );
@@ -81,10 +101,10 @@ const SidebarContent = ({ ...rest }: BoxProps) => {
   const currentPath = `/${router.route?.split("/")[2]}` || "";
   return (
     <Box
-      w={{ base: 0, md: 80 }}
-      h="full"
+      w={{ base: 20, xl: 250 }}
+      minH={700}
       pt={8}
-      pb={80}
+      pb={0}
       bg="white"
       borderRight={"1px solid"}
       borderRightColor={"blackAlpha.200"}
@@ -118,16 +138,16 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
         />
       }
     >
-      <Flex justify="start">
-        <SidebarContent display={{ base: "none", md: "block" }} />
+      <div className="flex">
+        <SidebarContent display={{ base: "block", xl: "block" }} />
         {userInfo?.role === "ADMIN" ? (
-          <Box w="full" h={700} px={6} py={8} bg="brand.grey.50">
+          <Box w="full" h="full" px={6} py={8} bg="brand.grey.50">
             {children}
           </Box>
         ) : (
           <LoadingSection />
         )}
-      </Flex>
+      </div>
     </DeFaultAdmin>
   );
 }
