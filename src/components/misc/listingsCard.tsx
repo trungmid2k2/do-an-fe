@@ -244,7 +244,7 @@ export const JobsCard = ({
                     fontSize={["x-small", "xs", "xs", "xs"]}
                     fontWeight={500}
                   >
-                    {type === "open" ? "Job" : "Project"}
+                    {type === "open" ? "Việc làm" : "Dự án"}
                   </Text>
                 </>
                 <Text
@@ -460,6 +460,18 @@ export const CategoryBanner = ({ type }: { type: string }) => {
     },
     Development: {
       desc: "Nếu sở trường của bạn là xây dựng các ứng dụng mạnh mẽ và giải pháp có thể mở rộng, đừng bỏ lỡ các cơ hội kiếm tiền được liệt kê bên dưới",
+      bg: `/assets/category_assets/bg/frontend.png`,
+      color: "#FEA8EB",
+      icon: "/assets/category_assets/icon/backend.png",
+    },
+    Frontend: {
+      desc: "Mảng frontend",
+      bg: `/assets/category_assets/bg/frontend.png`,
+      color: "#FEA8EB",
+      icon: "/assets/category_assets/icon/backend.png",
+    },
+    Backend: {
+      desc: "Mảng backend",
       bg: `/assets/category_assets/bg/frontend.png`,
       color: "#FEA8EB",
       icon: "/assets/category_assets/icon/backend.png",

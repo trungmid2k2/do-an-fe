@@ -110,7 +110,8 @@ function DetailSideCard({
       //   },
       // });
 
-      setIsSubmitted(subscribeDetails?.data);
+      // setIsSubmitted(false);
+      setIsSubmitted(subscribeDetails?.data.length === 0 ? false : true);
       setIsUserSubscribeLoading(false);
     } catch (e) {
       setIsUserSubscribeLoading(false);
@@ -166,6 +167,7 @@ function DetailSideCard({
       onOpen();
     }
   };
+  console.log("isSubmitted", isSubmitted);
 
   const countDownRenderer = ({
     days,

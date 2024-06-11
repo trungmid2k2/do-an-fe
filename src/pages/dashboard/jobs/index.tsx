@@ -328,7 +328,7 @@ function Jobs() {
                   fontWeight={500}
                   textTransform={"capitalize"}
                 >
-                  Tên
+                  Tiêu đề
                 </Th>
                 <Th
                   align="right"

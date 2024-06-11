@@ -215,126 +215,112 @@ export default function EditProfilePage() {
   }, [userInfo?.id]);
 
   const onSubmit = async (data: FormData) => {
-    try {
-      if (!data.discord) {
-        setDiscordError(true);
-        toast({
-          title: "Lỗi Discord",
-          description: "Yêu cầu có Discord",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-        return;
-      }
-      setDiscordError(false);
-
-      const filledSocialLinksCount = socialLinkFields.filter(
-        (field) => data[field as keyof FormData]
-      ).length;
-
-      setSocialError(filledSocialLinksCount < 1);
-
-      if (filledSocialLinksCount < 1) {
-        toast({
-          title: "Đường dẫn bị lỗi",
-          description: "Ít nhất phải có một mạng xã hội",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-        return;
-      }
-
-      if (isAnySocialUrlInvalid) {
-        toast({
-          title: "URL xã hội không hợp lệ",
-          description: "URL xã hội không hợp lệ",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-        return;
-      }
-
-      const interestsJSON = JSON.stringify(
-        (data.interests || []).map((interest) => interest.value)
-      );
-
-      const combinedSkills = skills.map((mainskill) => {
-        const main = SkillList.find(
-          (skill) => skill.mainskill === mainskill.value
-        );
-        const sub: SubSkillsType[] = [];
-
-        subSkills.forEach((subskill) => {
-          if (
-            main &&
-            main.subskills.includes(subskill.value as SubSkillsType)
-          ) {
-            sub.push(subskill.value as SubSkillsType);
-          }
-        });
-
-        return {
-          skills: main?.mainskill ?? "",
-          subskills: sub ?? [],
-        };
-      });
-
-      const updatedData = {
-        ...data,
-        interests: interestsJSON,
-        skills: combinedSkills,
-      };
-
-      const finalUpdatedData = Object.keys(updatedData).reduce((acc, key) => {
-        const fieldKey = key as keyof FormData;
-        if (
-          userInfo &&
-          updatedData[fieldKey] !== userInfo[fieldKey] &&
-          !keysToOmit.includes(key)
-        ) {
-          acc[fieldKey] = updatedData[fieldKey];
-        }
-        return acc;
-      }, {} as Partial<FormData>);
-      const response = await fetchClient({
-        method: "POST",
-        endpoint: "/api/user/edit",
-        body: JSON.stringify({
-          id: userInfo?.id,
-          ...finalUpdatedData,
-        }),
-      });
-      await fetchClient({
-        method: "POST",
-        endpoint: "/api/pow/edit",
-        body: JSON.stringify({
-          pows: pow,
-        }),
-      });
-
+    if (!data.discord) {
+      setDiscordError(true);
       toast({
-        title: "Hồ sơ đã được cập nhật.",
-        description: "Hồ sơ của bạn đã được cập nhật thành công!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      setTimeout(() => {
-        router.push(`/t/${userInfo?.username}`);
-      }, 500);
-    } catch (error: any) {
-      toast({
-        title: "Cập nhật thất bại",
-        description:
-          "Có thể một vài trường bị lỗi. Vui lòng kiểm tra lại thông tin của bạn và thử lại.",
+        title: "Lỗi Discord",
+        description: "Yêu cầu có Discord",
         status: "error",
         duration: 5000,
         isClosable: true,
       });
+      return;
     }
+    setDiscordError(false);
+
+    const filledSocialLinksCount = socialLinkFields.filter(
+      (field) => data[field as keyof FormData]
+    ).length;
+
+    setSocialError(filledSocialLinksCount < 1);
+
+    if (filledSocialLinksCount < 1) {
+      toast({
+        title: "Đường dẫn bị lỗi",
+        description: "Ít nhất phải có một mạng xã hội",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (isAnySocialUrlInvalid) {
+      toast({
+        title: "URL xã hội không hợp lệ",
+        description: "URL xã hội không hợp lệ",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const interestsJSON = JSON.stringify(
+      (data.interests || []).map((interest) => interest.value)
+    );
+
+    const combinedSkills = skills.map((mainskill) => {
+      const main = SkillList.find(
+        (skill) => skill.mainskill === mainskill.value
+      );
+      const sub: SubSkillsType[] = [];
+
+      subSkills.forEach((subskill) => {
+        if (main && main.subskills.includes(subskill.value as SubSkillsType)) {
+          sub.push(subskill.value as SubSkillsType);
+        }
+      });
+
+      return {
+        skills: main?.mainskill ?? "",
+        subskills: sub ?? [],
+      };
+    });
+
+    const updatedData = {
+      ...data,
+      interests: interestsJSON,
+      skills: combinedSkills,
+    };
+
+    const finalUpdatedData = Object.keys(updatedData).reduce((acc, key) => {
+      const fieldKey = key as keyof FormData;
+      if (
+        userInfo &&
+        updatedData[fieldKey] !== userInfo[fieldKey] &&
+        !keysToOmit.includes(key)
+      ) {
+        acc[fieldKey] = updatedData[fieldKey];
+      }
+      return acc;
+    }, {} as Partial<FormData>);
+    const response = await fetchClient({
+      method: "POST",
+      endpoint: "/api/user/edit",
+      body: JSON.stringify({
+        id: userInfo?.id,
+        ...finalUpdatedData,
+      }),
+    });
+    await fetchClient({
+      method: "POST",
+      endpoint: "/api/pow/edit",
+      body: JSON.stringify({
+        pows: pow,
+      }),
+    });
+
+    toast({
+      title: "Hồ sơ đã được cập nhật.",
+      description: "Hồ sơ của bạn đã được cập nhật thành công!",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+    setTimeout(() => {
+      router.push(`/t/${userInfo?.username}`);
+    }, 500);
   };
 
   return (
