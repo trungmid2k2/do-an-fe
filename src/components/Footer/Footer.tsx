@@ -39,8 +39,6 @@ const Logo = (props: any) => {
     />
   );
 };
-const API_KEY_GPT_1 = "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";
-// const API_KEY_GPT = "sk-proj-nZAC8fC0cQ5gOtwYWyqPT3BlbkFJqwiAWWRnvByDXd0mpol7";
 
 export default function LargeWithNewsletter() {
   const [isTyping, setIsTyping] = useState(false);
@@ -50,85 +48,85 @@ export default function LargeWithNewsletter() {
     setIsOpen(false);
   };
 
-  const systemMessage = {
-    role: "system",
-    content:
-      "Explain things like you're talking to a software professional with 2 years of experience.",
-  };
+  // const systemMessage = {
+  //   role: "system",
+  //   content:
+  //     "Explain things like you're talking to a software professional with 2 years of experience.",
+  // };
 
-  const [messages, setMessages] = useState([
-    {
-      message: "Hello, I'm ChatGPT! Ask me anything!",
-      // sentTime: "just now",
-      sender: "ChatGPT",
-      direction: "incoming" as MessageDirection,
-      position: "first" as MessageModel["position"],
-    },
-  ]);
+  // const [messages, setMessages] = useState([
+  //   {
+  //     message: "Hello, I'm ChatGPT! Ask me anything!",
+  //     // sentTime: "just now",
+  //     sender: "ChatGPT",
+  //     direction: "incoming" as MessageDirection,
+  //     position: "first" as MessageModel["position"],
+  //   },
+  // ]);
 
-  const handleSendMessage = async (message: string) => {
-    const newMessages = {
-      direction: "outgoing" as MessageDirection,
-      message: message,
-      sender: "User",
-      position: "last" as MessageModel["position"],
-    };
-    const newMessages2 = [...messages, newMessages];
-    setMessages(newMessages2);
-    setIsTyping(true);
+  // const handleSendMessage = async (message: string) => {
+  //   const newMessages = {
+  //     direction: "outgoing" as MessageDirection,
+  //     message: message,
+  //     sender: "User",
+  //     position: "last" as MessageModel["position"],
+  //   };
+  //   const newMessages2 = [...messages, newMessages];
+  //   setMessages(newMessages2);
+  //   setIsTyping(true);
 
-    await getResponseFromChatGPT(newMessages2);
-  };
+  //   await getResponseFromChatGPT(newMessages2);
+  // };
 
-  async function getResponseFromChatGPT(chatMessages: any) {
-    let apiMessages = chatMessages.map((messageObject: any) => {
-      let role = "";
-      if (messageObject.sender === "ChatGPT") {
-        role = "assistant";
-      } else {
-        role = "user";
-      }
-      return { role: role, content: messageObject.message };
-    });
+  // async function getResponseFromChatGPT(chatMessages: any) {
+  //   let apiMessages = chatMessages.map((messageObject: any) => {
+  //     let role = "";
+  //     if (messageObject.sender === "ChatGPT") {
+  //       role = "assistant";
+  //     } else {
+  //       role = "user";
+  //     }
+  //     return { role: role, content: messageObject.message };
+  //   });
 
-    const apiRequestBody = {
-      model: "gpt-3.5-turbo",
-      messages: [
-        systemMessage, // The system message DEFINES the logic of our chatGPT
-        ...apiMessages, // The messages from our chat with ChatGPT
-      ],
-    };
+  //   const apiRequestBody = {
+  //     model: "gpt-3.5-turbo",
+  //     messages: [
+  //       systemMessage, // The system message DEFINES the logic of our chatGPT
+  //       ...apiMessages, // The messages from our chat with ChatGPT
+  //     ],
+  //   };
 
-    try {
-      const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${API_KEY_GPT_1}`,
-          },
-          body: JSON.stringify(apiRequestBody),
-        }
-      );
-      const data = await response.json();
-      if (data?.choices?.[0]?.message?.content) {
-        setMessages([
-          ...chatMessages,
-          {
-            message: data.choices[0].message.content,
-            sender: "ChatGPT",
-          },
-        ]);
-      } else {
-        console.error("No response from API");
-      }
-    } catch (error) {
-      console.error("Error fetching data from API:", error);
-    } finally {
-      setIsTyping(false);
-    }
-  }
+  //   try {
+  //     const response = await fetch(
+  //       "https://api.openai.com/v1/chat/completions",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${API_KEY_GPT_1}`,
+  //         },
+  //         body: JSON.stringify(apiRequestBody),
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     if (data?.choices?.[0]?.message?.content) {
+  //       setMessages([
+  //         ...chatMessages,
+  //         {
+  //           message: data.choices[0].message.content,
+  //           sender: "ChatGPT",
+  //         },
+  //       ]);
+  //     } else {
+  //       console.error("No response from API");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data from API:", error);
+  //   } finally {
+  //     setIsTyping(false);
+  //   }
+  // }
 
   return (
     <Box
@@ -162,7 +160,7 @@ export default function LargeWithNewsletter() {
           </div>
         </SimpleGrid>
       </Container>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      {/* <Modal isOpen={isOpen} onClose={onClose}>
         <ModalContent maxW={"607px"} py={"1.4375rem"}>
           <ModalBody>
             <div
@@ -190,7 +188,7 @@ export default function LargeWithNewsletter() {
             </div>
           </ModalBody>
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </Box>
   );
 }
