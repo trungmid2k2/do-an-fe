@@ -5,10 +5,10 @@ export const getDeadlineFromNow = (deadline: string | undefined) =>
   deadline ? dayjs(deadline).locale("vi").fromNow() : "-";
 
 export const formatDeadline = (deadline: string | undefined) =>
-  deadline ? dayjs(deadline).format("MMM D, YYYY HH:mm") : "-";
+  deadline ? dayjs(deadline).locale("vi").format("MMM D, YYYY HH:mm") : "-";
 
 export const isDeadlineOver = (deadline: string | undefined) =>
-  deadline ? dayjs().isAfter(dayjs(deadline)) : false;
+  deadline ? dayjs().isAfter(dayjs(deadline).locale("vi")) : false;
 
 export const getJobDraftStatus = (
   status: string | undefined,

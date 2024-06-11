@@ -3,6 +3,8 @@ import LayoutAdmin from "@/layouts/LayoutAdmin";
 import {
   Box,
   Button,
+  Center,
+  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -23,15 +25,18 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { getSession } from "next-auth/react";
 import axios from "axios";
 import { BACKEND_URL } from "@/env";
 import {
+  AddIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   DeleteIcon,
+  EditIcon,
 } from "@chakra-ui/icons";
 import { AiFillEdit } from "react-icons/ai";
 import { InputField } from "@/components/Form/InputField";
@@ -55,6 +60,8 @@ import { uploadToCloudinary } from "@/utils/upload";
 import { useRouter } from "next/router";
 import { SkillList, SubSkillsType } from "@/interface/skills";
 import fetchClient from "@/lib/fetch-client";
+import { SkillSelect } from "@/components/misc/SkillSelect";
+import { AddProject } from "@/components/Form/AddProject";
 
 type FormData = {
   photo?: string;
@@ -122,33 +129,47 @@ const parseSkillsAndSubskills = (skillsObject: any) => {
 
 export default function User() {
   const [listUser, setListUser] = useState([]);
-  const { register, handleSubmit, setValue, watch } = useForm<FormData>();
-  // const [jobs, setJob] = useState([]);
-  const [pow, setPow] = useState<PoW[]>([]);
-  const [skills, setSkills] = useState<MultiSelectOptions[]>([]);
-  const [subSkills, setSubSkills] = useState<MultiSelectOptions[]>([]);
   const toast = useToast();
   const [totalUser, setTotalUser] = useState(0);
   const [searchText, setSearchText] = useState("");
   const debouncedSetSearchText = useRef(debounce(setSearchText, 300)).current;
   const [skip, setSkip] = useState(0);
   const length = 10;
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [currentUser, setCurrentUser] = useState<FormData | any>(null);
+  const [currentUserId, setCurrentUserId] = useState<any>();
+  const { register, handleSubmit, setValue, watch } = useForm<FormData>();
+
   const [discordError, setDiscordError] = useState(false);
   const [socialError, setSocialError] = useState(false);
   const [isAnySocialUrlInvalid, setAnySocialUrlInvalid] = useState(false);
-  const socialLinksValidityRef = useRef<{ [key: string]: boolean }>({});
-  const animatedComponents = makeAnimated();
+  const [uploading, setUploading] = useState(false);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [isPhotoLoading, setIsPhotoLoading] = useState(true);
-  const [DropDownValues, setDropDownValues] = useState<{
-    interests: string;
-  }>({ interests: JSON.stringify(currentUser?.interests || []) });
+
+  const router = useRouter();
+
+  const [pow, setPow] = useState<PoW[]>([]);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const editableFields = Object.keys(currentUser || {}) as (keyof FormData)[];
 
-  const [uploading, setUploading] = useState(false);
-  const router = useRouter();
+  const animatedComponents = makeAnimated();
+  const [DropDownValues, setDropDownValues] = useState<{
+    interests: string;
+  }>({
+    interests: JSON.stringify(currentUser?.interests || []),
+  });
+
+  const [skills, setSkills] = useState<MultiSelectOptions[]>([]);
+  const [subSkills, setSubSkills] = useState<MultiSelectOptions[]>([]);
+
+  const privateValue = watch("private", currentUser?.private);
+
+  const socialLinksValidityRef = useRef<{ [key: string]: boolean }>({});
+
   const handleUrlValidation = (isValid: boolean, field: keyof FormData) => {
     socialLinksValidityRef.current[field] = isValid;
 
@@ -159,12 +180,61 @@ export default function User() {
     setAnySocialUrlInvalid(!allUrlsValid);
   };
 
-  const onClose = () => {
-    setIsOpen(false);
+  useEffect(() => {
+    if (currentUser) {
+      editableFields.forEach((field) => {
+        setValue(field, currentUser[field]);
+      });
+
+      if (currentUser.interests) {
+        const interestsArray = JSON.parse(currentUser.interests);
+        const defaultInterests = interestsArray.map((value: string) =>
+          IndustryList.find((option) => option.value === value)
+        );
+        setValue("interests", defaultInterests);
+        setDropDownValues((prev) => ({
+          ...prev,
+          interests: defaultInterests,
+        }));
+      }
+
+      if (currentUser.experience) {
+        setValue("experience", currentUser.experience);
+      }
+
+      if (currentUser.location) {
+        setValue("location", currentUser.location);
+      }
+
+      if (currentUser.private) {
+        setValue("private", currentUser.private);
+      }
+
+      if (currentUser?.skills && Array.isArray(currentUser.skills)) {
+        const { skills: parsedSkills, subSkills: parsedSubSkills } =
+          parseSkillsAndSubskills(currentUser.skills);
+        setSkills(parsedSkills);
+        setSubSkills(parsedSubSkills);
+      }
+
+      if (currentUser?.photo) {
+        setValue("photo", currentUser.photo);
+        setPhotoUrl(currentUser.photo);
+        setIsPhotoLoading(false);
+      } else {
+        setIsPhotoLoading(false);
+      }
+    }
+  }, [currentUser, setValue]);
+
+  const onCloseModal = () => {
+    setIsOpenModal(false);
   };
-  const onOpen = (user: any) => {
+  const onOpenModal = (user: any, userId: string) => {
     setCurrentUser(user);
-    setIsOpen(true);
+    setCurrentUserId(userId);
+    setIsOpenModal(true);
+    console.log(userId);
   };
 
   const getListUser = async () => {
@@ -226,151 +296,135 @@ export default function User() {
     getListUser();
   }, [skip, searchText]);
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     editableFields.forEach((field) => {
-  //       setValue(field, currentUser[field]);
-  //     });
+  useEffect(() => {
+    const fetchPoW = async () => {
+      const response = await fetchClient({
+        method: "GET",
+        endpoint: `/api/pow/get?userId=${currentUser?.id}`,
+      });
+      setPow(response?.data);
+    };
+    if (currentUser?.id) {
+      fetchPoW();
+    }
+  }, [currentUser?.id]);
 
-  //     if (currentUser.interests) {
-  //       const interestsArray = JSON.parse(currentUser.interests);
-  //       const defaultInterests = interestsArray.map((value: string) =>
-  //         IndustryList.find((option) => option.value === value)
-  //       );
-  //       setValue("interests", defaultInterests);
-  //       setDropDownValues((prev) => ({
-  //         ...prev,
-  //         interests: defaultInterests,
-  //       }));
-  //     }
+  const onSubmit = async (data: FormData) => {
+    if (!data.discord) {
+      setDiscordError(true);
+      toast({
+        title: "Lỗi Discord",
+        description: "Yêu cầu có Discord",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+    setDiscordError(false);
 
-  //     setValue("experience", currentUser.experience || "");
-  //     setValue("location", currentUser.location || "");
+    const filledSocialLinksCount = socialLinkFields.filter(
+      (field) => data[field as keyof FormData]
+    ).length;
 
-  //     setValue("interests", currentUser.interests || []);
-  //     setValue("photo", currentUser.photo);
-  //     setPhotoUrl(currentUser?.photo);
-  //     if (currentUser?.skills && Array.isArray(currentUser.skills)) {
-  //       const { skills: parsedSkills, subSkills: parsedSubSkills } =
-  //         parseSkillsAndSubskills(currentUser.skills);
-  //       setSkills(parsedSkills);
-  //       setSubSkills(parsedSubSkills);
-  //     }
-  //   }
-  // }, [currentUser, setValue]);
+    setSocialError(filledSocialLinksCount < 1);
 
-  // const onSubmit = async (data: FormData) => {
-  //   try {
-  //     if (!data.discord) {
-  //       setDiscordError(true);
-  //       toast({
-  //         title: "Lỗi Discord",
-  //         description: "Yêu cầu có Discord",
-  //         status: "error",
-  //         duration: 5000,
-  //         isClosable: true,
-  //       });
-  //       return;
-  //     }
-  //     setDiscordError(false);
+    if (filledSocialLinksCount < 1) {
+      toast({
+        title: "Đường dẫn bị lỗi",
+        description: "Ít nhất phải có một mạng xã hội",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
 
-  //     const filledSocialLinksCount = socialLinkFields.filter(
-  //       (field) => data[field as keyof FormData]
-  //     ).length;
+    if (isAnySocialUrlInvalid) {
+      toast({
+        title: "URL xã hội không hợp lệ",
+        description: "URL xã hội không hợp lệ",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
 
-  //     setSocialError(filledSocialLinksCount < 1);
+    const interestsJSON = JSON.stringify(
+      (data.interests || []).map((interest) => interest.value)
+    );
 
-  //     if (filledSocialLinksCount < 1) {
-  //       toast({
-  //         title: "Đường dẫn bị lỗi",
-  //         description: "Ít nhất phải có một mạng xã hội",
-  //         status: "error",
-  //         duration: 5000,
-  //         isClosable: true,
-  //       });
-  //       return;
-  //     }
+    const combinedSkills = skills.map((mainskill) => {
+      const main = SkillList.find(
+        (skill) => skill.mainskill === mainskill.value
+      );
+      const sub: SubSkillsType[] = [];
 
-  //     if (isAnySocialUrlInvalid) {
-  //       toast({
-  //         title: "URL xã hội không hợp lệ",
-  //         description: "URL xã hội không hợp lệ",
-  //         status: "error",
-  //         duration: 5000,
-  //         isClosable: true,
-  //       });
-  //       return;
-  //     }
+      subSkills.forEach((subskill) => {
+        if (main && main.subskills.includes(subskill.value as SubSkillsType)) {
+          sub.push(subskill.value as SubSkillsType);
+        }
+      });
 
-  //     const interestsJSON = JSON.stringify(
-  //       (data.interests || []).map((interest) => interest.value)
-  //     );
+      return {
+        skills: main?.mainskill ?? "",
+        subskills: sub ?? [],
+      };
+    });
 
-  //     const combinedSkills = skills.map((mainskill) => {
-  //       const main = SkillList.find(
-  //         (skill: any) => skill.mainskill === mainskill.value
-  //       );
-  //       const sub: SubSkillsType[] = [];
+    const updatedData = {
+      ...data,
+      interests: interestsJSON,
+      skills: combinedSkills,
+    };
 
-  //       subSkills.forEach((subskill: any) => {
-  //         if (
-  //           main &&
-  //           main.subskills.includes(subskill.value as SubSkillsType)
-  //         ) {
-  //           sub.push(subskill.value as SubSkillsType);
-  //         }
-  //       });
+    const finalUpdatedData = Object.keys(updatedData).reduce((acc, key) => {
+      const fieldKey = key as keyof FormData;
+      if (
+        currentUser &&
+        updatedData[fieldKey] !== currentUser[fieldKey] &&
+        !keysToOmit.includes(key)
+      ) {
+        acc[fieldKey] = updatedData[fieldKey];
+      }
+      return acc;
+    }, {} as Partial<FormData>);
+    const response = await fetchClient({
+      method: "POST",
+      endpoint: "/api/user/edit",
+      body: JSON.stringify({
+        id: currentUserId,
+        ...finalUpdatedData,
+      }),
+    });
+    // await fetchClient({
+    //   method: "POST",
+    //   endpoint: "/api/pow/edit",
+    //   body: JSON.stringify({
+    //     pows: pow,
+    //   }),
+    // });
+    if (pow && pow.length > 0) {
+      await fetchClient({
+        method: "POST",
+        endpoint: "/api/pow/edit",
+        body: JSON.stringify({
+          pows: pow,
+        }),
+      });
+    }
 
-  //       return {
-  //         skills: main?.mainskill ?? "",
-  //         subskills: sub ?? [],
-  //       };
-  //     });
-
-  //     const updatedData = {
-  //       ...data,
-  //       interests: interestsJSON,
-  //       skills: combinedSkills,
-  //     };
-
-  //     const finalUpdatedData = Object.keys(updatedData).reduce((acc, key) => {
-  //       const fieldKey = key as keyof FormData;
-  //       if (
-  //         currentUser &&
-  //         updatedData[fieldKey] !== currentUser[fieldKey] &&
-  //         !keysToOmit.includes(key)
-  //       ) {
-  //         acc[fieldKey] = updatedData[fieldKey];
-  //       }
-  //       return acc;
-  //     }, {} as Partial<FormData>);
-  //     const response = await fetchClient({
-  //       method: "POST",
-  //       endpoint: "/api/user/edit",
-  //       body: JSON.stringify({
-  //         id: currentUser?.id,
-  //         ...finalUpdatedData,
-  //       }),
-  //     });
-
-  //     toast({
-  //       title: "Hồ sơ đã được cập nhật.",
-  //       description: "Hồ sơ của bạn đã được cập nhật thành công!",
-  //       status: "success",
-  //       duration: 3000,
-  //       isClosable: true,
-  //     });
-  //   } catch (error: any) {
-  //     toast({
-  //       title: "Cập nhật thất bại",
-  //       description:
-  //         "Có thể một vài trường bị lỗi. Vui lòng kiểm tra lại thông tin của bạn và thử lại.",
-  //       status: "error",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //   }
-  // };
+    toast({
+      title: "Hồ sơ đã được cập nhật.",
+      description: "Hồ sơ của bạn đã được cập nhật thành công!",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+    getListUser();
+    onCloseModal();
+  };
 
   return (
     <LayoutAdmin>
@@ -422,15 +476,15 @@ export default function User() {
                     >
                       Xóa
                     </Button>
-                    {/* <Button
+                    <Button
                       leftIcon={<AiFillEdit />}
                       ml={1}
                       size="xs"
                       variant="solid"
-                      onClick={() => onOpen(user)}
+                      onClick={() => onOpenModal(user, user.id)}
                     >
                       Sửa
-                    </Button> */}
+                    </Button>
                   </Td>
                 </Tr>
               );
@@ -475,42 +529,79 @@ export default function User() {
           Tiếp
         </Button>
       </Flex>
-      {/* <Modal
+      <Modal
         // initialFocusRef={initialRef}
         // finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenModal}
+        onClose={onCloseModal}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Sửa người dùng</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody pb={6}>
-                <FormLabel
-                  mb={"0"}
-                  pb={"0"}
-                  color={"brand.slate.500"}
-                  requiredIndicator={<></>}
-                >
-                  Ảnh đại diện
-                </FormLabel>
-                <MediaPicker
-                  defaultValue={{ url: photoUrl, type: "image" }}
-                  onChange={async (e: any) => {
-                    setUploading(true);
-                    const a = await uploadToCloudinary(e);
-                    setValue("photo", a);
-                    setUploading(false);
-                  }}
-                  onReset={() => {
-                    setValue("photo", "");
-                    setUploading(false);
-                  }}
-                  compact
-                  label="Chọn hoặc kéo thả ảnh vào đây"
-                />
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Sửa người dùng</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <FormControl>
+                <Text mt={12} mb={5} fontSize="xl">
+                  Thông tin cá nhân
+                </Text>
+
+                {/* eslint-disable no-nested-ternary */}
+
+                {isPhotoLoading ? (
+                  <></>
+                ) : photoUrl ? (
+                  <>
+                    <FormLabel
+                      mb={"0"}
+                      pb={"0"}
+                      color={"brand.slate.500"}
+                      requiredIndicator={<></>}
+                    >
+                      Ảnh đại diện
+                    </FormLabel>
+                    <MediaPicker
+                      defaultValue={{ url: photoUrl, type: "image" }}
+                      onChange={async (e: any) => {
+                        setUploading(true);
+                        const a = await uploadToCloudinary(e);
+                        setValue("photo", a);
+                        setUploading(false);
+                      }}
+                      onReset={() => {
+                        setValue("photo", "");
+                        setUploading(false);
+                      }}
+                      compact
+                      label="Chọn hoặc kéo thả ảnh vào đây"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <FormLabel
+                      mb={"0"}
+                      pb={"0"}
+                      color={"brand.slate.500"}
+                      requiredIndicator={<></>}
+                    >
+                      Ảnh đại diện
+                    </FormLabel>
+                    <MediaPicker
+                      onChange={async (e: any) => {
+                        setUploading(true);
+                        const a = await uploadToCloudinary(e);
+                        setValue("photo", a);
+                        setUploading(false);
+                      }}
+                      onReset={() => {
+                        setValue("photo", "");
+                        setUploading(false);
+                      }}
+                      compact
+                      label="Chọn hoặc kéo thả ảnh vào đây"
+                    />
+                  </>
+                )}
 
                 <InputField
                   label="Tên"
@@ -527,6 +618,7 @@ export default function User() {
                   register={register}
                   isRequired
                 />
+
                 <Box w={"full"} mb={"1.25rem"}>
                   <FormLabel color={"brand.slate.500"}>Tiểu sử</FormLabel>
                   <Textarea
@@ -537,7 +629,7 @@ export default function User() {
                     focusBorderColor="brand.purple"
                     id={"bio"}
                     maxLength={180}
-                    placeholder="Tiểu sử"
+                    placeholder="Đây là nơi nhập tiểu sử của bạn."
                     {...register("bio", { required: true })}
                   />
                   <Text
@@ -551,42 +643,47 @@ export default function User() {
                   >
                     còn {180 - (watch("bio")?.length || 0)} kí tự
                   </Text>
-                  <Text mt={8} mb={5} fontSize="xl">
-                    Xã hội
-                  </Text>
-
-                  {socials.map((sc, idx: number) => {
-                    return (
-                      <SocialInput
-                        name={sc.label.toLowerCase()}
-                        register={register}
-                        {...sc}
-                        key={`sc${idx}`}
-                        discordError={
-                          sc.label.toLowerCase() === "discord"
-                            ? discordError
-                            : false
-                        }
-                        watch={watch}
-                        onUrlValidation={(isValid) => {
-                          handleUrlValidation(
-                            isValid,
-                            sc.label.toLowerCase() as keyof FormData
-                          );
-                        }}
-                      />
-                    );
-                  })}
-                  {socialError && (
-                    <Text color="red">Có ít nhất một mạng xã hội!</Text>
-                  )}
                 </Box>
+
+                <Text mt={8} mb={5} fontSize="xl">
+                  Xã hội
+                </Text>
+
+                {socials.map((sc, idx: number) => {
+                  return (
+                    <SocialInput
+                      name={sc.label.toLowerCase()}
+                      register={register}
+                      {...sc}
+                      key={`sc${idx}`}
+                      discordError={
+                        sc.label.toLowerCase() === "discord"
+                          ? discordError
+                          : false
+                      }
+                      watch={watch}
+                      onUrlValidation={(isValid) => {
+                        handleUrlValidation(
+                          isValid,
+                          sc.label.toLowerCase() as keyof FormData
+                        );
+                      }}
+                    />
+                  );
+                })}
+                {socialError && (
+                  <Text color="red">Có ít nhất một mạng xã hội!</Text>
+                )}
+
+                <Text mt={8} mb={5} fontSize="xl">
+                  Việc làm
+                </Text>
+
                 <Box w={"full"} mb={"1.25rem"}>
                   <FormLabel color={"brand.slate.500"}>
-                    Lĩnh vực web3?
+                    Bạn quan tâm đến lĩnh vực nào nhất của Web3?
                   </FormLabel>
                   <ReactSelect
-                    placeholder="Chọn"
                     closeMenuOnSelect={false}
                     components={animatedComponents}
                     isMulti
@@ -614,6 +711,7 @@ export default function User() {
                     }}
                   />
                 </Box>
+
                 <SelectBox
                   label="Kinh nghiệm việc làm"
                   watchValue={watch("experience")}
@@ -648,17 +746,111 @@ export default function User() {
                   register={register}
                   isRequired
                 />
-              </ModalBody>
-              <ModalFooter>
-                <Button type="submit" colorScheme="blue" mr={3}>
-                  Sửa
+
+                <FormLabel color={"brand.slate.500"}>
+                  Chứng chỉ việc làm
+                </FormLabel>
+                <Box>
+                  {pow.map((data, idx) => {
+                    return (
+                      <Flex
+                        key={data.id}
+                        align={"center"}
+                        mt="2"
+                        mb={"1.5"}
+                        px={"1rem"}
+                        py={"0.5rem"}
+                        color={"brand.slate.500"}
+                        border={"1px solid gray"}
+                        borderColor="brand.slate.300"
+                        rounded={"md"}
+                      >
+                        <Text w={"full"} color={"gray.800"} fontSize={"0.8rem"}>
+                          {data.title}
+                        </Text>
+                        <Center columnGap={"0.8rem"}>
+                          <EditIcon
+                            onClick={() => {
+                              setSelectedProject(idx);
+                              onOpen();
+                            }}
+                            cursor={"pointer"}
+                            fontSize={"0.8rem"}
+                          />
+                          <DeleteIcon
+                            onClick={() => {
+                              setPow((prevPow) =>
+                                prevPow.filter((_ele, id) => idx !== id)
+                              );
+                            }}
+                            cursor={"pointer"}
+                            fontSize={"0.8rem"}
+                          />
+                        </Center>
+                      </Flex>
+                    );
+                  })}
+                </Box>
+                <Button
+                  w={"full"}
+                  mb={8}
+                  leftIcon={<AddIcon />}
+                  onClick={() => {
+                    onOpen();
+                  }}
+                  variant="outline"
+                >
+                  Thêm dự án
                 </Button>
-                <Button onClick={onClose}>Hủy</Button>
-              </ModalFooter>
-            </ModalContent>
-          </FormControl>
-        </form>
-      </Modal> */}
+
+                <SkillSelect
+                  skills={skills}
+                  subSkills={subSkills}
+                  setSkills={setSkills}
+                  setSubSkills={setSubSkills}
+                  skillLabel="Mảng"
+                  subSkillLabel="Kỹ năng"
+                />
+
+                <Checkbox
+                  mr={1}
+                  mb={8}
+                  color="brand.slate.500"
+                  fontWeight={500}
+                  colorScheme="purple"
+                  isChecked={privateValue}
+                  onChange={(e) => {
+                    setValue("private", e.target.checked);
+                  }}
+                  size="md"
+                >
+                  Giữ thông tin riêng tư
+                </Checkbox>
+                <br />
+                <div className="flex justify-between">
+                  <Button mb={12} isLoading={uploading} type="submit">
+                    Cập nhật
+                  </Button>
+                  <Button mb={12} onClick={onCloseModal}>
+                    Hủy
+                  </Button>
+                </div>
+              </FormControl>
+            </form>
+            <AddProject
+              key={`${pow.length}project`}
+              {...{
+                isOpen,
+                onClose,
+                pow,
+                setPow,
+                selectedProject,
+                setSelectedProject,
+              }}
+            />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </LayoutAdmin>
   );
 }

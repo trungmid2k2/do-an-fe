@@ -19,7 +19,13 @@ import LayoutAdmin from "@/layouts/LayoutAdmin";
 import axios from "axios";
 import { BACKEND_URL } from "@/env";
 import { getSession } from "next-auth/react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DeleteIcon,
+} from "@chakra-ui/icons";
+import { AiFillEdit } from "react-icons/ai";
+import ModalEditCompany from "@/components/admin/company/ModalEditCompany";
 
 type Props = {};
 
@@ -30,9 +36,19 @@ export default function Index({}: Props) {
   const [skip, setSkip] = useState(0);
   const [searchText, setSearchText] = useState("");
   const [companies, setCompanies] = useState<any>([]);
+  const [company, setCompany] = useState<any>();
   const [totalCompanies, setTotalCompanies] = useState<number>(0);
   const debouncedSetSearchText = useRef(debounce(setSearchText, 300)).current;
   const toast = useToast();
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const onOpenModal = (company: any) => {
+    setCompany(company);
+    setIsOpenModal(true);
+  };
+  const onCloseModal = () => {
+    setIsOpenModal(false);
+  };
 
   const getListCompanies = async () => {
     try {
@@ -146,12 +162,22 @@ export default function Index({}: Props) {
                     </Td>
                     <Td>
                       <Button
+                        leftIcon={<DeleteIcon w={2} h={2} />}
                         onClick={() => deleteCompany(company.id)}
                         size="xs"
                         colorScheme="red"
                         variant="solid"
                       >
                         Xóa
+                      </Button>
+                      <Button
+                        leftIcon={<AiFillEdit />}
+                        ml={1}
+                        size="xs"
+                        variant="solid"
+                        onClick={() => onOpenModal(company)}
+                      >
+                        Sửa
                       </Button>
                     </Td>
                   </Tr>
@@ -200,6 +226,11 @@ export default function Index({}: Props) {
             Tiếp
           </Button>
         </Flex>
+        <ModalEditCompany
+          isOpenModal={isOpenModal}
+          onCloseModal={onCloseModal}
+          company={company}
+        />
       </LayoutAdmin>
     </>
   );

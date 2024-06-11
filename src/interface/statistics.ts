@@ -27,6 +27,7 @@ interface StatisticUserData {
   user_created_count: number;
   users_created_today: number;
   users_created_yesterday: number;
+  last_week: WeeklyData;
   week: WeeklyData;
   year: YearlyData;
 }
@@ -35,6 +36,7 @@ interface StatisticJobData {
   job_created_count: number;
   jobs_created_today: number;
   jobs_created_yesterday: number;
+  last_week: WeeklyData;
   week: WeeklyData;
   year: YearlyData;
 }
@@ -43,6 +45,7 @@ interface StatisticCompanyData {
   company_created_count: number;
   companies_created_today: number;
   companies_created_yesterday: number;
+  last_week: WeeklyData;
   week: WeeklyData;
   year: YearlyData;
 }

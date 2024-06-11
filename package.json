@@ -12,6 +12,7 @@
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.1",
+    "@chatscope/chat-ui-kit-react": "^2.0.3",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/domine": "^5.0.13",

@@ -22,7 +22,7 @@ function ListingCategoryPage({ slug }: { slug: string }) {
   const [listings, setListings] = useState<Listings>({
     jobs: [],
   });
-
+  console.log("slug", slug);
   const getListings = async () => {
     setIsListingsLoading(true);
     const params =
@@ -31,8 +31,9 @@ function ListingCategoryPage({ slug }: { slug: string }) {
         : { category: "all", take: 100, filter: slug };
     try {
       const listingsData = await axios.get("/api/listings", { params });
-      console.log(listingsData.data);
-      setListings(listingsData.data);
+      const data = listingsData.data;
+      console.log(data.data);
+      setListings(data.data);
       setIsListingsLoading(false);
     } catch (e) {
       setIsListingsLoading(false);
@@ -42,7 +43,7 @@ function ListingCategoryPage({ slug }: { slug: string }) {
   useEffect(() => {
     if (!isListingsLoading) return;
     getListings();
-  }, []);
+  }, [slug]);
 
   return (
     <Home type="category">
@@ -67,23 +68,22 @@ function ListingCategoryPage({ slug }: { slug: string }) {
               />
             </Flex>
           )}
-          {!isListingsLoading &&
-            listings?.jobs?.map((job) => {
-              return (
-                <JobsCard
-                  slug={job?.slug}
-                  rewardAmount={job?.rewardAmount}
-                  key={job?.id}
-                  companyName={job?.company?.name}
-                  deadline={job?.deadline}
-                  title={job?.title}
-                  logo={job?.company?.logo}
-                  token={job?.token}
-                  type={job?.type}
-                  applicationType={job?.applicationType}
-                />
-              );
-            })}
+          {listings?.jobs?.map((job) => {
+            return (
+              <JobsCard
+                slug={job?.slug}
+                rewardAmount={job?.rewardAmount}
+                key={job?.id}
+                companyName={job?.company?.name}
+                deadline={job?.deadline}
+                title={job?.title}
+                logo={job?.company?.logo}
+                token={job?.token}
+                type={job?.type}
+                applicationType={job?.applicationType}
+              />
+            );
+          })}
         </ListingSection>
       </Box>
     </Home>
@@ -93,7 +93,14 @@ function ListingCategoryPage({ slug }: { slug: string }) {
 export async function getServerSideProps(context: NextPageContext) {
   const { slug } = context.query;
 
-  const validCategories = ["Design", "Content", "Development", "jobs"];
+  const validCategories = [
+    "Design",
+    "Content",
+    "Development",
+    "Backend",
+    "Frontend",
+    "jobs",
+  ];
 
   if (!validCategories.includes(slug as string)) {
     return {

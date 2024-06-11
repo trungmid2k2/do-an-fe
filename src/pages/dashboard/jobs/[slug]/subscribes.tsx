@@ -44,26 +44,19 @@ import {
 import Avatar from "boring-avatars";
 import type { GetServerSideProps } from "next";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import ErrorSection from "@/components/shared/ErrorSection";
 import LoadingSection from "@/components/shared/LoadingSection";
-import { tokenList } from "@/constants";
 import type { Job, JobWithSubscribes, Rewards } from "@/interface/job";
 import type { SubscribeWithUser } from "@/interface/subscribes";
 import Sidebar from "@/layouts/Sidebar";
 import { userStore } from "@/store/user";
 import { getBgColor, getJobDraftStatus, getJobProgress } from "@/utils/job";
 
-import { dayjs } from "@/utils/dayjs";
-import { sortRank } from "@/utils/rank";
-import { truncatePublicKey } from "@/utils/truncatePublicKey";
 import fetchClient from "@/lib/fetch-client";
 import { AiOutlineEdit, AiOutlineOrderedList } from "react-icons/ai";
-import { FiMoreVertical } from "react-icons/fi";
 import PublishResults from "@/components/subscribes/PublishResults";
-import Talent from "@/pages/new/talent";
 
 interface Props {
   slug: string;
@@ -99,9 +92,10 @@ function JobSubscribes({ slug }: Props) {
     setIsJobLoading(true);
     try {
       const jobDetails = await fetchClient({
-        method: "GET",    
+        method: "GET",
         endpoint: `/api/jobs?slug=${slug}`,
       });
+      console.log("jobDetails", jobDetails);
       setJob(jobDetails.data.data[0]);
       getSubscribes(jobDetails.data.data[0]);
     } catch (e) {
@@ -270,14 +264,15 @@ function JobSubscribes({ slug }: Props) {
                                 >
                                   <NextLink
                                     target="_blank"
-                                    href={`/t/${sub?.user.username}`}
+                                    href={`/t/${sub?.user?.username}`}
                                     passHref
                                   >
                                     <Text
                                       as="a"
                                       _hover={{ textDecoration: "none" }}
                                     >
-                                      {sub?.user.firstname} {sub?.user.lastname}
+                                      {sub?.user?.firstname}{" "}
+                                      {sub?.user?.lastname}
                                     </Text>
                                   </NextLink>
                                 </Td>

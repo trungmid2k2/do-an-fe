@@ -131,14 +131,16 @@ const Index = () => {
             color="white"
             className="hover:drop-shadow-[0_9px_7px_rgba(0,0,0,0.3)] hover:opacity-100 opacity-80"
           >
-            <Flex direction="column" justify="space-between" h="full">
-              <Text as="b" fontSize={20}>
-                Số bài đăng
-              </Text>
-              <Text as="b" fontSize={20} align="right">
-                {statisticsData?.jobs_count}
-              </Text>
-            </Flex>
+            <Link href="/admin/jobs">
+              <Flex direction="column" justify="space-between" h="full">
+                <Text as="b" fontSize={20}>
+                  Số bài đăng
+                </Text>
+                <Text as="b" fontSize={20} align="right">
+                  {statisticsData?.jobs_count}
+                </Text>
+              </Flex>
+            </Link>
           </Box>
         </Flex>
 
