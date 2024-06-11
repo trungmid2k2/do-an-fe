@@ -113,7 +113,7 @@ export default function ModalEditCompany(props: Props) {
                   industry: industries || "",
                   name: e.name,
                   slug: e.slug,
-                  logo: imageUrl ? imageUrl : company.logo,
+                  logo: imageUrl || "",
                   twitter: e.twitter,
                   url: e.url ?? "",
                 });
