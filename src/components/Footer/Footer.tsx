@@ -24,7 +24,6 @@ import {
   MessageModel,
 } from "@chatscope/chat-ui-kit-react";
 import { ChatIcon } from "@chakra-ui/icons";
-import { API_GPT } from "@/env";
 import { MessageDirection } from "@chatscope/chat-ui-kit-react/src/types/unions";
 
 const Logo = (props: any) => {
