@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import LayoutAdmin from "@/layouts/LayoutAdmin";
-import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Spacer, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import axios from "axios";
 import { getSession } from "next-auth/react";
@@ -16,6 +16,7 @@ import {
   PointElement,
 } from "chart.js";
 import LineChartStatistic from "@/components/statistics/LineChartStatistic";
+import { months } from "moment";
 
 Chart.register(
   CategoryScale,
@@ -30,6 +31,7 @@ const Index = () => {
   const [dataUser, setDataUser] = useState<any>();
   const [dataJob, setDataJob] = useState<any>();
   const [dataCompany, setDataCompany] = useState<any>();
+  const [dataGetByMonth, setDataGetByMonth] = useState<any>();
 
   const statisticsAdmin = async () => {
     try {
@@ -41,6 +43,25 @@ const Index = () => {
         },
       });
       setStatisticsData(res.data);
+    } catch (error) {
+      console.error("Error ", error);
+    }
+  };
+
+  const statisticsDataCreatedByMonth = async (month: any) => {
+    try {
+      const session: any = await getSession();
+      const accessToken = session?.accessToken;
+      const res = await axios.get(
+        `${BACKEND_URL}/api/admin/get_data_created_month?month=${month}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const data = await res.data;
+      setDataGetByMonth(data);
     } catch (error) {
       console.error("Error ", error);
     }
@@ -68,6 +89,7 @@ const Index = () => {
   useEffect(() => {
     statisticsAdmin();
     statisticsDataCreated();
+    // statisticsDataCreatedByMonth();
   }, []);
 
   return (
@@ -150,9 +172,9 @@ const Index = () => {
             statisticCompany={dataCompany}
             statisticUser={dataUser}
             statisticJob={dataJob}
+            statisticsDataCreatedByMonth={statisticsDataCreatedByMonth}
+            dataGetByMonth={dataGetByMonth}
           />
-
-          {/* <div className="w-[500px] h-[250px]"><Bar data={data} /></div> */}
         </div>
       </LayoutAdmin>
     </>

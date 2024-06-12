@@ -7,6 +7,7 @@ import {
   Flex,
   FormControl,
   Input,
+  Link,
   Table,
   TableContainer,
   Tbody,
@@ -160,7 +161,11 @@ export default function Index() {
               return (
                 <Tr key={index + job?.title}>
                   <Td>{index + 1}</Td>
-                  <Td>{job?.title || ""}</Td>
+                  <Td>
+                    <Link href={`/listings/jobs/${job?.title}`}>
+                      {job?.title || ""}
+                    </Link>
+                  </Td>
                   <Td>
                     <div className="overflow-hidden whitespace-nowrap text-ellipsis w-[120px]">
                       {job?.description || ""}
@@ -180,7 +185,6 @@ export default function Index() {
                     >
                       Xóa
                     </Button>
-                   
                   </Td>
                 </Tr>
               );

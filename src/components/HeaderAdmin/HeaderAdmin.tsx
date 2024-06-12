@@ -155,7 +155,8 @@ export default function HeaderAdmin() {
             justify={{ base: "center", lg: "start" }}
             gap={6}
           >
-            CMS Admin
+            <Link href="/admin"> CMS Admin</Link>
+            <Link href="/">Trang chính</Link>
           </Flex>
           <Flex
             align="center"
