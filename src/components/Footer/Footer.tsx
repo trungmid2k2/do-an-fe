@@ -134,6 +134,7 @@ export default function LargeWithNewsletter() {
       borderTop="1px solid"
       borderTopColor="blackAlpha.200"
       h="full"
+      w="full"
     >
       <Container w="full" py={12}>
         <SimpleGrid

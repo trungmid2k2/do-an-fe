@@ -1,6 +1,7 @@
 import React, { use, useEffect, useRef, useState } from "react";
 import LayoutAdmin from "@/layouts/LayoutAdmin";
 import {
+  Avatar,
   Box,
   Button,
   Center,
@@ -461,7 +462,18 @@ export default function User() {
               return (
                 <Tr key={index + user?.username}>
                   <Td>{index + 1}</Td>
-                  <Td>{user?.username || ""}</Td>
+                  <Td>
+                    <div className="flex items-center">
+                      <Avatar
+                        w={6}
+                        h={6}
+                        name={user?.name}
+                        src={user?.photo}
+                        mr={2}
+                      ></Avatar>
+                      <Text> {user?.username || ""}</Text>
+                    </div>
+                  </Td>
                   <Td> {user?.email || ""}</Td>
                   <Td>{user?.firstname + " " + user?.lastname}</Td>
                   <Td> {user?.location || ""}</Td>

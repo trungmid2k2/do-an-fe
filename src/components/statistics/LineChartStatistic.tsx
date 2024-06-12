@@ -3,19 +3,17 @@ import {
   BarElement,
   CategoryScale,
   Chart,
-  ChartOptions,
   Legend,
   LineElement,
   LinearScale,
   PointElement,
   Title,
   Tooltip,
-  plugins,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { title } from "process";
-import { text } from "stream/consumers";
+
 import { Select } from "@chakra-ui/react";
+import { englishMonth, labelsMonth, labelsWeek } from "@/constants";
 
 Chart.register(
   CategoryScale,
@@ -32,11 +30,20 @@ interface LineChartProp {
   statisticUser: StatisticUserData;
   statisticJob: StatisticJobData;
   statisticCompany: StatisticCompanyData;
+  statisticsDataCreatedByMonth: (month: any) => Promise<void>;
+  dataGetByMonth: any;
 }
 
 export default function LineChartStatistic(props: LineChartProp) {
-  // const [chartOptions, setChartOptions] = useState<ChartOptions>();
-  const { statisticUser, statisticJob, statisticCompany } = props;
+  const [selectedWeek, setSelectedWeek] = useState("current");
+  const {
+    statisticUser,
+    statisticJob,
+    statisticCompany,
+    statisticsDataCreatedByMonth,
+    dataGetByMonth,
+  } = props;
+
   const statisticUserWeek = statisticUser?.week;
   const statisticJobWeek = statisticJob?.week;
   const statisticCompanyWeek = statisticCompany?.week;
@@ -49,9 +56,25 @@ export default function LineChartStatistic(props: LineChartProp) {
   const statisticJobYear = statisticJob?.year;
   const statisticCompanyYear = statisticCompany?.year;
 
-  const [selectedWeek, setSelectedWeek] = useState("current");
+  const getDataJobByMonth = dataGetByMonth?.job_statistics || {};
+  const getDataUserByMonth = dataGetByMonth?.user_statistics || {};
+  const getDataCompanyByMonth = dataGetByMonth?.company_statistics || {};
 
-  const optionsWeek = {
+  const getLabels = Object.keys(getDataJobByMonth);
+  const getDaLabels = getLabels.map(
+    (getLabel) => `Ngày ${getLabel.split("-")[2]}`
+  );
+  const getValuesJobByMonth = Object.values(getDataJobByMonth);
+  const getValuesUserByMonth = Object.values(getDataUserByMonth);
+  const getValuesCompanyByMonth = Object.values(getDataCompanyByMonth);
+  const [currentTime, setCurrentTime] = useState("");
+
+  const now = new Date();
+  const currentMonth = now
+    .toLocaleString("default", { month: "long" })
+    .toLowerCase();
+
+  const options = (text: string) => ({
     responsive: true,
     plugins: {
       legend: {
@@ -59,37 +82,17 @@ export default function LineChartStatistic(props: LineChartProp) {
       },
       title: {
         display: true,
-        text: "Thống kê số liệu đã được tạo ra trong tuần này",
-      },
-    },
-  };
-  const optionsYear = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "bottom" as const,
-      },
-      title: {
-        display: true,
-        text: " Thống kê số liệu đã được tạo ra trong năm",
+        text: `Thống kê số liệu đã được tạo ra trong ${text} này`,
       },
       hover: {
         mode: "nearest",
         intersect: true,
       },
     },
-  };
+  });
 
   const dataChartWeek = {
-    labels: [
-      "Thứ hai",
-      "Thứ ba",
-      "Thứ tư",
-      "Thứ năm",
-      "Thứ sáu",
-      "Thứ bảy",
-      "Chủ nhật",
-    ],
+    labels: labelsWeek,
     datasets: [
       {
         label: "Bài đăng",
@@ -146,7 +149,7 @@ export default function LineChartStatistic(props: LineChartProp) {
         pointColor: "rgb(151 122 220)",
       },
       {
-        label: "Công ty",
+        label: "Nhà tuyển dụng",
         data:
           selectedWeek === "current"
             ? [
@@ -174,21 +177,9 @@ export default function LineChartStatistic(props: LineChartProp) {
       },
     ],
   };
+
   const dataChartYear = {
-    labels: [
-      "Tháng 1",
-      "Tháng 2",
-      "Tháng 3",
-      "Tháng 4",
-      "Tháng 5",
-      "Tháng 6",
-      "Tháng 7",
-      "Tháng 8",
-      "Tháng 9",
-      "Tháng 10",
-      "Tháng 11",
-      "Tháng 12",
-    ],
+    labels: labelsMonth,
     datasets: [
       {
         label: "Người dùng",
@@ -256,8 +247,44 @@ export default function LineChartStatistic(props: LineChartProp) {
     ],
   };
 
+  const dataChartByMonth = {
+    labels: getDaLabels,
+    datasets: [
+      {
+        label: "Bài đăng",
+        data: getValuesJobByMonth,
+        // fill: false,
+        borderColor: "rgb(69 70 140)",
+        tension: 0.1,
+        pointColor: "rgb(69 70 140)",
+      },
+      {
+        label: "Người dùng",
+        data: getValuesUserByMonth,
+        // fill: false,
+        borderColor: "rgb(151 122 220)",
+        tension: 0.1,
+        pointColor: "rgb(151 122 220)",
+      },
+      {
+        label: "Nhà tuyển dụng",
+        data: getValuesCompanyByMonth,
+        // fill: false,
+        borderColor: "rgb(88 154 215)",
+        tension: 0.1,
+        pointColor: "rgb(88 154 215)",
+      },
+    ],
+  };
+
+  useEffect(() => {
+    setCurrentTime(currentMonth);
+    statisticsDataCreatedByMonth(currentMonth);
+    dataGetByMonth;
+  }, [currentMonth]);
+  console.log(currentTime);
   return (
-    <div className="w-[1000px] mx-auto">
+    <div className="max-w-[1000px] mx-auto">
       <div className="w-[150px]">
         <Select
           defaultValue="current"
@@ -269,9 +296,38 @@ export default function LineChartStatistic(props: LineChartProp) {
           <option value="last">Tuần trước</option>
         </Select>
       </div>
-      <Line data={dataChartWeek} options={optionsWeek} />
+      <Line data={dataChartWeek} options={options("tuần")} />
+      <br />
+      <div className="w-full">
+        <Line
+          data={dataChartYear}
+          options={options("các tháng trong năm nay")}
+        />
+      </div>
 
-      <Line data={dataChartYear} options={optionsYear} />
+      <div className="w-[150px] mt-10">
+        <Select
+          defaultValue={currentMonth}
+          onChange={async (e) => {
+            statisticsDataCreatedByMonth(e.target.value);
+          }}
+          placeholder="Chọn"
+          size="md"
+        >
+          {englishMonth.map((month, index) => {
+            const getmonth = new Date().getMonth() + 1;
+            return (
+              <>
+                {index < getmonth && (
+                  <option value={month}>Tháng {index + 1}</option>
+                )}
+                ;
+              </>
+            );
+          })}
+        </Select>
+      </div>
+      <Line data={dataChartByMonth} options={options("các ngày trong tháng")} />
     </div>
   );
 }

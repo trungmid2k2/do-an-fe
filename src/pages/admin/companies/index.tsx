@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Flex,
   FormControl,
@@ -32,6 +33,16 @@ type Props = {};
 const debounce = require("lodash.debounce");
 const length = 10;
 
+type FormData = {
+  name: string;
+  slug: string;
+  logo: string;
+  url: string;
+  industry: string;
+  twitter: string;
+  bio: string;
+};
+
 export default function Index({}: Props) {
   const [skip, setSkip] = useState(0);
   const [searchText, setSearchText] = useState("");
@@ -40,6 +51,7 @@ export default function Index({}: Props) {
   const [totalCompanies, setTotalCompanies] = useState<number>(0);
   const debouncedSetSearchText = useRef(debounce(setSearchText, 300)).current;
   const toast = useToast();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const onOpenModal = (company: any) => {
@@ -49,7 +61,7 @@ export default function Index({}: Props) {
   const onCloseModal = () => {
     setIsOpenModal(false);
   };
-
+  console.log("company", company);
   const getListCompanies = async () => {
     try {
       const session: any = await getSession();
@@ -111,9 +123,41 @@ export default function Index({}: Props) {
     }
   };
 
+  const updateCompany = async (id: any, formData: FormData) => {
+    try {
+      const response = await axios.put(
+        `${BACKEND_URL}/api/company/update_company?id=${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+      toast({
+        title: "Thành công!",
+        description: "Xóa thành công!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      getListCompanies();
+      console.log("response", response);
+      setIsLoading(false);
+      onCloseModal();
+    } catch (e: any) {
+      console.log("eror", e);
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     getListCompanies();
   }, [skip, searchText]);
+  useEffect(() => {
+    company;
+  }, [isOpenModal]);
 
   return (
     <>
@@ -150,7 +194,18 @@ export default function Index({}: Props) {
                 return (
                   <Tr key={index + company?.title}>
                     <Td>{index + 1}</Td>
-                    <Td>{company?.name || ""}</Td>
+                    <Td>
+                      <div className="flex items-center ">
+                        <Avatar
+                          w={7}
+                          h={7}
+                          name={company?.name}
+                          src={company?.logo}
+                          mr={2}
+                        ></Avatar>
+                        <Text>{company?.name || ""}</Text>
+                      </div>
+                    </Td>
                     <Td>{company?.industry || ""}</Td>
                     <Td>
                       <div className="overflow-hidden whitespace-nowrap text-ellipsis w-[120px]">
@@ -227,6 +282,8 @@ export default function Index({}: Props) {
           </Button>
         </Flex>
         <ModalEditCompany
+          isLoading={isLoading}
+          updateCompany={updateCompany}
           isOpenModal={isOpenModal}
           onCloseModal={onCloseModal}
           company={company}

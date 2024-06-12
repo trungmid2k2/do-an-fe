@@ -25,10 +25,6 @@ import toast, { Toaster } from "react-hot-toast";
 import Select from "react-select";
 import { uploadToCloudinary } from "@/utils/upload";
 import { useForm } from "react-hook-form";
-import fetchClient from "@/lib/fetch-client";
-import axios from "axios";
-import { getSession } from "next-auth/react";
-import { BACKEND_URL } from "@/env";
 
 type FormData = {
   name: string;
@@ -44,23 +40,28 @@ type Props = {
   isOpenModal: boolean;
   onCloseModal: () => void;
   company: CompanyType;
+  updateCompany: (id: any, formData: FormData) => Promise<void>;
+  isLoading: boolean;
 };
 
 export default function ModalEditCompany(props: Props) {
-  const { onCloseModal, isOpenModal, company } = props;
+  const { onCloseModal, isOpenModal, company, updateCompany, isLoading } =
+    props;
   const animatedComponents = makeAnimated();
   const [industries, setIndustries] = useState<string>();
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [hasError, setHasError] = useState<boolean>(false);
+  const [imageUrl, setImageUrl] = useState<string>();
+
   const {
     handleSubmit,
     register,
     formState: { errors },
     watch,
     getValues,
+    setValue,
   } = useForm();
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
+
   const industryString = company?.industry;
   const selectedIndustries = industryString?.split(", ");
   const defaultIndustryObjects = IndustryList?.filter((industry) =>
@@ -68,35 +69,16 @@ export default function ModalEditCompany(props: Props) {
   );
 
   useEffect(() => {
-    defaultIndustryObjects;
-    company;
-  }, [company, isOpenModal]);
-
-  const updateCompany = async (id: any, formData: FormData) => {
-    try {
-      const session: any = await getSession();
-      const accessToken = session?.accessToken;
-      const response = await axios.put(
-        `${BACKEND_URL}/api/company/update_company?id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          data: {
-            formData,
-          },
-        }
-      );
-      toast.success("Company updated!");
-      console.log("response", response);
-      setIsLoading(false);
-      onCloseModal();
-    } catch (e: any) {
-      console.log("eror", e);
-      setIsLoading(false);
-      setHasError(true);
+    if (company) {
+      setValue("name", company?.name);
+      setValue("slug", company?.slug);
+      setValue("url", company?.url);
+      setValue("twitter", company?.twitter);
+      setValue("bio", company?.bio);
+      setImageUrl(company?.logo);
+      setIndustries(company?.industry);
     }
-  };
+  }, [company, isOpenModal, setValue]);
 
   return (
     <>
@@ -107,13 +89,13 @@ export default function ModalEditCompany(props: Props) {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <form
-              onSubmit={handleSubmit(async (e) => {
+              onSubmit={handleSubmit((e) => {
                 updateCompany(company?.id, {
                   bio: e.bio,
-                  industry: industries || "",
+                  industry: industries || company?.industry || "",
                   name: e.name,
                   slug: e.slug,
-                  logo: imageUrl || "",
+                  logo: imageUrl || company?.logo || "",
                   twitter: e.twitter,
                   url: e.url ?? "",
                 });
